@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Waggy Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="assets/css/login.css"> <!-- Link to external CSS -->
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gray-100">
+    <!-- Main Container -->
+    <div class="flex flex-col lg:flex-row max-w-5xl w-full bg-white rounded-lg shadow-lg overflow-hidden">
+        <!-- Left Side (Form) -->
+        <div class="w-full lg:w-1/2 p-8">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2 mb-8">
+                <img src="assets/images/icons/Waggy.png" alt="Waggy Logo" class="h-20 w-20" />
+                <h1 class="text-3xl font-bold text-blue-400">Waggy</h1>
+            </div>
+
+            <!-- Title and Description -->
+            <h2 class="text-2xl font-semibold mb-4">Login</h2>
+            <p class="text-gray-600 mb-6">Login to access your Waggy account</p>
+
+            <!-- Form -->
+            <form id="loginForm" onsubmit="validateForm(event)" class="space-y-4">
+                <!-- Email Input -->
+                <div>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Email"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                        required
+                    />
+                </div>
+
+                <!-- Password Input -->
+                <div class="relative">
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                        required
+                    />
+                    <button
+                        type="button"
+                        onclick="togglePassword()"
+                        class="absolute inset-y-0 right-3 flex items-center text-gray-500"
+                    >
+                        <svg
+                            id="eyeIcon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M10 2C5.532 2 2.026 5.455.3 10c1.725 4.545 5.23 8 9.7 8s7.974-3.455 9.7-8C17.974 5.455 14.468 2 10 2zM10 15c-2.577 0-4.61-2.09-5.257-4.975C5.39 7.09 7.423 5 10 5s4.61 2.09 5.257 4.975C14.61 12.91 12.577 15 10 15zm0-8a3 3 0 100 6 3 3 0 000-6z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Forgot Password -->
+                <div class="text-right">
+                    <a href="#" class="text-blue-400 text-sm hover:underline">Forgot Password?</a>
+                </div>
+
+                <!-- Login Button -->
+                <button
+                    type="submit"
+                    class="w-full bg-blue-400 text-white p-3 rounded-lg font-semibold hover:bg-blue-400"
+                >
+                    Login
+                </button>
+            </form>
+
+            <!-- Signup Links -->
+            <p class="mt-6 text-sm text-center text-gray-600">
+                Don't have an account?
+                <a href="#" class="text-red-500 hover:underline">Sign up</a> or
+                <a href="#" class="text-red-500 hover:underline">Create an Organization Account</a>
+            </p>
+        </div>
+
+        <!-- Right Side (Image) -->
+        <div
+            class="hidden lg:block w-full lg:w-1/2 bg-cover bg-center login-bg"
+        >
+            <!-- Background Image - Replace with your image URL -->
+        </div>
+    </div>
+
+    <script src="assets/js/login.js"></script> <!-- Link to external JS -->
+</body>
+</html>
