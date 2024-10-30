@@ -1,5 +1,7 @@
 # waggy-frontend
 
+Font: Poppins
+
 Navbar / Sidebar
 Background Color: #157AFF (Blue shade)
 Text Color / Text on Focus: #FFFFFF (White)
