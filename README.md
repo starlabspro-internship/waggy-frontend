@@ -1,1 +1,6 @@
 # waggy-frontend
+
+
+
+
+<!--  Color Shemas -->
