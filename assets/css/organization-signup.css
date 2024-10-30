@@ -1,0 +1,31 @@
+/* Custom Styles for Organization Signup */
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.btn-primary {
+    background-color: #60a5fa;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #4299e1;
+}
+
+.toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+}

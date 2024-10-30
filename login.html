@@ -12,10 +12,12 @@
     <div class="flex flex-col lg:flex-row max-w-5xl w-full bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Left Side (Form) -->
         <div class="w-full lg:w-1/2 p-8">
-            <!-- Logo -->
+            <!-- Logo with Link to Index -->
             <div class="flex items-center space-x-2 mb-8">
-                <img src="assets/images/icons/Waggy.png" alt="Waggy Logo" class="h-20 w-20" />
-                <h1 class="text-3xl font-bold text-blue-400">Waggy</h1>
+                <a href="index.html"> <!-- Link to index page -->
+                    <img src="assets/images/icons/Waggy.png" alt="Waggy Logo" class="h-20 w-20" />
+                </a>
+                <a href="index.html" class="text-3xl font-bold text-blue-400">Waggy</a> <!-- Link to index page -->
             </div>
 
             <!-- Title and Description -->
@@ -68,20 +70,20 @@
                     <a href="#" class="text-blue-400 text-sm hover:underline">Forgot Password?</a>
                 </div>
 
-                <!-- Login Button -->
-                <button
-                    type="submit"
-                    class="w-full bg-blue-400 text-white p-3 rounded-lg font-semibold hover:bg-blue-400"
+                <!-- Login Button with Link to Matches -->
+                <a
+                    href="matching.html"
+                    class="block w-full bg-blue-400 text-white text-center p-3 rounded-lg font-semibold hover:bg-blue-600 transition"
                 >
                     Login
-                </button>
+                </a>
             </form>
 
             <!-- Signup Links -->
             <p class="mt-6 text-sm text-center text-gray-600">
                 Don't have an account?
-                <a href="#" class="text-red-500 hover:underline">Sign up</a> or
-                <a href="#" class="text-red-500 hover:underline">Create an Organization Account</a>
+                <a href="signup.html" class="text-red-500 hover:underline">Sign up</a> or
+                <a href="organization-signup.html" class="text-red-500 hover:underline">Create an Organization Account</a>
             </p>
         </div>
 

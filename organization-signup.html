@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up as Individual User</title>
+    <title>Sign Up as Organization</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/signup.css">
+    <link rel="stylesheet" href="assets/css/organization-signup.css">
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-4xl flex">
@@ -15,11 +15,10 @@
                 <img src="assets/images/icons/Waggy.png" alt="Logo" class="h-16 w-16">
                 <h3 class="text-3xl font-bold text-blue-400 ml-2">Waggy</h3>
             </div>
-            <h3 class="text-2xl font-semibold mb-2">Sign Up as an Individual User</h3>
-            <p class="text-gray-600 mb-6 text-sm">Let's get you all set up so you can access your personal account.</p>
-            <form id="signupForm" class="space-y-4">
-                <input type="text" id="firstname" placeholder="Your Name" class="input-field">
-                <input type="text" id="lastname" placeholder="Last Name" class="input-field">
+            <h3 class="text-2xl font-semibold mb-2">Create an Organization Account</h3>
+            <p class="text-gray-600 mb-6 text-sm">For businesses, schools, or other organizations.</p>
+            <form id="orgSignupForm" class="space-y-4">
+                <input type="text" id="organizationName" placeholder="Organization Name" class="input-field">
                 <input type="email" id="email" placeholder="Email" class="input-field">
                 <div class="relative">
                     <input type="password" id="password" placeholder="Password" class="input-field">
@@ -39,8 +38,8 @@
         </div>
 
         <!-- Right Side (Image) -->
-        <div class="hidden lg:block w-1/2 bg-cover bg-center" style="background-image: url('assets/images/DOGG.jpg');"></div>
+        <div class="hidden lg:block w-1/2 bg-cover bg-center" style="background-image: url('assets/images/dog2.jpg');"></div>
     </div>
-    <script src="assets/js/signup.js"></script>
+    <script src="assets/js/organization-signup.js"></script>
 </body>
 </html>
