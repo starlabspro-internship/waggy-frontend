@@ -2,16 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("blogForm");
     
     form.addEventListener("submit", (event) => {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); 
 
-        // Get form field values
         const title = document.getElementById("title").value.trim();
         const category = document.getElementById("category").value.trim();
         const article = document.getElementById("article").value.trim();
         const imageInput = document.querySelector('input[type="file"]');
-        const imageFile = imageInput.files[0]; // Get the selected file
+        const imageFile = imageInput.files[0]; 
 
-        // Clear previous error messages
         document.getElementById("titleError").classList.add("hidden");
         document.getElementById("categoryError").classList.add("hidden");
         document.getElementById("articleError").classList.add("hidden");
@@ -20,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
             imageError.classList.add("hidden");
         }
 
-        // Validation checks
         let valid = true;
 
         if (!title) {
@@ -38,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("articleError").classList.remove("hidden");
         }
 
-        // Validate image upload
         if (!imageFile) {
             valid = false;
             if (!imageError) {
@@ -46,20 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 errorSpan.id = "imageError";
                 errorSpan.className = "text-red-500 text-xs";
                 errorSpan.textContent = "Article Image is required.";
-                imageInput.parentNode.appendChild(errorSpan); // Append the error message below the file input
+                imageInput.parentNode.appendChild(errorSpan);
             } else {
                 imageError.classList.remove("hidden");
             }
         }
 
-        // Show alert if validation fails
         if (valid) {
-            alert("Blog created successfully!"); // Placeholder for successful submission
+            alert("Blog created successfully!"); 
             
-            // Reset form fields
             form.reset();
             
-            // Optionally, clear the image error message if you don't need it anymore
             if (imageError) {
                 imageError.classList.add("hidden");
             }
