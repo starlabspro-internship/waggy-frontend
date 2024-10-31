@@ -1,0 +1,73 @@
+body {
+    background-color: #f3f4f6;
+}
+.or-sign-up {
+    text-align: center;
+    position: relative;
+}
+.or-sign-up hr {
+    border-top: 1px solid #ccc;
+    width: 100%;
+}
+.text-on-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+}
+@media (max-width: 767.98px) {
+    .responsive-image {
+        display: none;
+    }
+}
+
+.form-group div{
+  font-size:10px;
+  margin-left: 9px;
+  
+}
+#togglePassword, #toggleConfirmPassword{
+float:right;
+margin-left:-25px;
+margin-top:-40px;
+right:10px;
+position:relative;
+z-index:2;
+
+}
+
+.bi-eye-slash{
+cursor:pointer;
+}
+
+.button-hover:hover{
+    background-color: #f0f9ff;
+}
+
+.signUp-btn{
+    font-weight:700;
+    background-color: #60a5fa;
+}
+
+.signUp-btn-hover:hover{
+    background-color: #3b82f6;
+}
+
+
+
+.border-blue {
+    border-color: #3667d7;
+    font-weight: 700;
+    color:#60a5fa;
+}
+
+.border-blue:hover{
+    border-color:#60a5fa;
+    color:#60a5fa;
+}
+
+a, span{
+    color:red;
+    font-weight:400
+}
