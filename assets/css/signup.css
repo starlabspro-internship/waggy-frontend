@@ -1,5 +1,6 @@
 body {
     background-color: #f3f4f6;
+    font-family: "Poppins", sans-serif;
 }
 .or-sign-up {
     text-align: center;
@@ -46,7 +47,7 @@ cursor:pointer;
 }
 
 .signUp-btn{
-    font-weight:700;
+    font-weight:600;
     background-color: #60a5fa;
 }
 
@@ -58,7 +59,7 @@ cursor:pointer;
 
 .border-blue {
     border-color: #3667d7;
-    font-weight: 700;
+    font-weight: 600;
     color:#60a5fa;
 }
 
@@ -67,7 +68,13 @@ cursor:pointer;
     color:#60a5fa;
 }
 
-a, span{
+a, span,.error-text-color{
     color:red;
-    font-weight:400
+    font-weight:500
 }
+
+.link-hover:hover{
+    text-decoration: underline;
+    color:red
+}
+
