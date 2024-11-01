@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create a Blog</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/blog.css">
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-1/4 bg-blue-600 text-white flex flex-col items-center pt-8">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image" class="rounded-full w-20 h-20 mb-4">
+      <h2 class="text-xl font-bold">Admin</h2>
+      <p class="text-sm mb-6">admin@gmail.com</p>
+      <nav class="space-y-4 text-lg">
+        <a href="#" class="block hover:underline">Profile</a>
+        <a href="#" class="block hover:underline">Matching</a>
+        <a href="#" class="block hover:underline">Pet Profile</a>
+        <a href="#" class="block hover:underline">Message</a>
+        <a href="#" class="block hover:underline">Blog</a>
+        <a href="#" class="block hover:underline">Adaptation</a>
+        <a href="#" class="block hover:underline">Settings</a>
+      </nav>
+      <div class="mt-auto py-4">
+        <p class="font-bold">Waggy</p>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 p-8">
+      <h1 class="text-3xl font-bold mb-6 text-center">Create a Blog</h1>
+      <div class="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto">
+        <form id="blogForm">
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Blog Title</label>
+            <input type="text" id="title" placeholder="Enter the title" class="border border-gray-300 rounded w-full p-2">
+            <span id="titleError" class="text-red-500 text-xs hidden">Blog Title is required.</span>
+          </div>
+          <!-- Category -->
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="category">Category</label>
+            <input type="text" id="category" placeholder="Enter the category" class="border border-gray-300 rounded w-full p-2">
+            <span id="categoryError" class="text-red-500 text-xs hidden">Category is required.</span>
+          </div>
+          <!-- Article -->
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="article">Article</label>
+            <textarea id="article" placeholder="Enter the article" class="border border-gray-300 rounded w-full p-2 h-24"></textarea>
+            <span id="articleError" class="text-red-500 text-xs hidden">Article is required.</span>
+          </div>
+          <!-- File Upload -->
+          <div class="file-upload mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Select an Article Image</label>
+            <input type="file" class="upload-button border border-blue-300 text-blue-500 rounded p-2 w-full bg-gray-100">
+            <span id="imageError" class="text-red-500 text-xs hidden">Article Image is required.</span>
+          </div>
+          <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full">Save Details</button>
+        </form>
+      </div>
+    </main>
+    
+    <!-- My Blogs Sidebar -->
+    <aside class="w-1/5 bg-gray-100 p-4 border-l border-gray-200"> 
+      <h2 class="text-lg font-bold text-blue-600 mb-4">My Blogs</h2>
+      <input type="text" placeholder="Search Here..." class="border border-gray-300 rounded p-2 w-full mb-4">
+      <p class="text-blue-500 text-sm">No Blog Posted</p>
+    </aside>
+  </div>
+  
+  <script src="assets/js/blog.js"></script>
+</body>
+</html>
