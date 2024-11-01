@@ -1,4 +1,4 @@
-const input = document.getElementById('organization-name');
+const organizationName = document.getElementById('organization-name');
 const error = document.getElementById('username-error');
 const termsInput = document.getElementById('terms');
 const termsError = document.getElementById('terms-error');
@@ -14,7 +14,7 @@ const confirmPasswordError = document.getElementById('confirm-password-error'); 
 const form = document.getElementById('register-form');
 
 
-input.addEventListener('input', () => error.textContent = '');
+organizationName.addEventListener('input', () => error.textContent = '');
 emailInput.addEventListener('input', () => emailError.textContent = '');
 passwordInput.addEventListener('input', () => passwordError.textContent = '');
 confirmPasswordInput.addEventListener('input', () => confirmPasswordError.textContent = '');
@@ -24,7 +24,7 @@ termsInput.addEventListener('change', () => termsError.textContent = '');
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const username = input.value;
+    const organization = organizationName.value;
     const email = emailInput.value;
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
@@ -36,7 +36,7 @@ form.addEventListener('submit', (event) => {
     confirmPasswordError.textContent = '';
 
     
-    if (username.length < 3 || username.length > 30) {
+    if (organization.length < 3 || organization.length > 30) {
         error.textContent = 'Organization name must be between 3 and 30 characters.';
         return;
     }
@@ -64,7 +64,7 @@ form.addEventListener('submit', (event) => {
 
     if (!termsInput.checked) {
         termsError.textContent = 'You must accept the terms and conditions.';
-        event.preventDefault(); 
+        
         return;
     } else {
       termsInput.checked = false;
@@ -76,7 +76,7 @@ form.addEventListener('submit', (event) => {
     alert('All fields are valid! Form submitted successfully.');
 
    
-    input.value = '';
+    organizationName.value = '';
     emailInput.value = '';
     passwordInput.value = '';
     confirmPasswordInput.value = '';

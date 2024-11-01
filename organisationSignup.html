@@ -6,12 +6,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/signup.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <title>Organization Account</title>
-
-
-
-  </style>
 </head>
 <body>
 
@@ -29,35 +25,35 @@
         <form action="#" id="register-form" class="mt-3"  >
             <div class="form-group">
                 <input type="text" class="form-control m-2 p-2" id="organization-name" placeholder="Organization Name">
-                <div id="username-error" class="text-danger"></div>
+                <div id="username-error" class="error-text-color px-2"></div>
             </div>
             <div class="form-group">
                 <input type="email" class="form-control m-2 mt-3 p-2" id="email" placeholder="Email">
-                <div id="email-error" class="text-danger"></div>
+                <div id="email-error" class="error-text-color px-2"></div>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control m-2 mt-3 p-2" id="password" placeholder="Password"   >
                 <i class="bi bi-eye-slash eye-icon" id="togglePassword" onclick="togglePassword('password', 'togglePassword')"></i>
-                <div id="password-error" class="text-danger"></div>
+                <div id="password-error" class="error-text-color px-2"></div>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control m-2 mt-3 p-2" id="confirmPassword" name="confirm-password"   placeholder="Confirm password">
                 <i class="bi bi-eye-slash eye-icon" id="toggleConfirmPassword" onclick="togglePassword('confirmPassword', 'toggleConfirmPassword')"></i>
-                <div id="confirm-password-error" class="text-danger"></div>
+                <div id="confirm-password-error" class="error-text-color px-2"></div>
             </div>
             <div class="form-group form-check mt-2 mx-2">
                 <input type="checkbox" id="terms" name="terms" class="form-check-input">
                 <label for="terms" class="form-check-label" style="font-size: 13px;">I agree to all the <span >Terms</span> and <span >Privacy Policies</span></label>
-                <div id="terms-error" class="text-danger"></div>
+                <div id="terms-error" class="error-text-color px-2 "></div>
             </div>
-            <button type="submit" class="btn text-white w-100 rounded p-2 mb-1  border-0 text-center mt-4 px-1 signUp-btn signUp-btn-hover" >Sign Up</button>
+            <button type="submit" class="btn text-white w-100 rounded p-2 mb-1 mx-2 border-0 text-center mt-4 px-1 signUp-btn signUp-btn-hover" >Sign Up</button>
           
             <div class="or-sign-up">
               <hr>
               <p class="text-on-line p-2" style="font-size: 12px;">Or </p>
             </div>
           
-          <button type="button" class="btn  mt-2  rounded w-100 p-2 button-hover border-blue">
+          <button type="button" class="btn  mt-2  mx-2 rounded w-100 p-2 button-hover border-blue">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png"
               alt="Google Logo"
@@ -65,7 +61,7 @@
             />  Sign up with Google
           </button>
           <div class="d-flex justify-content-center">
-            <p class="mt-2" style="font-size: 12px;">Already have an account? <a href="#" class="text-decoration-none">Login</a></p>
+            <p class="mt-2" style="font-size: 12px;">Already have an account? <a href="./login.html" class="text-decoration-none link-hover">Login</a></p>
           </div>
         </form>
       </div>
@@ -75,3 +71,6 @@
     </div>
   </div>
 </div>
+<script src="assets/js/organizationSignup.js"></script>
+</body>
+</html>
