@@ -1,30 +1,20 @@
-const sidebar=document.querySelector(".sidebar");
-const sidebarToggler =document.querySelector(".sidebar-toggler");
-const menuToggler = document.querySelector(".menu-toggler");
+const sidebar = document.querySelector('.sidebar');
+const toggler = document.querySelector('.sidebar-toggler');
 
-const collapsedSidebarHeight="56px";
-const fullSidebarHeight ="calc(100vh - 32px)";
 
-sidebarToggler .addEventListener("click",() =>{
-    sidebar.classList.toggle("collapsed");
-});
-
-const toggleMenu = (isMenuActive) =>{
-    sidebar.style.height=isMenuActive ? `${sidebar.scrollHeight}px` :
-    collapsedSidebarHeight;
-    menuToggler.querySelector("span").innerText = isMenuActive ? "close" : "menu";
+function handleResize() {
+  if (window.innerWidth >= 768) {
+    
+    sidebar.classList.remove('collapsed');
+  } else {
+    
+    sidebar.classList.add('collapsed');
+  }
 }
-menuToggler.addEventListener("click", ()=>{
-    toggleMenu(sidebar.classList.toggle("menu-active"));
-});
 
-window.addEventListener("resize",() =>{
-    if(window.innerWidth >=1024){
-        sidebar.style.height=fullSidebarHeight;
-    }else{
-        sidebar.classList.remove("collapsed");
-        sidebar.style.height="auto";
-        toggleMenu(sidebar.classList.contains("menu-active"));
-    }
-});
+window.addEventListener('resize', handleResize);
+handleResize(); 
 
+toggler.addEventListener('click', () => {
+  sidebar.classList.toggle('collapsed');
+});
