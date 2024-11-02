@@ -45,11 +45,15 @@ body {
   border: none;
   cursor: pointer;
   border-radius: 8px;
-  background-color: aliceblue;
+  background-color:#157aff;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: 0.4s ease;
+  color: white;
+}
+.sidebar-header .toggler .material-symbols-rounded {
+  font-size: 35px;
 }
 .sidebar-header .sidebar-toggler {
   position: absolute;
@@ -61,14 +65,15 @@ body {
 }
 
 .sidebar-header .toggler:hover {
-  background: #adb8dc;
+  color: black;
+  background-color: white;
 }
 
 
 
-.sidebar-header .sidebar-toggler span {
+/* .sidebar-header .sidebar-toggler span {
   transition: 0.4s ease;
-}
+} */
 .sidebar.collapsed .sidebar-header .sidebar-toggler span {
   transform: rotate(180deg);
 }
@@ -162,4 +167,4 @@ body {
     bottom: 0;
     margin: 40px 0 30px;
   } */
-  
+
