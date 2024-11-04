@@ -14,6 +14,23 @@
       body {
         font-family: "Poppins", sans-serif;
       }
+      /* Maintain input height and absolute positioning for error messages */
+      .input-container {
+        position: relative;
+        margin-bottom: 1.5rem; /* Space between input fields */
+      }
+      .error-message {
+        position: absolute;
+        left: 0;
+        bottom: -20px; /* Adjust to position below the input */
+        color: #f56565; /* Tailwind red-500 */
+        font-size: 0.75rem; /* Tailwind text-xs */
+        opacity: 0; /* Initially hidden */
+        transition: opacity 0.2s ease; /* Smooth transition */
+      }
+      .error-message.visible {
+        opacity: 1; /* Show error message */
+      }
     </style>
   </head>
   <body class="flex justify-center items-center min-h-screen bg-gray-100">
@@ -25,7 +42,11 @@
       <div class="w-full lg:w-1/2 p-8">
         <!-- Logo -->
         <div class="flex items-center space-x-1 mb-8">
-          <img src="img/logo.webp" alt="Waggy Logo" class="h-20 w-20" />
+          <img
+            src="assets/images/Waggy.png"
+            alt="Waggy Logo"
+            class="h-20 w-20"
+          />
           <h1 class="text-2xl font-semibold text-blue-400">Waggy</h1>
         </div>
 
@@ -38,24 +59,27 @@
         <!-- Form -->
         <form id="loginForm" onsubmit="validateForm(event)" class="space-y-4">
           <!-- Email Input -->
-          <div>
+          <div class="input-container">
             <input
               type="email"
               id="email"
               placeholder="Email"
               class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              required
+              onfocus="hideError('emailError')"
             />
+            <span id="emailError" class="error-message"
+              >Please enter your email.</span
+            >
           </div>
 
           <!-- Password Input -->
-          <div class="relative">
+          <div class="input-container relative">
             <input
               type="password"
               id="password"
               placeholder="Password"
               class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              required
+              onfocus="hideError('passwordError')"
             />
             <button
               type="button"
@@ -74,11 +98,16 @@
                 />
               </svg>
             </button>
+            <span id="passwordError" class="error-message"
+              >Please enter your password.</span
+            >
           </div>
 
           <!-- Forgot Password -->
           <div class="text-right">
-            <a href="forgetPassword.html" class="text-blue-400 text-sm hover:underline"
+            <a
+              href="forgetPassword.html"
+              class="text-blue-400 text-sm hover:underline"
               >Forgot Password?</a
             >
           </div>
@@ -110,7 +139,7 @@
           Don't have an account?
           <a href="signup.html" class="text-red-500 hover:underline">Sign up</a>
           or
-          <a href="#" class="text-red-500 hover:underline"
+          <a href="organisationSignup.html" class="text-red-500 hover:underline"
             >Create an Organization Account</a
           >
         </p>
@@ -142,15 +171,41 @@
         }
       }
 
+      // Hide error message on input focus
+      function hideError(errorId) {
+        const errorMessage = document.getElementById(errorId);
+        errorMessage.classList.remove("visible");
+      }
+
       // Form Validation
       function validateForm(event) {
         event.preventDefault();
+
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
+        const emailError = document.getElementById("emailError");
+        const passwordError = document.getElementById("passwordError");
 
-        if (!email || !password) {
-          alert("Please fill out both fields.");
-        } else {
+        // Reset error messages
+        emailError.classList.remove("visible");
+        passwordError.classList.remove("visible");
+
+        let isValid = true;
+
+        // Validate email
+        if (!email) {
+          emailError.classList.add("visible");
+          isValid = false;
+        }
+
+        // Validate password
+        if (!password) {
+          passwordError.classList.add("visible");
+          isValid = false;
+        }
+
+        // If form is valid, log in the user
+        if (isValid) {
           alert("Logged in successfully!");
         }
       }
