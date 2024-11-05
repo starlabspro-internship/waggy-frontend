@@ -12,8 +12,8 @@
     <!-- Sidebar -->
     <aside class="w-1/4 bg-blue-600 text-white flex flex-col items-center pt-8">
       <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile Image" class="rounded-full w-20 h-20 mb-4">
-      <h2 class="text-xl font-bold">Admin</h2>
-      <p class="text-sm mb-6">admin@gmail.com</p>
+      <h2 class="text-xl font-bold" id="firstName">Admin</h2>
+      <p class="text-sm mb-6" id="email">admin@gmail.com</p>
       <nav class="space-y-4 text-lg">
         <a href="#" class="block hover:underline">Profile</a>
         <a href="#" class="block hover:underline">Matching</a>
@@ -22,6 +22,8 @@
         <a href="#" class="block hover:underline">Blog</a>
         <a href="#" class="block hover:underline">Adaptation</a>
         <a href="#" class="block hover:underline">Settings</a>
+        <a href="#" id="logoutLink" class="block hover:underline">Log Out</a>
+
       </nav>
       <div class="mt-auto py-4">
         <p class="font-bold">Waggy</p>
@@ -70,5 +72,6 @@
   </div>
   
   <script src="assets/js/blog.js"></script>
+  <script src="./scripts/auth/logoutAuth.js"></script>
 </body>
 </html>

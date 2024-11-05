@@ -1,4 +1,4 @@
-
+// JavaScript code
 const firstnameInput = document.getElementById('firstname');
 const firstnameError = document.getElementById('firstname-error');
 
@@ -18,7 +18,6 @@ const form = document.getElementById('register-form');
 const termsInput = document.getElementById('terms');
 const termsError = document.getElementById('terms-error');
 
-
 firstnameInput.addEventListener('input', () => firstnameError.textContent = '');
 lastnameInput.addEventListener('input', () => lastnameError.textContent = '');
 emailInput.addEventListener('input', () => emailError.textContent = '');
@@ -26,8 +25,7 @@ passwordInput.addEventListener('input', () => passwordError.textContent = '');
 confirmPasswordInput.addEventListener('input', () => confirmPasswordError.textContent = '');
 termsInput.addEventListener('change', () => termsError.textContent = '');
 
-
-form.addEventListener('submit', (event) => {
+form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const firstname = firstnameInput.value;
@@ -36,14 +34,14 @@ form.addEventListener('submit', (event) => {
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
 
-  
+    // Clear previous errors
     firstnameError.textContent = '';
     lastnameError.textContent = '';
     emailError.textContent = '';
     passwordError.textContent = '';
     confirmPasswordError.textContent = '';
 
-   
+    // Validation
     if (firstname.length < 3 || firstname.length > 15) {
         firstnameError.textContent = 'Name must be between 3 and 15 characters.';
         return;
@@ -54,7 +52,6 @@ form.addEventListener('submit', (event) => {
         return;
     }
 
-    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailRegex.test(email)) {
         emailError.textContent = 'Please enter a valid email address.';
@@ -74,25 +71,55 @@ form.addEventListener('submit', (event) => {
 
     if (!termsInput.checked) {
         termsError.textContent = 'You must accept the terms and conditions.';
-       
         return;
-    } else {
-      termsInput.checked = false;
-      termsError.textContent = '';
     }
 
-  
-    alert('All fields are valid! Form submitted successfully.');
+    try {
+        const response = await fetch('http://localhost:3000/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+                firstName: firstname,
+                lastName: lastname
+            })
+        });
 
-   
-    firstnameInput.value = '';
-    lastnameInput.value = '';
-    emailInput.value = '';
-    passwordInput.value = '';
-    confirmPasswordInput.value = '';
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('User registered successfully!');
+            // Clear form fields
+            firstnameInput.value = '';
+            lastnameInput.value = '';
+            emailInput.value = '';
+            passwordInput.value = '';
+            confirmPasswordInput.value = '';
+            
+            // Optionally, store the token in localStorage for future use
+
+            localStorage.setItem('userId', data.userId);
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('refreshToken', data.refreshToken);
+             // Redirect to blog
+            window.location.href = '/blog.html'; 
+    
+            
+
+        } else {
+            // Display error message if registration fails
+            alert(data.message || 'Registration failed');
+        }
+    } catch (error) {
+        console.error('Error during registration:', error);
+        alert('An error occurred during registration. Please try again.');
+    }
 });
 
-//Toggle Password
+// Toggle Password Visibility
 function togglePassword(fieldId, iconId) {
     const passInput = document.getElementById(fieldId);
     const eyeIcon = document.getElementById(iconId);

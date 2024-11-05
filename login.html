@@ -8,6 +8,8 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       /* Custom font setup for Tailwind */
@@ -155,60 +157,8 @@
         <!-- Background Image - Replace with your image URL -->
       </div>
     </div>
+    <script src="assets/js/login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- JavaScript -->
-    <script>
-      // Toggle Password Visibility
-      function togglePassword() {
-        const password = document.getElementById("password");
-        const eyeIcon = document.getElementById("eyeIcon");
-        if (password.type === "password") {
-          password.type = "text";
-          eyeIcon.setAttribute("fill", "#4A5568");
-        } else {
-          password.type = "password";
-          eyeIcon.setAttribute("fill", "currentColor");
-        }
-      }
-
-      // Hide error message on input focus
-      function hideError(errorId) {
-        const errorMessage = document.getElementById(errorId);
-        errorMessage.classList.remove("visible");
-      }
-
-      // Form Validation
-      function validateForm(event) {
-        event.preventDefault();
-
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const emailError = document.getElementById("emailError");
-        const passwordError = document.getElementById("passwordError");
-
-        // Reset error messages
-        emailError.classList.remove("visible");
-        passwordError.classList.remove("visible");
-
-        let isValid = true;
-
-        // Validate email
-        if (!email) {
-          emailError.classList.add("visible");
-          isValid = false;
-        }
-
-        // Validate password
-        if (!password) {
-          passwordError.classList.add("visible");
-          isValid = false;
-        }
-
-        // If form is valid, log in the user
-        if (isValid) {
-          alert("Logged in successfully!");
-        }
-      }
-    </script>
   </body>
 </html>
