@@ -1,0 +1,6 @@
+/* Custom styling for matches page */
+
+
+#friendsSection {
+    display: block; /* none if wanted hidden initially */
+}
