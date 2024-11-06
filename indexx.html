@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/styles/layout.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Satisfy&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blue: '#157AFF',
+                        paleGrey: "#F9FAFC",
+                        grey: "#F0F0F0"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-blue flex h-screen  py-5 pr-5">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="text-white w-72 hidden sm:block bg-blue">
+        <nav class="flex flex-col p-4 space-y-2">
+            <a href="#profile" class="hover:bg-gray-700 rounded p-2">Profile</a>
+            <a href="#pet-profile" class="hover:bg-gray-700 rounded p-2">Pet Profile</a>
+            <a href="#matching" class="hover:bg-gray-700 rounded p-2">Matching</a>
+            <a href="#messages" class="hover:bg-gray-700 rounded p-2">Messages</a>
+            <a href="#blogs" class="hover:bg-gray-700 rounded p-2">Blogs</a>
+            <a href="#adoptation" class="hover:bg-gray-700 rounded p-2">Adoptation</a>
+            <a href="#settings" class="hover:bg-gray-700 rounded p-2">Settings</a>
+        </nav>
+    </aside>
+
+    <!-- Drawer for Mobile -->
+    <div id="drawer" class="fixed inset-0 z-50 bg-gray-800 bg-opacity-75 hidden sm:hidden">
+        <aside class="w-64 bg-gray-800 text-white">
+            <nav class="flex flex-col p-4 space-y-2">
+                <a href="#dashboard" class="hover:bg-gray-700 rounded p-2">Dashboard</a>
+                <a href="#friends" class="hover:bg-gray-700 rounded p-2">Friends</a>
+                <a href="#blogs" class="hover:bg-gray-700 rounded p-2">My Blogs</a>
+            </nav>
+        </aside>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content" class="flex-1 p-6 bg-white rounded-l-3xl">
+        <div id="content">Welcome to the Dashboard</div>
+    </main>
+
+    <!-- Right Section -->
+    <aside id="right-section" class="w-72 hidden lg:block bg-paleGrey p-4 shadow-md rounded-r-3xl">
+        <h2 id="page-title" class="font-semibold text-lg py-5 text-center text-blue"></h2>
+        <div class="bg-grey h-[90%] rounded-3xl p-4">
+            <div class="relative py-2">
+                <img src="./assets/images/svg/magnetize.svg" alt="Search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
+                <input type="text" class="w-full bg-white rounded-3xl pl-10 pr-2 py-1 text-sm" placeholder="Search Here...">
+            </div>
+            <hr class="py-1"/>
+            <div id="right-content">No content</div>
+        </div>
+    </aside>
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-button" class="sm:hidden fixed top-4 left-4 z-50 bg-gray-800 text-white p-2 rounded">
+        Menu
+    </button>
+
+    <script src="./scripts/layout.js"></script>
+</body>
+</html>
