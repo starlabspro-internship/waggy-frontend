@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .replace(/-/g, " ")
         .replace(/^\w/, (c) => c.toUpperCase());
       pageTitle.textContent = pageTitleText;
-      document.title = `${pageTitleText} - Your Site Name`; // Update the document's title
+      document.title = `${pageTitleText} - Waggy`;
       setActiveLink(page);
     } catch (error) {
       console.error(`Error loading page ${page}:`, error);
@@ -75,4 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const page = location.hash ? location.hash.substring(1) : "profile";
     loadPage(page);
   });
+
+  
 });

@@ -2,6 +2,16 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 /* layout.css */
-.active-link {
-    color: #FF8682;
+.paw-icon {
+    display: none;
+    margin-left: 5px;
+    font-size: 1.2rem; /* Adjust size as needed */
+}
+
+.active-link .paw-icon {
+    display: inline;
+}
+
+.nav-link.active-link {
+    color: #FF8682; /* Your active link color */
 }

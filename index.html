@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard App</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="./assets/images/icons/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/styles/layout.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +19,8 @@
               colors: {
                 blue: '#157AFF',
                 paleGrey: "#F9FAFC",
-                grey: "#F0F0F0"
+                grey: "#F0F0F0",
+                pink: "#F0F0F0",
               }
             }
           }
@@ -30,25 +32,42 @@
 <body class="bg-blue flex h-screen  md:py-5 md:pr-5">
     <!-- Sidebar -->
     <aside id="sidebar" class="text-white w-72 hidden sm:block bg-blue pl-9">
-            <img src="./assets/images/icons/joi.png" class="p-4  rounded-full" alt="">
+            <img src="./assets/images/icons/joi.png" class="p-4 h-[120px] rounded-full" alt="">
             <nav class="flex flex-col pl-5 space-y-2">
                 <div class="p-2 mb-5 font-semibold text-2xl">
                     <h1 class="user-name">Xhoi</h1>
                     <h4 id="user-email" class="font-thin text-sm">xhokabash@gmail.com</h4>
                 </div>
-                <a href="#profile" class=" hover:rounded p-2 font-semibold">Profile</a>
-                <a href="#petprofile" class=" hover:rounded p-2 font-semibold">Pet Profile</a>
-                <a href="#matching" class=" hover:rounded p-2 font-semibold">Matching</a>
-                <a href="#messages" class=" hover:rounded p-2 font-semibold">Messages</a>
-                <a href="#blogs" class=" hover:rounded p-2 font-semibold">Blogs</a>
-                <a href="#adoptation" class=" hover:rounded p-2 font-semibold">Adoptation</a>
-                <a href="#settings" class=" hover:rounded p-2 font-semibold">Settings</a>
-                <div><button class=" hover:rounded p-2  font-semibold">Logout</button></div>
-
+                <a href="#profile" class="nav-link hover:rounded p-2 font-semibold">
+                    Profile <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon">
+                </a>
+                <a href="#petprofile" class="nav-link hover:rounded p-2 font-semibold">
+                    Pet Profile <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon">
+                </a>
+                <a href="#matching" class="nav-link hover:rounded p-2 font-semibold">
+                    Matching <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon">
+                </a>
+                <a href="#messages" class="nav-link hover:rounded p-2 font-semibold">
+                    Messages <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon">
+                </a>
+                <a href="#blogs" class="nav-link hover:rounded p-2 font-semibold">
+                    Blogs <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon">
+                </a>
+                <a href="#adoptation" class="nav-link hover:rounded p-2 font-semibold">
+                    Adoptation <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon">
+                </a>
+                <a href="#settings" class="nav-link hover:rounded p-2 font-semibold">
+                    Settings <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon">
+                </a>
+                <div class=" pl-4 pt-5">
+                    <button class="hover:rounded p-2 font-semibold"><img src="./assets/images/icons/logout.png" alt=""></button>
+                </div>
             </nav>
-            <div class=" flex jusify-center items-center absolute bottom-0 left-3">
-                <img src="./assets/images/icons/WaggyRounded.png" class=" w-10 rounded-full " alt="">
-                <div class="text-white text-sm font-semibold">Waggy</div>
+            
+            
+            <div class=" flex jusify-center items-center absolute bottom-0 left-3 gap-1">
+                <img src="./assets/images/icons/WaggyRounded.png" class=" w-8 rounded-full " alt="">
+                <div class="text-white text-xs font-semibold">Waggy</div>
             </div>
     </aside>
 
@@ -66,7 +85,7 @@
     </div>
 
     <!-- Main Content -->
-    <main id="main-content" class="flex-1 p-6 bg-white md:rounded-l-3xl">
+    <main id="main-content" class="flex-1 p-6 bg-white md:rounded-l-3xl  md:rounded-r-3xl lg:rounded-r-none">
         <!-- Page content loaded here -->
         <div id="content">Welcome to the Dashboard</div>
     </main>
