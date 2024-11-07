@@ -3,12 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const drawer = document.getElementById("drawer");
   const sidebar = document.getElementById("sidebar");
   const pageTitle = document.getElementById("page-title");
+ 
 
+  
   // Toggle Drawer
   menuButton.addEventListener("click", () => {
     drawer.classList.toggle("hidden");
   });
-
+  
   // Centralized menu click handler
   function handleMenuClick(e) {
     if (e.target.tagName === "A") {
