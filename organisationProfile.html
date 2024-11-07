@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM6RZ17C5A7tZ3bl4M/oEjY7v1f0D9kGHQZ+e7B"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="assets/css/organizationProfile.css" />
+    <title>Edit Organization Profile</title>
+  </head>
+  <body class="flex justify-end items-center h-full p-1 bg-color font-poppins color">
+    <div class="flex w-full max-w-6xl justify-end">
+      <!-- Main Content -->
+      <main class="flex-1 p-4 z-10">
+        <div class="bg-white rounded-3xl rounded-tr-none rounded-br-none shadow-lg px-16 py-6">
+          <h1 class="text-3xl font-bold mb-12 mt-2 text-gray-800">
+            Edit Organization Profile
+          </h1>
+
+          <form id="organization-form" method="POST" enctype="multipart/form-data">
+            <div class="grid gap-5">
+              <!-- Organization Name -->
+              <div class="relative w-full">
+                <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Organization Name</label>
+                <input
+                  id="org-name"
+                  name="org-name"
+                  type="text"
+                  class="w-full border-2 rounded-2xl p-3 z-0"
+                />
+                <span class="text-red-500 text-xs ml-2 hidden org-name-error">Organization Name is required</span>
+              </div>
+
+              <!-- Contact Email -->
+              <div class="relative w-full">
+                <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Contact Email</label>
+                <input
+                  id="contact-email"
+                  name="contact-email"
+                  type="email"
+                  class="w-full border-2 rounded-2xl p-3 z-0"
+                />
+                <span class="text-red-500 text-xs ml-2 hidden contact-email-error">Contact Email is required</span>
+              </div>
+
+              <!-- Phone Number -->
+              <div class="relative w-full">
+                <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Phone Number</label>
+                <input
+                  id="org-phonenumber"
+                  name="org-phonenumber"
+                  type="text"
+                  pattern="\d*"
+                  inputmode="numeric"
+                  class="w-full border-2 rounded-2xl p-3 z-0"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                />
+                <span class="text-red-500 text-xs ml-2 hidden org-phonenumber-error">Phone Number is required</span>
+              </div>
+
+              <!-- Location -->
+              <div class="relative w-full">
+                <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Location</label>
+                <input
+                  id="location"
+                  name="location"
+                  type="text"
+                  class="w-full border-2 rounded-2xl p-3 z-0"
+                />
+                <span class="text-red-500 text-xs ml-2 hidden location-error">Location is required</span>
+              </div>
+
+              <!-- Description -->
+              <div class="relative w-full">
+                <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Organization Description</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  class="w-full border-2 rounded-2xl p-3 z-0 resize-none"
+                  rows="3"
+                ></textarea>
+                <span class="text-red-500 text-xs ml-2 hidden description-error">Description is required</span>
+              </div>
+
+              <!-- Upload Logo -->
+              <div class="flex items-center -mb-3">
+                <label
+                  class="flex items-center justify-center bg-white text-red-500 px-4 py-2 mr-4 rounded cursor-pointer text-sm"
+                  style="border: 1px solid #157aff"
+                >
+                Choose File
+                  <input
+                    type="file"
+                    class="hidden file"
+                    id="file-input"
+                    name="orgLogo"
+                    accept="image/*"
+                  />
+                </label>
+                <span class="file-url ml-3 color text-sm">Select organization logo</span>
+              </div>
+              <span class="text-red-500 text-xs ml-2 hidden file-error">Logo is required</span>
+
+              <!-- Submit Button -->
+              <button
+                type="button" id="saveBtn"
+                class="mt-6 w-full py-2 rounded-2xl submit-btn"
+                style="background-color: #157aff; color: #ffffff"
+              >
+                <span class="text-xs">Save Details</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </main>
+
+      <!-- Right Sidebar -->
+      <aside class="w-80 m-4 rounded-3xl p-4 -ml-14 pl-14" style="background-color: #f9fafc">
+        <h2 class="mb-4 text-2xl font-bold flex justify-center items-center" style="color: #157aff">Pets</h2>
+        <div class="rounded-3xl shadow-lg p-3" style="background: #f0f0f0">
+          <div class="relative mb-5 w-full">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPeXGz-KcjQsfeK6Gc9iELyizAHVZILlHLFg&s"
+              alt="Search Icon"
+              class="icon absolute left-3 top-2 w-5 cursor-pointer"
+            />
+            <input
+              type="text"
+              placeholder="Search Here..."
+              class="w-full border rounded-3xl p-2 pl-10 text-sm"
+              style="color: #70717b"
+            />
+          </div>
+          <hr />
+          <div class="pet-list-container">
+            <p class="text-gray-400 ml-3 text-sm" style="color: #157aff">No Pet Listed</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <script src="assets/js/organisationProfile.js"></script>
+  </body>
+</html>

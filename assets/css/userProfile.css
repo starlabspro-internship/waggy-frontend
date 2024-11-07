@@ -1,0 +1,12 @@
+.error-message {
+  font-size: 0.75rem; 
+  color: #dc3545;
+  position: absolute; 
+  bottom: -1.25rem; 
+  left: 0;
+  margin: 0; 
+  font-weight: normal; 
+}
+.relative {
+  position: relative; /* Ensure relative positioning for error messages */
+}

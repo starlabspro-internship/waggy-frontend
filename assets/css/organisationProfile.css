@@ -1,0 +1,16 @@
+.hidden {
+    display: none;
+  }
+  
+  .text-red-500 {
+    color: #f56565;
+  }
+  
+  .text-green-500 {
+    color: #48bb78;
+  }
+  
+  .text-xs {
+    font-size: 0.75rem;
+  }
+  
