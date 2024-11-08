@@ -48,7 +48,7 @@ const adjustToastPositions = () => {
   let currentY = 0;
 
   toasts.forEach((toast, index) => {
-    toast.style.bottom = `${currentY + 20}px`;
+    toast.style.top = `${currentY + 20}px`;
     currentY += toast.offsetHeight + 20; // 20px spacing between toasts
   });
 };
