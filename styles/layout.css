@@ -15,3 +15,69 @@ body {
 .nav-link.active-link {
     color: #FF8682; /* Your active link color */
 }
+/* layout.css */
+/* layout.css */
+#menu-icon {
+    transition: opacity 0.5s ease-in-out; /* Smooth transition for opacity */
+    opacity: 1;
+}
+
+.hidden-icon {
+    opacity: 0;
+}
+
+/* Ensure the text color turns pink when the link is active */
+.nav-link.active-link {
+    color: #FF8682; /* Set to your preferred pink color */
+}
+
+/* Optionally, adjust the color for the paragraph text */
+.nav-link.active-link p {
+    color: #FF8682;
+}
+/* Plain CSS version */
+.toast {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    will-change: opacity, transform;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.success {
+    background-color: #28a745;
+}
+
+.toast.error {
+    background-color: #dc3545;
+}
+
+.toast.info {
+    background-color: #007bff;
+}
+
+.toast .toast-icon {
+    margin-right: 12px;
+}
+
+.toast .toast-message {
+    flex-grow: 1;
+}
+
+.toast .close-btn {
+    margin-left: 12px;
+    cursor: pointer;
+}
+
+  

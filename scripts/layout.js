@@ -1,74 +1,77 @@
+import { showToast } from './toast.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   const menuButton = document.getElementById("menu-button");
   const drawer = document.getElementById("drawer");
-  const sidebar = document.getElementById("sidebar");
-  const pageTitle = document.getElementById("page-title");
- 
+  const menuIcon = document.getElementById('menu-icon');
+  const navLinks = document.querySelectorAll('.nav-link');
 
-  
   // Toggle Drawer
   menuButton.addEventListener("click", () => {
     drawer.classList.toggle("hidden");
+    menuIcon.src = drawer.classList.contains("hidden")
+      ? './assets/images/icons/app.png'
+      : './assets/images/icons/cancel.png';
   });
-  
-  // Centralized menu click handler
-  function handleMenuClick(e) {
-    if (e.target.tagName === "A") {
-      e.preventDefault();
-      const page = e.target.getAttribute("href").substring(1);
-      loadPage(page);
 
-      // Update the browser URL
-      history.pushState(null, null, `#${page}`);
-    }
+  // Function to close the drawer
+  function closeDrawer() {
+    drawer.classList.add("hidden");
+    menuIcon.src = './assets/images/icons/app.png';
   }
 
-  sidebar.addEventListener("click", handleMenuClick);
-  drawer.addEventListener("click", handleMenuClick);
+  // Set active link function
   function setActiveLink(page) {
-    const links = document.querySelectorAll("#sidebar a, #drawer a");
-    links.forEach((link) => {
+    navLinks.forEach(link => {
+      link.classList.remove('active-link');
       if (link.getAttribute("href").substring(1) === page) {
-        link.classList.add("active-link");
-      } else {
-        link.classList.remove("active-link");
+        link.classList.add('active-link');
       }
     });
   }
+
+  // Handle link clicks
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();  // Prevent default link behavior
+      const page = link.getAttribute("href").substring(1);
+
+      // Load the page
+      loadPage(page);
+
+      // Update URL without reloading
+      history.pushState(null, null, `#${page}`);
+      closeDrawer();
+      setActiveLink(page); // Update active links
+    });
+  });
 
   // Load page content based on navigation
   async function loadPage(page) {
     const content = document.getElementById("content");
     const rightContent = document.getElementById("right-content");
 
-    content.innerHTML = `<p>Loading...</p>`; // Show a loading message
-    rightContent.innerHTML = `<p>Loading...</p>`; // Show a loading message
+    content.innerHTML = `<p>Loading...</p>`;
+    rightContent.innerHTML = `<p>Loading...</p>`;
 
     try {
-      // Load main page content
       const pageModule = await import(`../pages/${page}.js`);
       const renderPageContent = pageModule.default;
       renderPageContent();
 
-      // Load right section content
       const rightModule = await import(`../pages/${page}-right.js`);
       const renderRightContent = rightModule.default;
       renderRightContent();
 
-      // Set the page title to uppercase
-      const pageTitleText = page
-        .replace(/-/g, " ")
-        .replace(/^\w/, (c) => c.toUpperCase());
-      pageTitle.textContent = pageTitleText;
-      document.title = `${pageTitleText} - Waggy`;
+      document.title = `${page.charAt(0).toUpperCase() + page.slice(1)} - Waggy`;
       setActiveLink(page);
     } catch (error) {
       console.error(`Error loading page ${page}:`, error);
-      content.innerHTML = `<p>Error loading page content. Check if ${page}.js exists and is exported correctly.</p>`;
+      content.innerHTML = `<p>Error loading page content.</p>`;
     }
   }
 
-  // Load initial page from URL or default to 'profile'
+  // Load initial page or default to 'profile'
   const initialPage = location.hash ? location.hash.substring(1) : "profile";
   loadPage(initialPage);
 
@@ -77,6 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const page = location.hash ? location.hash.substring(1) : "profile";
     loadPage(page);
   });
-
-  
 });
+showToast('U thek buka!!!', 'success');
+ showToast('U dogj buka!', 'error');

@@ -1,39 +1,59 @@
+.glide__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
 
-   .glide__arrow {
-   position: absolute;
-   top: 50%;
-   transform: translateY(-50%);
-   padding: 8px;
-   background: rgba(255, 255, 255, 0.8);
-   border-radius: 50%;
-   cursor: pointer;
-   transition: all 0.2s ease-in-out;
- }
-  
- .glide__arrow--left {
-   left: 10px;
- }
-  
- .glide__arrow--right {
-   right: 10px;
- }
-  
- .glide__bullets {
-   position: relative;
-   bottom: -20px;
-   display: flex;
-   justify-content: center;
-   gap: 8px;
- }
-  
- .glide__bullet {
-   width: 10px;
-   height: 10px;
-   border-radius: 50%;
-   background: #ccc;
-   cursor: pointer;
- }
-  
- .glide__bullet--active {
-   background: #03063A;
- }
+.glide__arrow--left {
+  left: 19px;
+}
+
+.glide__arrow--right {
+  right: 10px;
+}
+
+.glide__bullets {
+  position: relative;
+  bottom: -20px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.glide__bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+}
+
+.glide__bullet--active {
+  background: #03063A;
+}
+
+.glide__slides {
+  display: flex;
+  gap: 4px; /* Reduced gap between slides */
+}
+
+.glide__slide {
+  max-width: calc(100% / 3 - 4px); /* Sets 3 cards per view with gap adjustment */
+}
+
+@media (max-width: 1024px) {
+  .glide__slide {
+      max-width: calc(100% / 2 - 4px); /* Adjust for two cards per view on medium screens */
+  }
+}
+
+@media (max-width: 640px) {
+  .glide__slide {
+      max-width: 100%; /* Single card view on small screens */
+  }
+}
