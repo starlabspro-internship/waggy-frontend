@@ -1,11 +1,13 @@
 // profile.js
 export default function renderPageContent() {
+    
+    
   const customCssLink = document.createElement("link");
   customCssLink.rel = "stylesheet";
   customCssLink.href = "../styles/petprofile.css";
   document.head.appendChild(customCssLink);
   const customStyles = document.createElement("style");
-    customStyles.textContent = `
+  customStyles.textContent = `
         .font-poppins {
             font-family: "Poppins", sans-serif;
         }
@@ -16,14 +18,14 @@ export default function renderPageContent() {
             background: #157aff;
         }
     `;
-    document.head.appendChild(customStyles);
-    const content = document.getElementById("content");
-     content.innerHTML = `
-         <main class="flex-1 p-4 z-10 color">
-        <div >
+  document.head.appendChild(customStyles);
+  const content = document.getElementById("content");
+  content.innerHTML = `
+         
+        <div class="color">
         <p class="text-green-500 font-bold hidden success-text"><span> &#9989;</span>Your Pet was created Succesfully </p>
         <p class="text-red-500 font-bold error-text hidden"> Cannot Create a Pet Profile Right Now!</p>
-          <h1 id="heading" class="text-3xl font-bold mb-12 mt-2 text-gray-800">
+          <h1 id="heading" class="text-3xl font-bold mb-4 mt-2 text-gray-800">
             List your Pet
           </h1>
 
@@ -37,7 +39,7 @@ export default function renderPageContent() {
                   id="pet-name"
                   name="name"
                   type="text"
-                  class="w-full border-2 rounded-2xl p-3 z-0"
+                  class="w-full border-2 rounded-2xl p-3 -mb-1 z-0"
                 />
                 <span class="text-red-500 text-xs ml-2 hidden pet-name-error">Pet Name is required</span>
               </div>
@@ -49,11 +51,11 @@ export default function renderPageContent() {
                 <select
                   id="gender"
                   name="gender"
-                  class="w-full border-2 rounded-2xl p-3 z-0"
+                  class="w-full border-2 rounded-2xl p-3 -mb-1 z-0"
                 >
                   <option value="" disabled selected></option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
                   <option value="other">Other</option>
                 </select>
                 <span class="text-red-500 text-xs ml-2 hidden gender-error">
@@ -69,7 +71,7 @@ export default function renderPageContent() {
                 id="category"
                 name="category"
                   type="text"
-                  class="w-full border-2 rounded-2xl p-3 z-0"
+                  class="w-full border-2 rounded-2xl p-3 -mb-1 z-0"
                 />
                 <span class="text-red-500 text-xs ml-2 ml-2 hidden category-error">Category is required</span>
               </div>
@@ -82,7 +84,7 @@ export default function renderPageContent() {
       id="breed"
       name="breed"
       type="text"
-      class="w-full border-2 rounded-2xl p-3 z-0"
+      class="w-full border-2 rounded-2xl p-3 -mb-1 z-0"
     />
     <span class="text-red-500 text-xs ml-2 hidden breed-error">Breed is required</span>
   </div>
@@ -93,7 +95,7 @@ export default function renderPageContent() {
       id="age"
       name="age"
       type="text"
-      class="w-full border-2 rounded-2xl p-3 z-0"
+      class="w-full border-2 rounded-2xl p-3 -mb-1 z-0"
     />
     <span class="text-red-500 text-xs ml-2 hidden age-error">Age is required</span>
   </div>
@@ -107,10 +109,10 @@ export default function renderPageContent() {
                 id="description"
                 name="interests"
                   type="text"
-                  class="w-full border-2 rounded-2xl p-3 z-0 resize-none"
+                  class="w-full border-2 rounded-2xl p-3 -mb-3 z-0 resize-none"
                   rows="2"
                 ></textarea>
-                <span class="text-red-500 text-xs ml-2 hidden description-error">Description is required</span>
+                <span class="text-red-500 text-xs ml-2  hidden description-error ">Description is required</span>
               </div>
 
               <div class="flex items-center -mb-3">
@@ -121,13 +123,14 @@ export default function renderPageContent() {
                   Choose File
                   <input type="file" class="hidden file" id="file-input" name="petPicture" accept="image/*"/>
                 </label>
-                <label class="ml-3 color text-sm" for="file-input">Select Pet image</label>
+                <label class="ml-3 color text-sm file-label" for="file-input">Select Pet image</label>
+                <img id="image-preview" src="" alt="Current Pet Image" style="max-width: 100px; max-height: 100px; display: none;"/>
               </div>
-              <span class="text-red-500 text-xs ml-2 hidden file-error">File is required</span>
-
+              <span class="text-red-500 text-xs ml-2 -mt-2 hidden file-error">File is required</span>
+                <input type="hidden" id="pet-picture-src" name="petPictureSrc" />
               <button
                 type="submit"
-                class="mt-6 w-full py-2 rounded-2xl submit-btn"
+                class="mt-0 w-full py-2 rounded-2xl submit-btn mt-[rem]"
                 style="background-color: #157aff; color: #ffffff"
               >
                 <span class="text-xs">Save Details</span>
@@ -135,7 +138,6 @@ export default function renderPageContent() {
             </div>
           </form>
         </div>
-      </main>
 
 
     `;
@@ -158,11 +160,13 @@ export default function renderPageContent() {
   const petForm = document.getElementById("pet-form");
   const successText = document.querySelector(".success-text");
   const errorText = document.querySelector(".error-text");
-  const heading = document.querySelector('#heading')
-
+  const heading = document.querySelector("#heading");
+  const fileLabel = document.querySelector(".file-label");
+  const imagePreview = document.querySelector("#image-preview");
   /**
    * Displays an error message for the input field if it is empty.
    */
+ 
   const displayError = (input, error) => {
     if (!input.value.trim()) {
       error.classList.remove("hidden");
@@ -172,10 +176,17 @@ export default function renderPageContent() {
       input.style.border = "";
     }
   };
-
-  
+  //Event listener for file input
+  fileInput.addEventListener("change", () => {
+    if (fileInput.files.length > 0) {
+      const fileName = fileInput.files[0].name;
+      fileLabel.textContent = `${fileName} selected`;
+    } else {
+      fileLabel.textContent = "Select Pet image";
+    }
+  });
   const validateInputs = (event) => {
-    event.preventDefault(); // Prevents the form from submitting by default
+    event.preventDefault();
 
     // Validate all inputs
     displayError(petNameInput, petNameError);
@@ -195,18 +206,16 @@ export default function renderPageContent() {
       descriptionTextArea.value.trim() &&
       fileInput.files.length > 0 &&
       ageInput.value.trim()
-    ) {
-        if (petNameInput.dataset.petId) {
-            // Call updatePet with the pet ID
-            updatePet(petNameInput.dataset.petId);
-        } else {
-            // Call createPet for a new pet
-            createPet();
-        }
-    }
+    )
+      if (petNameInput.dataset.petId) {
+        // Call updatePet with the pet ID
+        updatePet(petNameInput.dataset.petId);
+      } else {
+        // Call createPet for a new pet
+        createPet();
+      }
   };
 
- 
   const userId = localStorage.getItem("userId");
   const createPet = async () => {
     const petData = new FormData();
@@ -219,32 +228,31 @@ export default function renderPageContent() {
     petData.append("petPicture", fileInput.files[0]);
     petData.append("userId", 1);
 
-    console.log([...petData]); 
     try {
       const response = await fetch("http://localhost:3000/api/pets/new", {
         method: "POST",
         body: petData,
       });
-
+      const data = await response.json()
+      console.log(data);
       if (response.ok) {
-        successText.classList.remove("hidden");
-
+        const createPetEvent = new CustomEvent('petCreated' , {bubbles: true})
+        document.dispatchEvent(createPetEvent)
+        successText.classList.remove("hidden")
         setTimeout(() => {
           successText.classList.add("hidden");
         }, 5000);
-        resetForm(); // Reset the form if successful
-        localStorage.setItem("petAdded", "true")
-        const event = new CustomEvent('petAdded', { bubbles: true });
-        document.dispatchEvent(event);
         
-      } else {
+        resetForm();
+    } else {
         errorText.classList.remove("hidden");
-      }
-    } catch (error) {
-      console.error("Error creating pet:", error); // Log the error for debugging
-      alert("Error creating pet. Please try again later."); // Display a generic error message
     }
-  };
+} catch (error) {
+    console.error("Error creating pet:", error);
+    alert("Error creating pet. Please try again later."); //
+}
+};
+
   const resetForm = () => {
     petNameInput.value = "";
     genderInput.value = "";
@@ -255,69 +263,9 @@ export default function renderPageContent() {
     fileInput.value = "";
   };
 
+ 
 
 
-  document.addEventListener('petEdited', (event) => {
-    const petData = event.detail; // 
-    if (petData) {
-       
-       submitButton.innerHTML = "<p class='text-xs m-1'>Save Changes</p>"
-       submitButton.classList.add('py-2', 'w-full', 'rounded-2xl')
-       heading.innerHTML = "Update Details"
 
-        petNameInput.value = petData.name;
-        genderInput.value = petData.gender;
-        categoryInput.value = petData.species;
-        breedInput.value = petData.breed;
-        ageInput.value = petData.age;
-        descriptionTextArea.value = petData.interests;
-        petNameInput.dataset.petId = petData.id;
-        console.log(petNameInput.dataset.petId);
-    } 
-    
-});
-
-const updatePet = async (petId) => {
-    const petData = new FormData();
-    petData.append("name", petNameInput.value);
-    petData.append("gender", genderInput.value);
-    petData.append("species", categoryInput.value);
-    petData.append("breed", breedInput.value);
-    petData.append("age", ageInput.value);
-    petData.append("interests", descriptionTextArea.value);
-    console.log(petId);
-    console.log(petNameInput.value);
-    if (fileInput.files.length > 0) {
-        petData.append("petPicture", fileInput.files[0]); 
-    }
-
-    try {
-        const response = await fetch(`http://localhost:3000/api/pets/edit/${petId}`, {
-            method: "PUT",
-            body: petData,
-        });
-        
-        if (response.ok) {
-            successText.classList.remove('hidden')
-            setTimeout(() => successText.classList.add("hidden"), 5000);
-            submitButton.innerHTML = "<p class='text-xs m-1'>Save Details</p>"
-            submitButton.classList.add('py-2', 'w-full', 'rounded-2xl')
-            heading.innerHTML = "List your pet"
-            resetForm();
-            petNameInput.removeAttribute('data-pet-id')
-            localStorage.setItem("petUpdated", "true");
-            console.log('Pet was updated succesfully');
-        } else {
-            errorText.classList.remove("hidden");
-        }
-    } catch (error) {
-        console.error("Error updating pet:", error);
-        alert("Error updating pet. Please try again later.");
-    }
-};
   petForm.addEventListener("submit", validateInputs);
-
-
-
-  
 }
