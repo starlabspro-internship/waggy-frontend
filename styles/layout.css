@@ -110,3 +110,10 @@ body {
     max-width: 90%;
   }
 }
+
+.glide {
+  max-width: 600px;
+  margin: auto;
+}
+
+

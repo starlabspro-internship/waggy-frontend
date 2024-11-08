@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("blogForm");
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token'); // Change from 'accessToken' to 'token'
+   
 
 
     console.log(userId)
