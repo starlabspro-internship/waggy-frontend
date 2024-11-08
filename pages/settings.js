@@ -1,132 +1,52 @@
+// profile.js
 export default function renderPageContent() {
-    // Add required CSS
-    const customCssLink = document.createElement("link");
-    customCssLink.rel = "stylesheet";
-    customCssLink.href = "../styles/matching.css";
-    document.head.appendChild(customCssLink);
-
-    // Add Glide.js CSS
-    const glideCssLink = document.createElement("link");
-    glideCssLink.rel = "stylesheet";
-    glideCssLink.href = "https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css";
-    document.head.appendChild(glideCssLink);
-
-    // Add Glide.js JavaScript
-    const glideScript = document.createElement("script");
-    glideScript.src = "https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js";
-    glideScript.onload = () => {
-        fetchUsers().then(initializeGlide);
-    }
-    document.body.appendChild(glideScript);
-    
     const content = document.getElementById('content');
     content.innerHTML = `
-          <div class="flex flex-col  w-full md:w-max">
-            <!-- Possible Match Section -->
-            <div class="flex flex-col gap-4 md:mb-10 max-w-screen-md w-full mx-auto overflow-hidden justify-center items-center">
-                <h1 class="font-semibold text-[16.71px] text-[#03063A] self-start">User Profiles</h1>
+        <div class="p-4 rounded-lg">
+            <h1 class="text-2xl font-bold mb-4">Settings Page</h1>
+            <button id="profile-content" class="bg-blue-500 text-red-500 px-4 py-2 rounded">Hey</button>
+            <form id="profile-form" class="mt-4">
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                 
-                <!-- Glide Container with responsive constraints -->
-                <div class="glide w-full">
-                  <!-- Glide Track -->
-                  <div class="glide__track" data-glide-el="track">
-                    <ul class="glide__slides" id="userSlides">
-                      <!-- Slides will be populated dynamically -->
-                      <li class="glide__slide">
-                        <div class="h-[200px] w-[90%] md:h-[224px] md:w-[200.51px] bg-gray-200 rounded-[20px] mx-2 flex items-center justify-center">
-                          Loading...
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-              
-                  <!-- Glide Arrows -->
-                  <div class="glide__arrows z-10" data-glide-el="controls">
-                    <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
-                      <img src="./assets/images/icons/back-arrows.png" class="h-[20px]" alt="Previous">
-                    </button>
-                    <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
-                      <img src="./assets/images/icons/right-arrow.png" class="h-[20px]" alt="Next">
-                    </button>
-                  </div>
-              
-                  <!-- Glide Bullets -->
-                  <div class="glide__bullets" data-glide-el="controls[nav]">
-                    <button class="glide__bullet" data-glide-dir="=0"></button>
-                    <button class="glide__bullet" data-glide-dir="=1"></button>
-                    <button class="glide__bullet" data-glide-dir="=2"></button>
-                  </div>
-                </div>
-              </div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mt-4">Email</label>
+                <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                
+                <label for="profile-picture" class="block text-sm font-medium text-gray-700 mt-4">Profile Picture</label>
+                <input type="file" id="profile-picture" name="profile-picture" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Save</button>
+            </form>
         </div>
     `;
-}
 
-async function fetchUsers() {
-    try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/users?_start=0&_limit=6');
-        const users = await response.json();
-        
-        const slidesContainer = document.getElementById('userSlides');
-        slidesContainer.innerHTML = users.map(user => `
-            <li class="glide__slide">
-                <div class="h-[200px] w-[90%] md:h-[224px] md:w-[200.51px] bg-white rounded-[20px] mx-2 p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg text-[#03063A] truncate">${user.name}</h3>
-                        <p class="text-sm text-gray-600 truncate">@${user.username}</p>
-                        <p class="text-sm text-gray-500 mt-2 truncate">${user.email}</p>
-                        <p class="text-sm text-gray-500 truncate">${user.company.name}</p>
-                    </div>
-                    <div class="mt-2">
-                        <p class="text-xs text-gray-400 truncate">${user.address.city}</p>
-                        <p class="text-xs text-gray-400 truncate">${user.phone}</p>
-                    </div>
-                </div>
-            </li>
-        `).join('');
-    } catch (error) {
-        console.error('Error fetching users:', error);
-        const slidesContainer = document.getElementById('userSlides');
-        slidesContainer.innerHTML = `
-            <li class="glide__slide">
-                <div class="h-[200px] w-[90%] md:h-[224px] md:w-[200.51px] bg-red-100 rounded-[20px] mx-2 flex items-center justify-center text-red-500">
-                    Error loading users
-                </div>
-            </li>
-        `;
+    // Initialize event listeners or any additional functionality
+    const profileContent = document.getElementById('profile-content');
+    if (profileContent) {
+        profileContent.addEventListener('click', function () {
+            alert('Profile content clicked');
+        });
     }
-}
 
-function initializeGlide() {
-    if (typeof Glide !== 'undefined') {
-        const glide = new Glide('.glide', {
-            type: 'carousel',
-            startAt: 0,
-            perView: 3,
-            gap: 0,
-            breakpoints: {
-                1024: {
-                    perView: 2
-                },
-                640: {
-                    perView: 1
-                }
-            },
-            bound: true
+    // Form submission event
+    const profileForm = document.getElementById('profile-form');
+    if (profileForm) {
+        profileForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(profileForm);
+            try {
+                const response = await fetch('https://api.example.com/profile', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                alert('Profile updated successfully!');
+                console.log(result);
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Failed to update profile');
+            }
         });
-
-        // Update bullets
-        glide.on('move', () => {
-            const bullets = document.querySelectorAll('.glide__bullet');
-            bullets.forEach((bullet, index) => {
-                if (index === glide.index) {
-                    bullet.classList.add('glide__bullet--active');
-                } else {
-                    bullet.classList.remove('glide__bullet--active');
-                }
-            });
-        });
-
-        glide.mount();
     }
 }

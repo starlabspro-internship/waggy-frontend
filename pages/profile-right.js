@@ -18,7 +18,7 @@ export default function renderRightContent() {
                         <p class="text-sm text-gray-600">Offline</p>
                     </div>
                 </li>
-                <li class="flex items-center space-x-3 p-2 rounded-lg bg-gray-100 shadow">
+                <li class="flex items-center space-x-3 p-2 rounded-lg bg-gray-100 shadow">  
                     <img src="https://via.placeholder.com/40" alt="Friend 3" class="w-10 h-10 rounded-full" />
                     <div>
                         <p class="text-md font-medium">Friend 3</p>

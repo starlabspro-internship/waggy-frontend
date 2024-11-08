@@ -1,5 +1,3 @@
-import { showToast } from './toast.js';
-
 document.addEventListener("DOMContentLoaded", () => {
   const menuButton = document.getElementById("menu-button");
   const drawer = document.getElementById("drawer");
@@ -81,5 +79,4 @@ document.addEventListener("DOMContentLoaded", () => {
     loadPage(page);
   });
 });
-showToast('U thek buka!!!', 'success');
- showToast('U dogj buka!', 'error');
+

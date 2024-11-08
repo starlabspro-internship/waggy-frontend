@@ -35,6 +35,9 @@ body {
 .nav-link.active-link p {
     color: #FF8682;
 }
+.active-link {
+  color: #ffcc00; /* Example color for active link */
+}
 /* Plain CSS version */
 .toast {
     display: flex;
@@ -46,38 +49,23 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-    will-change: opacity, transform;
-}
-
-.toast.show {
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  
+  .toast.show {
     opacity: 1;
     transform: translateY(0);
-}
-
-.toast.success {
+  }
+  
+  .toast.success {
     background-color: #28a745;
-}
-
-.toast.error {
+  }
+  
+  .toast.error {
     background-color: #dc3545;
-}
-
-.toast.info {
+  }
+  
+  .toast.info {
     background-color: #007bff;
-}
-
-.toast .toast-icon {
-    margin-right: 12px;
-}
-
-.toast .toast-message {
-    flex-grow: 1;
-}
-
-.toast .close-btn {
-    margin-left: 12px;
-    cursor: pointer;
-}
-
+  }
   
