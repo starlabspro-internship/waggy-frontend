@@ -39,33 +39,74 @@ body {
   color: #ffcc00; /* Example color for active link */
 }
 /* Plain CSS version */
+/* toast.css */
+/* toast.css */
 .toast {
-    display: flex;
-    align-items: center;
-    background-color: #333;
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s, transform 0.3s;
+  position: fixed;
+  right: 20px;
+  z-index: 1000;
+  max-width: 90%;
+  width: 400px;
+}
+
+.toast.animate__fadeInUp {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.animate__fadeOutDown {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.toast__icon {
+  margin-right: 12px;
+}
+
+.toast__icon svg {
+  color: currentColor;
+}
+
+.toast__content {
+  flex-grow: 1;
+}
+
+.toast__close {
+  background: none;
+  border: none;
+  color: currentColor;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 0;
+  margin-left: 12px;
+}
+
+.toast--success {
+  background-color: #28a745;
+}
+
+.toast--error {
+  background-color: #dc3545;
+}
+
+.toast--info {
+  background-color: #007bff;
+}
+
+@media (max-width: 600px) {
+  .toast {
+    right: 10px;
+    max-width: 80%;
   }
-  
-  .toast.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .toast.success {
-    background-color: #28a745;
-  }
-  
-  .toast.error {
-    background-color: #dc3545;
-  }
-  
-  .toast.info {
-    background-color: #007bff;
-  }
-  
+}

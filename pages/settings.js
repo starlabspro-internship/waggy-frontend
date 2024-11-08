@@ -24,9 +24,10 @@ export default function renderPageContent() {
     const profileContent = document.getElementById('profile-content');
     if (profileContent) {
         profileContent.addEventListener('click', function () {
-            alert('Profile content clicked');
+            showToast("This is a test toast!", "success");
         });
     }
+
 
     // Form submission event
     const profileForm = document.getElementById('profile-form');
