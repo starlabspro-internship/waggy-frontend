@@ -226,6 +226,9 @@ export default function renderPageContent() {
   };
 
   const userId = localStorage.getItem("userId");
+  const userIdNumber = parseInt(userId, 10);
+
+  console.log("Hey, user ID:", userIdNumber, typeof userIdNumber);
   const createPet = async () => {
     const petData = new FormData();
     petData.append("name", petNameInput.value);
@@ -235,7 +238,7 @@ export default function renderPageContent() {
     petData.append("age", ageInput.value);
     petData.append("interests", descriptionTextArea.value);
     petData.append("petPicture", fileInput.files[0]);
-    petData.append("userId", 1);
+    petData.append("userId", userIdNumber);
 
     try {
       const response = await fetch("http://localhost:3000/api/pets/new", {

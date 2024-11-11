@@ -54,6 +54,18 @@
                   name="lastname"
                   type="text"
                   class="w-full border-2 rounded-2xl p-3 z-0"
+                  value=""
+                />
+                <span class="text-red-500 text-xs ml-2 hidden user-lastname-error">User Last Name is required</span>
+              </div>
+              <div class="relative w-full">
+         if(user.Organizate)       <label class="absolute -top-2 left-3 z-10 bg-white text-sm"> Organizate Name</label>
+                <input
+                  id="user-lastname"
+                  name="lastname"
+                  type="text"
+                  class="w-full border-2 rounded-2xl p-3 z-0"
+                  value=""
                 />
                 <span class="text-red-500 text-xs ml-2 hidden user-lastname-error">User Last Name is required</span>
               </div>
@@ -146,9 +158,25 @@
           <div class="pet-list-container">
             <p class="text-gray-400 ml-3 text-sm" style="color: #157aff">No Pet Listed</p>
           </div>
+          <button id="setLastNameButton" class="p-2 bg-blue-500 text-white">Set Last Name</button>
+
         </div>
       </aside>
     </div>
     <script src="assets/js/userProfile.js"></script>
+    <script>
+      // JavaScript
+      const lastNameInput = document.getElementById("user-lastname");
+      const button = document.getElementById("setLastNameButton");
+    
+      // Function to set the input value
+      const setLastName = () => {
+        lastNameInput.value = "Kabashi"; // Set the value to 'Kabashi' or any other value
+      };
+    
+
+      // Add event listener to the button
+      button.addEventListener("click", setLastName);
+    </script>
   </body>
 </html>
