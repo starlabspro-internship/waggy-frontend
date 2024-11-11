@@ -1,9 +1,7 @@
 export default function renderRightContent() {
     const rightContent = document.getElementById("right-content");
     const searchInput = document.querySelector("#search-bar");
-    const pageTitle = document.querySelector('#page-title')
-    pageTitle.innerHTML = 'Pets'
-    
+
     // Initialize the right content area
     rightContent.innerHTML = `
       <div class="p-4 rounded-lg">

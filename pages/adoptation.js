@@ -182,11 +182,17 @@ export default function renderPageContent() {
             const glide = new Glide(".glide", {
                 type: "carousel",
                 startAt: 0,
-                perView: 3,
+                perView: 4,
                 gap: 10,
                 breakpoints: {
                     640: {
                         perView: 1,
+                    },
+                    640: {
+                        perView: 1,
+                    },
+                    800: {
+                        perView: 2,
                     },
                 },
                 bound: true,
