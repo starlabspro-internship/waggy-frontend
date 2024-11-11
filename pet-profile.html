@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .font-poppins {
+            font-family: "Poppins", sans-serif;
+        }
+        .color {
+            color: #70717b;
+        }
+        .bg-color {
+            background: #157aff;
+        }
+    </style>
+  </head>
+<body>
+  
+    <div class="color">
+      <p class="text-green-500 font-bold hidden success-text"><span> &#9989;</span>Your Pet was created Successfully</p>
+      <p class="text-red-500 font-bold error-text hidden">Cannot Create a Pet Profile Right Now!</p>
+  
+      <h1 id="heading" class="text-3xl font-bold mb-4 mt-2 text-gray-800">
+        List your Pet
+      </h1>
+  
+      <form id="pet-form" method="POST" enctype="multipart/form-data">
+        <div class="grid gap-5">
+  
+          <div class="relative w-full">
+            <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Pet Name</label>
+            <input
+              id="pet-name"
+              name="name"
+              type="text"
+              class="w-full border-2 rounded-2xl p-3 -mb-1 z-0"
+            />
+            <span class="text-red-500 text-xs ml-2 pet-name-error hidden">Pet Name is required</span>
+          </div>
+  
+          <div class="relative w-full">
+            <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Gender</label>
+            <select
+              id="gender"
+              name="gender"
+              class="w-full border-2 rounded-2xl p-3 -mb-1 z-0"
+            >
+              <option value="" disabled selected></option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <span class="text-red-500 text-xs ml-2 gender-error hidden">Gender is required</span>
+          </div>
+  
+          <div class="relative w-full">
+            <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Category</label>
+            <input
+              id="category"
+              name="category"
+              type="text"
+              class="w-full border-2 rounded-2xl p-3 -mb-1 z-0"
+            />
+            <span class="text-red-500 text-xs ml-2 category-error hidden">Category is required</span>
+          </div>
+  
+          <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+  
+            <div class="relative w-full sm:w-1/2">
+              <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Breed</label>
+              <input
+                id="breed"
+                name="breed"
+                type="text"
+                class="w-full border-2 rounded-2xl p-3 -mb-1 z-0"
+              />
+              <span class="text-red-500 text-xs ml-2 breed-error hidden">Breed is required</span>
+            </div>
+  
+            <div class="relative w-full sm:w-1/2">
+              <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Age</label>
+              <input
+                id="age"
+                name="age"
+                type="text"
+                class="w-full border-2 rounded-2xl p-3 -mb-1 z-0"
+              />
+              <span class="text-red-500 text-xs ml-2 age-error hidden">Age is required</span>
+            </div>
+  
+          </div>
+  
+          <div class="relative w-full">
+            <label class="absolute -top-2 left-3 z-10 bg-white text-sm">Description</label>
+            <textarea
+              id="description"
+              name="interests"
+              class="w-full border-2 rounded-2xl p-3 -mb-3 z-0 resize-none"
+              rows="2"
+            ></textarea>
+            <span class="text-red-500 text-xs ml-2 description-error hidden">Description is required</span>
+          </div>
+  
+          <div class="flex items-center -mb-3">
+            <label
+              class="flex items-center justify-center bg-white text-red-500 px-4 py-2 mr-4 rounded cursor-pointer text-sm"
+              style="border: 1px solid #157aff"
+            >
+              Choose File
+              <input type="file" class="hidden file" id="file-input" name="petPicture" accept="image/*"/>
+            </label>
+            <label class="ml-3 color text-sm file-label" for="file-input">Select Pet image</label>
+            <img id="image-preview" src="" alt="Current Pet Image" style="max-width: 100px; max-height: 100px; display: none;"/>
+          </div>
+          <span class="text-red-500 text-xs ml-2 -mt-2 file-error hidden">File is required</span>
+          <input type="hidden" id="pet-picture-src" name="petPictureSrc" />
+  
+          <!-- Button container with fixed position -->
+          <div class="button-container mt-4">
+            <button
+              type="submit"
+              class="mt-0 w-full py-2 rounded-2xl submit-btn bg-color text-white"
+            >
+              <span class="text-xs">Save Details</span>
+            </button>
+          </div>
+  
+        </div>
+      </form>
+    </div>
+ 
+
+</body>
+</html>
