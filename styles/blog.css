@@ -1,0 +1,37 @@
+.splide__list {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem; /* Adjust the gap between slides */
+  padding: 0;
+  width: 100%;
+}
+
+.splide__slide {
+  flex: 0 0 auto; /* Ensure each slide keeps its width */
+  width: calc(33.3333% - 1rem); /* Adjust based on the number of slides per page */
+}
+
+@media (max-width: 1024px) {
+  .splide__slide {
+    width: calc(50% - 1rem); /* Two items per page on smaller screens */
+  }
+}
+
+@media (max-width: 640px) {
+  .splide__slide {
+    width: 100%; /* One item per page on very small screens */
+  }
+}
+
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+.color {
+  color: #70717b;
+}
+.bg-color {
+  background: #157aff;
+}
+  .border {
+  border: 1px solid #157aff;
+  }
