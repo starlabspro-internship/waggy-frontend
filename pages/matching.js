@@ -132,7 +132,7 @@ export default function renderPageContent() {
             
             const slidesContainer = document.getElementById('userSlides');
             slidesContainer.innerHTML = users.map(user => `
-                <li class="glide__slide ">
+                <li class="glide__slide px-2 md:px-0">
                     <div class="h-[300px] bg-sky-200 w-full md:h-[214px] md:w-[180px] bg-white rounded-[20px] p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
                         <div>
                             <h3 class="font-bold text-lg text-[#03063A] truncate">${user.name}</h3>
@@ -167,7 +167,7 @@ export default function renderPageContent() {
             const glide = new Glide('.glide', {
                 type: 'carousel',
                 startAt: 0,
-                perView: 3,
+                perView: 4,
                 gap: 10,
                 breakpoints: {
                     640: {

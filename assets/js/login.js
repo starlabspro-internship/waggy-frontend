@@ -71,11 +71,10 @@ function togglePassword() {
       // Store tokens in localStorage
       localStorage.setItem('userId', userId);
       localStorage.setItem('token', accessToken);
-      window.location.href = '/blog.html'; 
-      alert("Logged in successfully!");
+      window.location.href = '/index.html'; 
+
     } catch (error) {
       console.error("Error during login:", error);
-      alert("Login failed. Please try again.");
     }
   }
   

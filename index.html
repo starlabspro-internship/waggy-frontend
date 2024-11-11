@@ -40,8 +40,8 @@
         <img src="./assets/images/icons/joi.png" class="p-4 h-[120px] rounded-full" alt="" />
         <nav class="flex flex-col pl-5 space-y-2">
             <div class="p-2 mb-5 font-semibold text-2xl">
-                <h1 class="user-name">Xhoi</h1>
-                <h4 id="user-email" class="font-thin text-sm">xhokabash@gmail.com</h4>
+                <h1 class="user-name">UserName</h1>
+                <h4 class="font-thin text-sm user-email">User Email</h4>
             </div>
             <a href="#profile" class="nav-link hover:rounded p-2 font-semibold">
                 Profile
@@ -72,7 +72,7 @@
                 <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon" />
             </a>
             <div class="pl-4 pt-5">
-                <button class="hover:rounded p-2 font-semibold">
+                <button class="hover:rounded p-2 font-semibold logoutLink">
                     <img src="./assets/images/icons/logout.png" alt="" />
                 </button>
             </div>
@@ -85,13 +85,13 @@
     </aside>
 <!-- -->
     
-    <div id="drawer" class="fixed inset-0 z-[90] bg-gray-800 bg-opacity-75 block md:hidden h-[100%]">
+    <div id="drawer" class="fixed inset-0 z-[90] bg-gray-800 bg-opacity-75 hidden h-[100%]">
         <aside class="w-64 bg-blue flex flex-col  text-white h-screen p-4">
             <img src="./assets/images/icons/joi.png" class="p-4 h-[120px] w-[120px] rounded-full" alt="" />
             <nav class="flex flex-col pl-5  justify-around">
                 <div class="p-2 mb-5 font-semibold text-2xl">
-                    <h1 class="user-name">Xhoi</h1>
-                    <h4 id="user-email" class="font-thin text-sm">xhokabash@gmail.com</h4>
+                    <h1 class="user-name">User Name</h1>
+                    <h4 class="font-thin text-sm user-email">User Email</h4>
                 </div>
                 <a href="#profile" class="nav-link hover:rounded p-2 font-semibold">
                     Profile
@@ -122,7 +122,7 @@
                     <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon" />
                 </a>
                 <div class="pl-4 pt-5">
-                    <button class="hover:rounded p-2 font-semibold">
+                    <button  class="hover:rounded p-2 font-semibold logoutLink">
                         <img src="./assets/images/icons/logout.png" alt="" />
                     </button>
                 </div>
@@ -191,8 +191,7 @@
     <!-- Toast Container -->
     <script type="module" src="./scripts/layout.js"></script>   
     <script src="./scripts/toast.js"></script>
-
-
+    <script src="./scripts/auth/logoutAuth.js"></script>
       
 </body>
 

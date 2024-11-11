@@ -75,7 +75,6 @@ form.addEventListener('submit', async (event) => {
         console.log(data);
 
         if (response.ok) {
-            alert('Organization registered successfully!');
             // Clear form fields
             organizationName.value = '';
             emailInput.value = '';
@@ -91,15 +90,14 @@ form.addEventListener('submit', async (event) => {
             localStorage.setItem('refreshToken', data.refreshToken);
 
             // Redirect to organization dashboard
-            window.location.href = '/blog.html';
+            window.location.href = '/index.html';
 
         } else {
             // Display error message if registration fails
-            alert(data.message || 'Registration failed');
+            console.error(error);
         }
     } catch (error) {
         console.error('Error during registration:', error);
-        alert('An error occurred during registration. Please try again.');
     }
 });
 

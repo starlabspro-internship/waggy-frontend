@@ -91,7 +91,6 @@ form.addEventListener('submit', async (event) => {
         const data = await response.json();
 
         if (response.ok) {
-            alert('User registered successfully!');
             // Clear form fields
             firstnameInput.value = '';
             lastnameInput.value = '';
@@ -105,17 +104,18 @@ form.addEventListener('submit', async (event) => {
             localStorage.setItem('token', data.token);
             localStorage.setItem('refreshToken', data.refreshToken);
              // Redirect to blog
-            window.location.href = '/blog.html'; 
+            window.location.href = '/index.html'; 
     
             
 
         } else {
             // Display error message if registration fails
-            alert(data.message || 'Registration failed');
+            console.error('Error during registration:', error);
+
         }
     } catch (error) {
         console.error('Error during registration:', error);
-        alert('An error occurred during registration. Please try again.');
+
     }
 });
 
