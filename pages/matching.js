@@ -1,3 +1,5 @@
+//matching center
+
 export default function renderPageContent() {
     // Add required CSS
     const customCssLink = document.createElement("link");
@@ -21,50 +23,54 @@ export default function renderPageContent() {
     
     const content = document.getElementById('content');
     content.innerHTML = `
-        <div class="flex flex-col md:pl-14 pt-5 w-full  md:w-max">
+        <div class="flex flex-col md:pl-14  w-full  md:w-full ">
             <!-- Location Section -->
-            <div class="mb-10 md:mb-5">
-                <div class="flex gap-1 items-center">
-                    <h2 class="text-xl md:text-sm text-[#70717B]">Location</h2>
+            <div class="mb-10 md:mb-5 flex flex-col justify-center items-center md:items-start bg-blue md:bg-transparent">
+                <div class="hidden md:flex gap-1 items-center pt-1 w-full">
+                    <h2 class="text-sm text-slate-400  font-mono">Location</h2>
                     <img src="./assets/images/icons/location-pin.png" alt="" class="h-4">
+                    <h1 class="relative text-center text-[#03063A] w-full text-2xl font-semibold right-5">Matching <span class="text-rose-400">Center</span></h1>
                 </div>
-                <h1 class="font-semibold text-3xl md:text-[26.11px] text-blue md:text-[#03063A]">Tirana, AL</h1>
+                <h1 class="font-semibold text-sm text-slate-50 md:text-xl md:text-[26.11px] text-white md:text-[#03063A] mt-2 md:mt-0">Tirana, <span class="text-rose-400">AL</span></h1>
+                <h1 class="md:hidden font-semibold text-slate-50 text-2xl md:text-3xl md:text-[26.11px] text-white md:text-[#03063A]">Matching Center</h1>
+
             </div>
     
+    
             <!-- Categories Section -->
-            <div class="flex flex-col gap-2 mb-5 w-full">
+            <div class="flex flex-col gap-2 mb-5 w-full pl-3">
                 <h1 class="font-semibold text-[16.71px] text-[#03063A]">Categories</h1>
                 <!-- Filters Section -->
                 <div class="flex gap-6 w-full md:justify-between z-50">
                     <!-- Filter Button -->
-                    <button onclick="toggleFilters()" class=" rounded-[15.66px]  mb-[100px] md:mb-10 h-[58.48px] w-[58.48px] text-[15px] flex justify-center items-center">
+                    <button onclick="toggleFilters()" class=" rounded-[15.66px]  md:mb-10 h-[58.48px] w-[58.48px] text-[15px] flex justify-center items-center">
                         <img src="./assets/images/icons/setting.png" alt="" class="">
                     </button>
     
                     <div class=" flex flex-col md:flex-row gap-6 w-full  px-4">
                         <!-- Default Categories -->
                         <div class="flex  justify-between md:gap-6">
-                            <div class="bg-[#F0F0F0]  text-blue rounded-[15.66px] h-[65px] hover:text-white hover:bg-blue w-[65px] md:text-[15px] flex justify-center items-center">Cat</div>
-                            <div class="bg-[#F0F0F0] text-blue rounded-[15.66px] h-[65px] hover:text-white hover:bg-blue w-[65px] md:text-[15px] flex justify-center items-center">Dog</div>
-                            <div class="bg-[#F0F0F0] text-blue rounded-[15.66px] h-[65px] hover:text-white hover:bg-blue w-[65px] md:text-[15px] flex justify-center items-center">Rabbit</div>
+                            <div class="bg-sky-200 text-sky-600 rounded-[15.66px] h-[65px] hover:text-white hover:bg-blue w-[65px] md:text-[15px] flex justify-center items-center">Cat</div>
+                            <div class="bg-rose-200 text-rose-600 rounded-[15.66px] h-[65px] hover:text-white hover:bg-blue w-[65px] md:text-[15px] flex justify-center items-center">Dog</div>
+                            <div class="bg-green-200 text-green-600 rounded-[15.66px] h-[65px] hover:text-white hover:bg-blue w-[65px] md:text-[15px] flex justify-center items-center">Rabbit</div>
                         </div>
                         
                         <!-- Hidden Filter Options Container -->
-                        <div id="extraFilters" class="hidden flex  justify-between  md:gap-6">
+                        <div id="extraFilters" class="hidden flex  justify-between  md:gap-6 transition-all duration-500 ease-in-out">
                         <!-- Breed Dropdown -->
                         <div class="relative inline-block dropdown">
-                            <button class="dropdown-btn bg-[#F0F0F0] rounded-[15.66px] h-[65px] min-w-[65px] px-1 text-[15px] flex justify-center items-center transition-colors duration-300 w-50">
-                                <span class="text-blue">Breed</span>
+                            <button class="dropdown-btn bg-sky-200 text-sky-600 hover:bg-blue hover:text-white rounded-[15.66px] h-[65px] min-w-[65px] px-1 text-[15px] flex justify-center items-center transition-colors duration-300 w-50">
+                                <span>Breed</span>
                             </button>
-                            <div class="absolute z-100 bg-gray-200 rounded-[15.66px] shadow-lg dropdown-menu hidden text-sm w-max mt-3">
+                            <div class="absolute z-100 bg-gray-200 rounded-[15.66px] shadow-lg dropdown-menu  text-sm w-max mt-3">
                                 <a href="#" class="block text-blue px-4 py-3 z-100 hover:bg-blue hover:text-white hover:rounded-[15.66px]">Option 1</a>
                                 <a href="#" class="block text-blue px-4 py-3 z-50 hover:bg-blue hover:text-white hover:rounded-[15.66px]">Option 2</a>
                             </div>
                         </div>
                         <!-- Gender Dropdown -->
                         <div class="relative inline-block dropdown">
-                            <button class="dropdown-btn bg-[#F0F0F0] rounded-[15.66px] h-[65px] min-w-[65px] text-[15px] px-1 flex justify-center items-center transition-colors duration-300 w-50">
-                                <span class="text-blue">Gender</span>
+                            <button class="dropdown-btn bg-rose-200  hover:bg-blue hover:text-white text-rose-600 rounded-[15.66px] h-[65px] min-w-[65px] text-[15px] px-1 flex justify-center items-center transition-colors duration-300 w-50">
+                                <span>Gender</span>
                             </button>
                             <div class="absolute z-100 bg-gray-200 rounded-[15.66px] shadow-lg dropdown-menu hidden text-sm w-max mt-3">
                                 <a href="#" class="block  text-blue px-4 py-3 hover:bg-blue hover:text-white hover:rounded-[15.66px]">Male</a>
@@ -73,10 +79,10 @@ export default function renderPageContent() {
                         </div>
                         <!-- Age Input -->
                         <div class="relative inline-block dropdown">
-                            <button class="dropdown-btn bg-[#F0F0F0] rounded-[15.66px] h-[65px] w-[65px] text-[15px] flex justify-center items-center transition-colors duration-300 w-50">
-                                <span class="text-blue">Age</span>
+                            <button class="dropdown-btn bg-green-200 hover:bg-blue hover:text-white text-green-600 rounded-[15.66px] h-[65px] w-[65px] text-[15px] flex justify-center items-center transition-colors duration-300 w-50">
+                                <span>Age</span>
                             </button>
-                            <div class="absolute z-100 bg-gray-200 rounded-[15.66px] shadow-lg dropdown-menu hidden text-sm w-max mt-3 text-blue ">
+                            <div class="absolute z-100 bg-gray-200 right-[1px] rounded-[15.66px] shadow-lg dropdown-menu hidden text-sm w-max mt-3 text-blue ">
                                 <input type="number" min="0" max="100" id="ageInput" class="px-4 py-3  bg-gray-200 text-blue rounded-[15.66px] w-full focus:outline-none" placeholder="Enter Age" />
                             </div>
                         </div>
@@ -87,22 +93,17 @@ export default function renderPageContent() {
     
             <!-- Possible Match Section -->
           
-             <div class="flex flex-col pt-5 w-full md:w-max">
+             <div class="flex flex-col pt-5 w-full md:w-full">
             <!-- Possible Match Section -->
-            <div class="flex flex-col gap-4 md:mb-10 max-w-screen-md w-full mx-auto overflow-hidden justify-center items-center">
-                <h1 class="font-semibold text-[16.71px] text-[#03063A] self-start">Possible Matches</h1>
+            <div class="flex flex-col gap-6 md:mb-10  w-full  overflow-hidden justify-center items-center">
+                <h1 class="font-semibold text-[16.71px] text-[#03063A] self-start pl-3">Possible Matches</h1>
                 
                 <!-- Glide Container with responsive constraints -->
                 <div class="glide w-full">
                   <!-- Glide Track -->
-                  <div class="glide__track" data-glide-el="track">
-                    <ul class="glide__slides" id="userSlides">
-                      <!-- Slides will be populated dynamically -->
-                      <li class="glide__slide">
-                        <div class="h-[200px] w-[90%] md:h-[224px] md:w-[200.51px] bg-gray-200 rounded-[20px] mx-2 flex items-center justify-center">
-                          Loading...
-                        </div>
-                      </li>
+                  <div class="glide__track w-full" data-glide-el="track">
+                    <ul class="glide__slides w-full flex " id="userSlides">
+               
                     </ul>
                   </div>
               
@@ -114,13 +115,6 @@ export default function renderPageContent() {
                     <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
                       <img src="./assets/images/icons/right-arrow.png" class="h-[24px]" alt="Next">
                     </button>
-                  </div>
-              
-                  <!-- Glide Bullets -->
-                  <div class="glide__bullets" data-glide-el="controls[nav]">
-                    <button class="glide__bullet" data-glide-dir="=0"></button>
-                    <button class="glide__bullet" data-glide-dir="=1"></button>
-                    <button class="glide__bullet" data-glide-dir="=2"></button>
                   </div>
                 </div>
               </div>
@@ -138,8 +132,8 @@ export default function renderPageContent() {
             
             const slidesContainer = document.getElementById('userSlides');
             slidesContainer.innerHTML = users.map(user => `
-                <li class="glide__slide">
-                    <div class="h-[200px] w-[90%] md:h-[224px] md:w-[200.51px] bg-white rounded-[20px] mx-2 p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
+                <li class="glide__slide ">
+                    <div class="h-[300px] bg-sky-200 w-full md:h-[214px] md:w-[180px] bg-white rounded-[20px] p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
                         <div>
                             <h3 class="font-bold text-lg text-[#03063A] truncate">${user.name}</h3>
                             <p class="text-sm text-gray-600 truncate">@${user.username}</p>
@@ -149,7 +143,8 @@ export default function renderPageContent() {
                         <div class="mt-2">
                             <p class="text-xs text-gray-400 truncate">${user.address.city}</p>
                             <p class="text-xs text-gray-400 truncate">${user.phone}</p>
-                            <a href="##profile/${user.username}" class="text-xs text-blue-500 hover:text-blue-600">View Profile</a>
+                            <a href="#/match-info" class="text-xs text-blue-500 hover:text-blue-600">View Profile</a>
+                            
                         </div>
                     </div>
                 </li>
@@ -159,25 +154,22 @@ export default function renderPageContent() {
             const slidesContainer = document.getElementById('userSlides');
             slidesContainer.innerHTML = `
                 <li class="glide__slide">
-                    <div class="h-[200px] w-[90%] md:h-[224px] md:w-[200.51px] bg-red-100 rounded-[20px] mx-2 flex items-center justify-center text-red-500">
+                    <div class="h-[300px] w-[full] md:h-[224px] md:w-[200.51px] bg-red-100 rounded-[20px] mx-2 flex items-center justify-center text-red-500">
                         Error loading users
                     </div>
                 </li>
             `;
         }
     }
-    
+
     function initializeGlide() {
         if (typeof Glide !== 'undefined') {
             const glide = new Glide('.glide', {
                 type: 'carousel',
                 startAt: 0,
                 perView: 3,
-                gap: 0,
+                gap: 10,
                 breakpoints: {
-                    1024: {
-                        perView: 2
-                    },
                     640: {
                         perView: 1
                     }

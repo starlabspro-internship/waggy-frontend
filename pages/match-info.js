@@ -60,15 +60,20 @@ export default function renderPageContent() {
                 <!-- First row -->
                 <div class="">
                     <div class="flex justify-between w-full relative top-5 md:static z-[10] px-2">
-                        <button class="bg-grey text-blue py-2 px-2 text-blue rounded-[16px]">
-                            <img src="./assets/images/icons/pet-care.png" class="h-6 w-6" alt="">
-                        </button>
+                        <div class="bg-grey text-blue pr-2 text-blue rounded-full flex justify-center items-center gap-1">
+                            <img src="./assets/images/icons/joi.png" class="h-10 w-10 rounded-full" alt="">
+                            <div>
+                            <h1 class="text-sm font-semibold">Xhoi</h1>
+                            <p class="text-sm">Owner</p>
+                             </div>
+
+                        </div>
                         <div class="flex gap-3">
                             <button class="gap-4 bg-grey py-1 px-2 rounded-[16px]">
-                                <img src="./assets/images/icons/edit-text.png" class="h-6 w-6" alt="">
+                                <img src="./assets/images/icons/add-user.png" class="h-6 w-6" alt="">
                             </button>
                             <button class="gap-4 bg-grey py-1 px-2 rounded-[16px]">
-                                <img src="./assets/images/icons/delete.png" class="h-6 w-6" alt="">
+                                <img src="./assets/images/icons/chat.png" class="h-6 w-6" alt="">
                             </button>
                         </div>
                     </div>
@@ -102,8 +107,7 @@ export default function renderPageContent() {
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ullam doloremque in voluptatem architecto a ab mollitia iusto corrupti eligendi nihil necessitatibus voluptates molestias ut blanditiis ipsum, pariatur ad facilis!</p>
                 </div>
                 <div class="flex justify-center gap-4 md:gap-8 pt-14">
-                    <button class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm">Add to Matching</button>
-                    <button class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm">Add to Adoption</button>
+                    <button class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm">Matching Request</button>
                 </div>
             </div>
         `;

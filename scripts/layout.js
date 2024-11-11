@@ -49,7 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const content = document.getElementById("content");
     const rightContent = document.getElementById("right-content");
 
-    content.innerHTML = `<p>Loading...</p>`;
+    content.innerHTML = `<div class="flex justify-center items-center h-screen md:h-[400px] bg-[#157AFF] md:bg-white">
+    <div class="flex flex-col items-center gap-2">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-75"></div>
+        <p class="text-white text-lg font-semibold">Loading...</p>
+    </div>
+</div>`;
     rightContent.innerHTML = `<p>Loading...</p>`;
 
     try {
@@ -65,7 +70,12 @@ document.addEventListener("DOMContentLoaded", () => {
       setActiveLink(page);
     } catch (error) {
       console.error(`Error loading page ${page}:`, error);
-      content.innerHTML = `<p>Error loading page content.</p>`;
+      content.innerHTML = `<div class="flex justify-center items-center h-screen  bg-[#157AFF] md:bg-white">
+    <div class="flex flex-col items-center gap-2">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-75"></div>
+        <p class="text-white text-lg font-semibold">Error loading...</p>
+    </div>
+</div>`;
     }
   }
 
