@@ -18,7 +18,8 @@ export default function renderRightContent() {
   
     // Declare pets array globally
     window.pets = [];
-  
+    const userId = localStorage.getItem("userId");
+  const userIdNumber = parseInt(userId, 10);
     // Fetch pets from the API
     const fetchPets = async () => {
       try {
@@ -26,7 +27,7 @@ export default function renderRightContent() {
         const fetchedPets = await response.json();
   
         if (response.ok) {
-          window.pets = fetchedPets; // Update global pets array
+          window.pets = fetchedPets.filter((fetchedPet) => fetchedPet.userId === userIdNumber ); // Update global pets array
           displayPets(window.pets);
         } else {
           console.log("Failed to fetch pets:", fetchedPets.message);
@@ -51,6 +52,7 @@ export default function renderRightContent() {
         petItem.classList.add("pet-item", "mb-5");
   
         petItem.innerHTML = `
+         
           <div class="flex items-center justify-between space-x-5 cursor-pointer sm:justify-center ">
          <div class="flex flex-col md:flex-row md:space-x-5">
              

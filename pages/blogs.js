@@ -7,7 +7,7 @@ export default function renderPageContent() {
   const customStyles = document.createElement("style");
   customStyles.rel = "stylesheet"
   customStyles.href = "../styles/blog.css"
-  document.head.append(customStyles)
+  document.head.appendChild(customStyles)
   const splideStyle = document.createElement("link");
   splideStyle.rel = "stylesheet";
   splideStyle.href =
@@ -32,7 +32,7 @@ export default function renderPageContent() {
   border: 1px solid #157aff;
   }
    #splide {
-    background: ;
+    display: grid;
    }
 .splide__list {
   display: flex;
@@ -43,7 +43,7 @@ export default function renderPageContent() {
 }
 
 .splide__slide {
-  flex: 0 0 auto; /* Ensure each slide keeps its width */
+  flex: 0 0 auto; 
   width: calc(33.3333% - 1rem); 
  
 }
@@ -69,18 +69,12 @@ export default function renderPageContent() {
         <div class="flex justify-start items-end mb-6">
           <button id="create-blog-btn" class="p-4 py-2 rounded-2xl bg-color text-white hover:bg-blue-600 transition-all duration-200">
             Publish a Blog
-          </button>
+          </button>  
         </div>
-          <div class="relative py-2">
-                <!-- Search icon -->
-                <img src="../assets/images/svg/magnetize.svg" alt="Search"
-                    class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
-                <!-- Input field styled with Tailwind CSS -->
-                <input type="text" class="w-full bg-white rounded-3xl pl-10 pr-2 py-1 text-sm" placeholder="Search Here..." id="search-bar">
-            </div>
-        <div id="splide" class="splide  border w-full md:w-[800px] mt-[6rem] mx-auto rounded-2xl overflow-hidden p-4">
+        
+        <div id="splide" class="splide  w-full md:w-[800px] mt-[6rem] mx-auto rounded-2xl overflow-hidden">
           <div class="splide__track">
-            <ul class="splide__list flex justify-center gap-1  w-full"></ul>
+            <ul class="splide__list  flex justify-center gap-1  w-full"></ul>
           </div>
         </div>
       </div>
@@ -99,7 +93,8 @@ export default function renderPageContent() {
           const blogItem = document.createElement("div");
           blogItem.classList.add(
             "splide__slide",
-            "p-2",
+            "p-4",
+            "bg-sky-100",
             "rounded-2xl",
             "shadow-lg",
             "transition-transform",
@@ -107,15 +102,17 @@ export default function renderPageContent() {
             "hover:scale-105",
             "hover:shadow-2xl",
             "relative" ,
-            "h-[350px]",
-            "w-[90%]" 
+            "h-[380px]",
+            "w-[90%]" ,
+            "border"
           );
           blogItem.innerHTML = `
-            <img src="http://localhost:3000${blog.articleImage}" alt="Blog Image" class="w-full h-[220px] mb-4 object-cover rounded-md"/>
+            <img src="http://localhost:3000${blog.articleImage}" alt="Blog Image" class="w-full h-[220px] mb-4 object-cover rounded-xl"/>
             <div class="flex justify-between items-start w-[90%]">
               <h3 class="font-bold text-xl text-[#157aff] w-[180px] ml-1">${blog.title}</h3>
               <img src="../assets/images/icons/diagonal-arrow.png" class="w-[20px] cursor-pointer fles justify-end"/>
-            </div>
+              </div>
+              <p class="truncate">${blog.description}</p>
           `;
           blogsList.appendChild(blogItem);
         });
@@ -126,9 +123,14 @@ export default function renderPageContent() {
     };
   
     const initializeSplide = () => {
+      const splideElement = document.querySelector("#splide");
+      if (splideElement && splideElement.splide) {
+        splideElement.splide.destroy(); // Destroy previous instance if it exists
+      }
       const splide = new Splide("#splide", {
         type: "slide",
         perPage: 3,
+        splitter: 2,
         gap: "5px",
         autoplay: true,
         interval: 3000,
@@ -147,14 +149,15 @@ export default function renderPageContent() {
           },
         },
         easing: "ease-in-out",
+        perMove: 1,
       });
       splide.mount(); // Mount the Splide instance
     };
   
     // Fetch blogs when the page loads
-    splideScript.onload = () => {
+    
       fetchBlogs(); // Call fetchBlogs only after Splide is loaded
-    };
+   
     createBlogBtn.addEventListener("click", redirectToCreateBlog);
 };
   // Redirect to the Create Blog form
@@ -274,18 +277,26 @@ export default function renderPageContent() {
       blogData.append("title", blogTitleInput.value);
       blogData.append("description", descriptionInput.value);
       blogData.append("articleImage", fileInput.files[0]);
-      blogData.append("userID", 1);
+      blogData.append("userID", 2);
 
       try {
         const response = await fetch("http://localhost:3000/api/blogs/new", {
           method: "POST",
           body: blogData,
         });
+        const data = await response.json()
         if (response.ok) {
           alert("Blog was created successfully");
           resetForm();
           renderBlogsList();
-        }
+          const blogCreatedEvent = new CustomEvent("blogCreated", {
+            detail: {
+              message: "A new blog has been created",
+              data: data, // Pass the response data if needed
+            },
+            bubbles: true, // Enable event bubbling
+          });
+      window.dispatchEvent(blogCreatedEvent); }
       } catch (error) {
         alert("Error creating blog. Please try again later.");
       }
@@ -303,4 +314,5 @@ export default function renderPageContent() {
   };
 
   renderBlogsList(); // Initialize with the blog list
+  document.addEventListener("DOMContentLoaded", renderPageContent)
 }
