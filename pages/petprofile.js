@@ -238,8 +238,12 @@ export default function renderPageContent() {
     petData.append("age", ageInput.value);
     petData.append("interests", descriptionTextArea.value);
     petData.append("petPicture", fileInput.files[0]);
+<<<<<<< Updated upstream
     petData.append("userId", userIdNumber);
 
+=======
+    petData.append("userId", 2);
+>>>>>>> Stashed changes
 
     try {
       const response = await fetch("http://localhost:3000/api/pets/new", {

@@ -1,12 +1,22 @@
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 export default function renderPageContent() {
   const content = document.getElementById("content");
   const customCssLink = document.createElement("link");
   document.head.appendChild(customCssLink);
   const customStyles = document.createElement("style");
+<<<<<<< Updated upstream
   customStyles.rel = "stylesheet";
   customStyles.href = "../styles/blog.css";
   document.head.appendChild(customStyles);
+=======
+  customStyles.rel = "stylesheet"
+  customStyles.href = "../styles/blog.css"
+  document.head.append(customStyles)
+>>>>>>> Stashed changes
   const splideStyle = document.createElement("link");
   splideStyle.rel = "stylesheet";
   splideStyle.href =
@@ -16,6 +26,7 @@ export default function renderPageContent() {
   splideScript.src =
     "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js";
   document.head.appendChild(splideScript);
+<<<<<<< Updated upstream
   const gridStyle = document.createElement("script");
   gridStyle.src =
     "https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-grid@0.4.1/dist/js/splide-extension-grid.min.js";
@@ -23,6 +34,11 @@ export default function renderPageContent() {
   customStyles.textContent = `
          
   .font-poppins {
+=======
+  customStyles.textContent = `
+         
+        .font-poppins {
+>>>>>>> Stashed changes
   font-family: "Poppins", sans-serif;
 }
 .color {
@@ -31,13 +47,48 @@ export default function renderPageContent() {
 .bg-color {
   background: #157aff;
 }
+<<<<<<< Updated upstream
 
+=======
+  .border {
+  border: 1px solid #157aff;
+  }
+   #splide {
+    background: ;
+   }
+.splide__list {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px; /* Adjust the gap between slides */
+  padding: 0;
+  width: 100%;
+}
+
+.splide__slide {
+  flex: 0 0 auto; /* Ensure each slide keeps its width */
+  width: calc(33.3333% - 1rem); 
+ 
+}
+
+@media (max-width: 1024px) {
+  .splide__slide {
+    width: calc(50% - 1rem); /* Two items per page on smaller screens */
+  }
+}
+
+@media (max-width: 640px) {
+  .splide__slide {
+    width: 100%; /* One item per page on very small screens */
+  }
+}
+>>>>>>> Stashed changes
       
       `;
 
   // Function to render the blog list
   const renderBlogsList = () => {
     content.innerHTML = `
+<<<<<<< Updated upstream
       <div class="color blogs-list-container p-3  md:p-8">
        <div class="flex justify-center mt-5 sm:justify-start sm:-mt-8 sm:-mt-12 sm:-ml-5 mb-5">
   <button id="create-blog-btn" class="p-4 py-2 rounded-2xl bg-color text-white hover:bg-blue-600 transition-all duration-200 w-full sm:w-auto">
@@ -55,11 +106,38 @@ export default function renderPageContent() {
     const blogsList = document.querySelector(".splide__list");
     const createBlogBtn = document.querySelector("#create-blog-btn");
 
+=======
+      <div class="color blogs-list-container p-6 md:p-8">
+        <div class="flex justify-start items-end mb-6">
+          <button id="create-blog-btn" class="p-4 py-2 rounded-2xl bg-color text-white hover:bg-blue-600 transition-all duration-200">
+            Publish a Blog
+          </button>
+        </div>
+          <div class="relative py-2">
+                <!-- Search icon -->
+                <img src="../assets/images/svg/magnetize.svg" alt="Search"
+                    class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
+                <!-- Input field styled with Tailwind CSS -->
+                <input type="text" class="w-full bg-white rounded-3xl pl-10 pr-2 py-1 text-sm" placeholder="Search Here..." id="search-bar">
+            </div>
+        <div id="splide" class="splide  border w-full md:w-[800px] mt-[6rem] mx-auto rounded-2xl overflow-hidden p-4">
+          <div class="splide__track">
+            <ul class="splide__list flex justify-center gap-1  w-full"></ul>
+          </div>
+        </div>
+      </div>
+    `;
+  
+    const blogsList = document.querySelector(".splide__list");
+    const createBlogBtn = document.querySelector("#create-blog-btn");
+  
+>>>>>>> Stashed changes
     // Fetch and display blogs
     const fetchBlogs = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/blogs/list");
         const blogs = await response.json();
+<<<<<<< Updated upstream
         blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
         blogsList.innerHTML = "";
@@ -70,11 +148,21 @@ export default function renderPageContent() {
             "p-1",
             "border",
             "bg-grey-100",
+=======
+        blogsList.innerHTML = "";
+        blogs.forEach((blog) => {
+          const blogItem = document.createElement("div");
+          blogItem.classList.add(
+            "splide__slide",
+            "p-2",
+            "rounded-2xl",
+>>>>>>> Stashed changes
             "shadow-lg",
             "transition-transform",
             "transform",
             "hover:scale-105",
             "hover:shadow-2xl",
+<<<<<<< Updated upstream
             "relative",
             "h-[280px]",
             "w-[90%]",
@@ -259,6 +347,64 @@ export default function renderPageContent() {
   const redirectToCreateBlog = () => {
     renderCreateBlogForm();
   };
+=======
+            "relative" ,
+            "h-[350px]",
+            "w-[90%]" 
+          );
+          blogItem.innerHTML = `
+            <img src="http://localhost:3000${blog.articleImage}" alt="Blog Image" class="w-full h-[220px] mb-4 object-cover rounded-md"/>
+            <div class="flex justify-between items-start w-[90%]">
+              <h3 class="font-bold text-xl text-[#157aff] w-[180px] ml-1">${blog.title}</h3>
+              <img src="../assets/images/icons/diagonal-arrow.png" class="w-[20px] cursor-pointer fles justify-end"/>
+            </div>
+          `;
+          blogsList.appendChild(blogItem);
+        });
+        initializeSplide(); // Initialize Splide after loading blogs
+      } catch (error) {
+        console.error("Error fetching blogs", error);
+      }
+    };
+  
+    const initializeSplide = () => {
+      const splide = new Splide("#splide", {
+        type: "slide",
+        perPage: 3,
+        gap: "5px",
+        autoplay: true,
+        interval: 3000,
+        pagination: false,
+        arrows: true,
+        pauseOnHover: true,
+        breakpoints: {
+          640: {
+            perPage: 1,
+          },
+          768: {
+            perPage: 2,
+          },
+          1024: {
+            perPage: 4,
+          },
+        },
+        easing: "ease-in-out",
+      });
+      splide.mount(); // Mount the Splide instance
+    };
+  
+    // Fetch blogs when the page loads
+    splideScript.onload = () => {
+      fetchBlogs(); // Call fetchBlogs only after Splide is loaded
+    };
+    createBlogBtn.addEventListener("click", redirectToCreateBlog);
+};
+  // Redirect to the Create Blog form
+  const redirectToCreateBlog = () => {
+    renderCreateBlogForm();
+  };
+
+>>>>>>> Stashed changes
   // Function to render the Create Blog form
   const renderCreateBlogForm = () => {
     content.innerHTML = `
@@ -368,6 +514,7 @@ export default function renderPageContent() {
     // Create blog request
     const createBlog = async () => {
       const blogData = new FormData();
+<<<<<<< Updated upstream
       blogData.append(
         "title",
         blogTitleInput.value.at(0).toUpperCase() + blogTitleInput.value.slice(1)
@@ -379,6 +526,12 @@ export default function renderPageContent() {
       );
       blogData.append("articleImage", fileInput.files[0]);
       blogData.append("userID", 2);
+=======
+      blogData.append("title", blogTitleInput.value);
+      blogData.append("description", descriptionInput.value);
+      blogData.append("articleImage", fileInput.files[0]);
+      blogData.append("userID", 1);
+>>>>>>> Stashed changes
 
       try {
         const response = await fetch("http://localhost:3000/api/blogs/new", {
@@ -386,6 +539,7 @@ export default function renderPageContent() {
           body: blogData,
         });
         if (response.ok) {
+<<<<<<< Updated upstream
           const blogCreatedEvent = new CustomEvent("blogCreated", {
             bubbles: true, // Enable event bubbling
           });
@@ -394,6 +548,11 @@ export default function renderPageContent() {
           resetForm();
           renderBlogsList();
           showToast("Blog created succesfully" , 'success');
+=======
+          alert("Blog was created successfully");
+          resetForm();
+          renderBlogsList();
+>>>>>>> Stashed changes
         }
       } catch (error) {
         alert("Error creating blog. Please try again later.");
