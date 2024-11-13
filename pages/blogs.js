@@ -1,267 +1,77 @@
-
 export default function renderPageContent() {
-  const content = document.getElementById("content");
-  const customCssLink = document.createElement("link");
-  document.head.appendChild(customCssLink);
-  const customStyles = document.createElement("style");
-  customStyles.rel = "stylesheet";
-  customStyles.href = "../styles/blog.css";
-  document.head.appendChild(customStyles);
-  const splideStyle = document.createElement("link");
-  splideStyle.rel = "stylesheet";
-  splideStyle.href =
-    "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css";
-  document.head.appendChild(splideStyle);
-  const splideScript = document.createElement("script");
-  splideScript.src =
-    "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js";
-  document.head.appendChild(splideScript);
-  const gridStyle = document.createElement("script");
-  gridStyle.src =
-    "https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-grid@0.4.1/dist/js/splide-extension-grid.min.js";
-  document.head.appendChild(gridStyle);
-  customStyles.textContent = `
-         
-  .font-poppins {
-  font-family: "Poppins", sans-serif;
-}
-.color {
-  color: #70717b;
-}
-.bg-color {
-  background: #157aff;
-}
-
-      
-      `;
-
-  // Function to render the blog list
-  const renderBlogsList = () => {
-    content.innerHTML = `
-      <div class="color blogs-list-container p-3  md:p-8">
-       <div class="flex justify-center mt-5 sm:justify-start sm:-mt-8 sm:-mt-12 sm:-ml-5 mb-5">
-  <button id="create-blog-btn" class="p-4 py-2 rounded-2xl bg-color text-white hover:bg-blue-600 transition-all duration-200 w-full sm:w-auto">
-    Publish a Blog
-  </button>  
-</div>
-       <div id="splide" class="splide w-full p-2 mt-2 md:w-[800px] mx-auto rounded-2xl overflow-hidden">
-        <div class="splide__track">
-          <ul class = "splide__list grid gap-4 w-full"></ul> <!-- Apply grid here -->
-        </div>
-      </div>
-      </div>
-    `;
-
-    const blogsList = document.querySelector(".splide__list");
-    const createBlogBtn = document.querySelector("#create-blog-btn");
-
-    // Fetch and display blogs
-    const fetchBlogs = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/blogs/list");
-        const blogs = await response.json();
-        blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-        blogsList.innerHTML = "";
-        blogs.forEach((blog) => {
-          const blogItem = document.createElement("li");
-          blogItem.classList.add(
-            "splide__slide",
-            "p-1",
-            "border",
-            "bg-grey-100",
-            "shadow-lg",
-            "transition-transform",
-            "transform",
-            "hover:scale-105",
-            "hover:shadow-2xl",
-            "relative",
-            "h-[280px]",
-            "w-[90%]",
-            "border",
-            "cursor-pointer"
-          );
-          //src="http://localhost:3000${
-          //  blog.articleImage
-          // }
-          blogItem.innerHTML = `
-            <img src="http://localhost:3000${
-              blog.articleImage
-            }" alt="Blog Image" class="w-full h-[180px] mb-1 object-cover"/>
-  <div class="flex justify-between items-start w-[90%]">
-    <div class="flex flex-col justify-between">
-      <h3 class="font-semibold text-lg text-black w-[180px] ml-1 truncate">${
-        blog.title
-      }</h3>
-      <span class="text-xs text-gray-500 mt-10">
-        ${new Date(blog.createdAt).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        })}
-      </span>
-    </div>
-    <img src="../assets/images/icons/diagonal-arrow.png" class="w-[20px] cursor-pointer flex justify-end"/>
-  </div>
-`;
-          blogItem.addEventListener("click", () => {
-            displayBlogDetails(blog);
-          });
-          blogsList.appendChild(blogItem);
-        });
-        initializeSplide();
-        window.addEventListener("myBlogClicked", (event) => {
-          const blogDetails = event.detail; // The blog object passed with the event
-          console.log("Blog clicked:", blogDetails);
-          displayBlogDetails(blogDetails);
-        });
-      } catch (error) {
-        console.error("Error fetching blogs", error);
-      }
-    };
-
-    const initializeSplide = () => {
-      const splideElement = document.querySelector("#splide");
-      if (splideElement && splideElement.splide) {
-        splideElement.splide.destroy(); // Destroy previous instance if it exists
-      }
-      const splide = new Splide("#splide", {
-        type: "slide",
-        perPage: 3,
-        grid: {
-          rows: 2,
-          cols: 1,
-          gap: {
-            row: "1rem",
-            col: "1.5rem",
-          },
-        },
-        gap: "10px",
-        autoplay: true,
-        interval: 3000,
-        pagination: false,
-        arrows: true,
-        pauseOnHover: true,
-        breakpoints: {
-          640: {
-            perPage: 1,
-            grid: {
-              rows: 1, // Adjust grid rows for small screens
-              cols: 1, // Ensure only one column is used on small devices
-            },
-          },
-          768: {
-            perPage: 2,
-            grid: {
-              rows: 1,
-              cols: 2,
-            },
-          },
-          1024: {
-            perPage: 4,
-          },
-        },
-        easing: "ease-in-out",
-        perMove: 1,
-      });
-      splide.mount(window.splide.Extensions); // Mount the Splide instance
-    };
-    const displayBlogDetails = (blog) => {
-      content.innerHTML = `
-   <div class="p-4 w-full bg-sky-100 rounded-3xl mx-auto">
-  <div class="flex justify-between items-center mb-4">
-    <!-- Back Button -->
-    <button id="back-to-list-btn" class="p-2 rounded-lg bg-blue-500 text-white">
-      <img src="../assets/images/icons/back-arrows.png" class="w-6 h-6 md:w-8 md:h-8">
-    </button>
-    <!-- Delete Button (hidden by default) -->
-    <button data-blog-id=${blog.blogId}>
-      <img class="delete-btn w-6 md:w-8 hidden" src="../assets/images/icons/delete.png" alt="Delete Icon">
-    </button>
-  </div>
-
-  <!-- Blog Title -->
-  <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">${blog.title}</h2>
-
-  <!-- Blog Image -->
-  <img src="http://localhost:3000${blog.articleImage}" alt="Blog Image" class="w-full h-[200px] md:h-[300px] lg:h-[400px] object-cover mb-4 rounded-lg"/>
-
-  <!-- User Info and Date -->
-  <div class="flex justify-between items-center mb-3">
-    <!-- User Information -->
-    <div class="flex items-center space-x-3">
-      <img class="w-10 h-10 md:w-12 md:h-12 rounded-full" src="../assets/images/Waggy.png" alt="User Profile Picture">
-      <p class="text-gray-500 text-sm md:text-base">Posted by User</p>
-    </div>
-    <!-- Date -->
-    <p class="text-gray-500 text-sm md:text-base">13 Nov 2024</p>
-  </div>
-
-  <!-- Blog Description -->
-  <p class="text-gray-700 text-sm md:text-base leading-relaxed">
-    <span class="font-semibold">Lorem Ipsum</span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-  </p>
-</div>
-  `;
-      const deleteBtn = document.querySelector(".delete-btn");
-      if (blog.userID === 2) {
-        deleteBtn.classList.remove("hidden");
-      } else {
-        deleteBtn.classList.add("hidden");
-      }
-      deleteBtn.addEventListener("click", (event) => {
-        const blogId = event.target.closest("button").dataset.blogId;
-        // // const petId = event.target.getAttribute("data-blog-id")
-        // console.log(petId);
-        console.log(blogId);
-        deleteBlog(blogId, blogItem);
-      });
-      const backToListBtn = document.getElementById("back-to-list-btn");
-      backToListBtn.addEventListener("click", renderBlogsList);
-      const deleteBlog = async (blogId) => {
-        try {
-          const response = await fetch(
-            `http://localhost:3000/api/blogs/remove/${blogId}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          console.log(response.json());
-          if (response.ok) {
-            const blogDeleteEvent = new CustomEvent("blogDeleted", {
-              bubbles: true,
-            });
-            window.dispatchEvent(blogDeleteEvent);
-            showToast("Blog deleted succesfully" , 'success');
-            renderBlogsList();
-
-          } else {
-            const result = await response.json();
-            console.error("Error deleting pet:", result.error);
-            alert("Failed to delete pet: " + result.error);
+    const content = document.getElementById('content');
+    const customCssLink = document.createElement("link");
+    document.head.appendChild(customCssLink);
+    const customStyles = document.createElement("style");
+    customStyles.textContent = `
+          .font-poppins {
+              font-family: "Poppins", sans-serif;
           }
-        } catch (error) {
-          console.error("Error deleting pet:", error);
-          alert("Error deleting pet. Please try again later.");
-        }
-      };
+          .color {
+              color: #70717b;
+          }
+          .bg-color {
+              background: #157aff;
+          }
+      `;
+    document.head.appendChild(customStyles);
+
+    // Function to render the blog list
+    const renderBlogsList = () => {
+        content.innerHTML = `
+        <div class="color blogs-list-container ">
+            <div class="">
+                <button id="create-blog-btn" class="mt-6 p-5 py-2 rounded-2xl bg-color text-white">
+                    Create a New Blog
+                </button>
+            </div>
+            <h1 id="heading" class="text-3xl font-bold mb-4 mt-2 text-gray-800">
+                Blog Posts
+            </h1>
+            <div id="blogs-list" class="flex flex-wrap justify-center gap-6 m-5"></div>
+        </div>
+        `;
+        const blogsList = document.querySelector('#blogs-list');
+        const createBlogBtn = document.querySelector('#create-blog-btn');
+
+        // Fetch and display blogs
+        const fetchBlogs = async () => {
+            try {
+                const response = await fetch("http://localhost:3000/api/blogs/list");
+                const blogs = await response.json();
+                blogsList.innerHTML = "";
+                blogs.forEach((blog) => {
+                    const blogItem = document.createElement('div');
+                    blogItem.classList.add('p-4',"w-[100px]", 'border', 'rounded-lg', 'bg-white');
+                    blogItem.innerHTML = `
+                      <div>
+                          <h3 class="font-bold">${blog.title}</h3>
+                        <p>${blog.description}</p>
+                      </div>
+                        <img src="http://localhost:3000${blog.articleImage}" alt="Blog Image" class="w-10"/>
+                    `;
+                    blogsList.appendChild(blogItem);
+                });
+            } catch (error) {
+                console.error("Error fetching blogs", error);
+            }
+        };
+
+        // Fetch blogs when the page loads
+        fetchBlogs();
+
+        // Event listener for Create Blog button
+        createBlogBtn.addEventListener('click', redirectToCreateBlog);
     };
-    // Fetch blogs when the page loads
 
-    fetchBlogs(); // Call fetchBlogs only after Splide is loaded
+    // Redirect to the Create Blog form
+    const redirectToCreateBlog = () => {
+        renderCreateBlogForm();
+    };
 
-    createBlogBtn.addEventListener("click", redirectToCreateBlog);
-  };
-  // Redirect to the Create Blog form
-  const redirectToCreateBlog = () => {
-    renderCreateBlogForm();
-  };
-  // Function to render the Create Blog form
-  const renderCreateBlogForm = () => {
-    content.innerHTML = `
+    // Function to render the Create Blog form
+    const renderCreateBlogForm = () => {
+        content.innerHTML = `
         <div class="color blog-form-container">
             <div class="flex flex-row justify-end items-end">
                 <button id="close-form-btn" class="mt-6 p-5 py-2 rounded-2xl bg-color text-white">X</button>
@@ -365,40 +175,28 @@ export default function renderPageContent() {
       }
     };
 
-    // Create blog request
-    const createBlog = async () => {
-      const blogData = new FormData();
-      blogData.append(
-        "title",
-        blogTitleInput.value.at(0).toUpperCase() + blogTitleInput.value.slice(1)
-      );
-      blogData.append(
-        "description",
-        descriptionInput.value.at(0).toUpperCase() +
-          descriptionInput.value.slice(1)
-      );
-      blogData.append("articleImage", fileInput.files[0]);
-      blogData.append("userID", 2);
+        // Create blog request
+        const createBlog = async () => {
+            const blogData = new FormData();
+            blogData.append('title', blogTitleInput.value);
+            blogData.append('description', descriptionInput.value);
+            blogData.append('articleImage', fileInput.files[0]);
+            blogData.append('userID', 1);
 
-      try {
-        const response = await fetch("http://localhost:3000/api/blogs/new", {
-          method: "POST",
-          body: blogData,
-        });
-        if (response.ok) {
-          const blogCreatedEvent = new CustomEvent("blogCreated", {
-            bubbles: true, // Enable event bubbling
-          });
-          window.dispatchEvent(blogCreatedEvent);
-          console.log(blogCreatedEvent);
-          resetForm();
-          renderBlogsList();
-          showToast("Blog created succesfully" , 'success');
-        }
-      } catch (error) {
-        alert("Error creating blog. Please try again later.");
-      }
-    };
+            try {
+                const response = await fetch("http://localhost:3000/api/blogs/new", {
+                    method: "POST",
+                    body: blogData,
+                });
+                if (response.ok) {
+                    alert('Blog was created successfully');
+                    resetForm();
+                    renderBlogsList();
+                }
+            } catch (error) {
+                alert("Error creating blog. Please try again later.");
+            }
+        };
 
     // Reset form after submission
     const resetForm = () => {
