@@ -238,7 +238,8 @@ export default function renderPageContent() {
     petData.append("age", ageInput.value);
     petData.append("interests", descriptionTextArea.value);
     petData.append("petPicture", fileInput.files[0]);
-    petData.append("userId", 1);
+    petData.append("userId", userIdNumber);
+
 
     try {
       const response = await fetch("http://localhost:3000/api/pets/new", {

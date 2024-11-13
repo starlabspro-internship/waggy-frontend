@@ -66,8 +66,9 @@ function togglePassword() {
       }
   
       const data = await response.json();
+<<<<<<< Updated upstream
       const { accessToken, userId } = data;
-  
+      
       // Store tokens in localStorage
       localStorage.setItem('userId', id);
       localStorage.setItem('token', accessToken);
