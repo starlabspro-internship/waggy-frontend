@@ -31,13 +31,15 @@ export default function renderRightContent() {
     window.blogs = [];
   
     // Fetch blogs from the API
+    const userId = localStorage.getItem("userId");
+    const userIdNumber = parseInt(userId, 10);
     const fetchBlogs = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/blogs/list");
         const fetchedBlogs = await response.json();
         
         if (response.ok) {
-          window.blogs = fetchedBlogs.filter((fetchedBlog) => fetchedBlog.userID === 2); 
+          window.blogs = fetchedBlogs.filter((fetchedBlog) => fetchedBlog.userID === userIdNumber); 
           window.blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           displayBlogs(window.blogs);
         } else {

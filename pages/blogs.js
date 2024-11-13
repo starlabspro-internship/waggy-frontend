@@ -366,7 +366,8 @@ export default function renderPageContent() {
       }
     };
 
-    // Create blog request
+    const userId = localStorage.getItem("userId");
+  const userIdNumber = parseInt(userId, 10);
     const createBlog = async () => {
       const blogData = new FormData();
       blogData.append(
@@ -379,7 +380,7 @@ export default function renderPageContent() {
           descriptionInput.value.slice(1)
       );
       blogData.append("articleImage", fileInput.files[0]);
-      blogData.append("userID", 2);
+      blogData.append("userID", userIdNumber);
 
       try {
         const response = await fetch("http://localhost:3000/api/blogs/new", {
