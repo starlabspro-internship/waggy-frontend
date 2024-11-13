@@ -1,13 +1,12 @@
 
-
 export default function renderPageContent() {
   const content = document.getElementById("content");
   const customCssLink = document.createElement("link");
   document.head.appendChild(customCssLink);
   const customStyles = document.createElement("style");
-  customStyles.rel = "stylesheet"
-  customStyles.href = "../styles/blog.css"
-  document.head.appendChild(customStyles)
+  customStyles.rel = "stylesheet";
+  customStyles.href = "../styles/blog.css";
+  document.head.appendChild(customStyles);
   const splideStyle = document.createElement("link");
   splideStyle.rel = "stylesheet";
   splideStyle.href =
@@ -17,9 +16,13 @@ export default function renderPageContent() {
   splideScript.src =
     "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js";
   document.head.appendChild(splideScript);
+  const gridStyle = document.createElement("script");
+  gridStyle.src =
+    "https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-grid@0.4.1/dist/js/splide-extension-grid.min.js";
+  document.head.appendChild(gridStyle);
   customStyles.textContent = `
          
-        .font-poppins {
+  .font-poppins {
   font-family: "Poppins", sans-serif;
 }
 .color {
@@ -28,100 +31,95 @@ export default function renderPageContent() {
 .bg-color {
   background: #157aff;
 }
-  .border {
-  border: 1px solid #157aff;
-  }
-   #splide {
-    display: grid;
-   }
-.splide__list {
-  display: flex;
-  justify-content: space-between;
-  gap: 5px; /* Adjust the gap between slides */
-  padding: 0;
-  width: 100%;
-}
 
-.splide__slide {
-  flex: 0 0 auto; 
-  width: calc(33.3333% - 1rem); 
- 
-}
-
-@media (max-width: 1024px) {
-  .splide__slide {
-    width: calc(50% - 1rem); /* Two items per page on smaller screens */
-  }
-}
-
-@media (max-width: 640px) {
-  .splide__slide {
-    width: 100%; /* One item per page on very small screens */
-  }
-}
       
       `;
 
   // Function to render the blog list
   const renderBlogsList = () => {
     content.innerHTML = `
-      <div class="color blogs-list-container p-6 md:p-8">
-        <div class="flex justify-start items-end mb-6">
-          <button id="create-blog-btn" class="p-4 py-2 rounded-2xl bg-color text-white hover:bg-blue-600 transition-all duration-200">
-            Publish a Blog
-          </button>  
-        </div>
-        
-        <div id="splide" class="splide  w-full md:w-[800px] mt-[6rem] mx-auto rounded-2xl overflow-hidden">
-          <div class="splide__track">
-            <ul class="splide__list  flex justify-center gap-1  w-full"></ul>
-          </div>
+      <div class="color blogs-list-container p-3  md:p-8">
+       <div class="flex justify-center mt-5 sm:justify-start sm:-mt-8 sm:-mt-12 sm:-ml-5 mb-5">
+  <button id="create-blog-btn" class="p-4 py-2 rounded-2xl bg-color text-white hover:bg-blue-600 transition-all duration-200 w-full sm:w-auto">
+    Publish a Blog
+  </button>  
+</div>
+       <div id="splide" class="splide w-full p-2 mt-2 md:w-[800px] mx-auto rounded-2xl overflow-hidden">
+        <div class="splide__track">
+          <ul class = "splide__list grid gap-4 w-full"></ul> <!-- Apply grid here -->
         </div>
       </div>
+      </div>
     `;
-  
+
     const blogsList = document.querySelector(".splide__list");
     const createBlogBtn = document.querySelector("#create-blog-btn");
-  
+
     // Fetch and display blogs
     const fetchBlogs = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/blogs/list");
         const blogs = await response.json();
+        blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
         blogsList.innerHTML = "";
         blogs.forEach((blog) => {
-          const blogItem = document.createElement("div");
+          const blogItem = document.createElement("li");
           blogItem.classList.add(
             "splide__slide",
-            "p-4",
-            "bg-sky-100",
-            "rounded-2xl",
+            "p-1",
+            "border",
+            "bg-grey-100",
             "shadow-lg",
             "transition-transform",
             "transform",
             "hover:scale-105",
             "hover:shadow-2xl",
-            "relative" ,
-            "h-[380px]",
-            "w-[90%]" ,
-            "border"
+            "relative",
+            "h-[280px]",
+            "w-[90%]",
+            "border",
+            "cursor-pointer"
           );
+          //src="http://localhost:3000${
+          //  blog.articleImage
+          // }
           blogItem.innerHTML = `
-            <img src="http://localhost:3000${blog.articleImage}" alt="Blog Image" class="w-full h-[220px] mb-4 object-cover rounded-xl"/>
-            <div class="flex justify-between items-start w-[90%]">
-              <h3 class="font-bold text-xl text-[#157aff] w-[180px] ml-1">${blog.title}</h3>
-              <img src="../assets/images/icons/diagonal-arrow.png" class="w-[20px] cursor-pointer fles justify-end"/>
-              </div>
-              <p class="truncate">${blog.description}</p>
-          `;
+            <img src="http://localhost:3000${
+              blog.articleImage
+            }" alt="Blog Image" class="w-full h-[180px] mb-1 object-cover"/>
+  <div class="flex justify-between items-start w-[90%]">
+    <div class="flex flex-col justify-between">
+      <h3 class="font-semibold text-lg text-black w-[180px] ml-1 truncate">${
+        blog.title
+      }</h3>
+      <span class="text-xs text-gray-500 mt-10">
+        ${new Date(blog.createdAt).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        })}
+      </span>
+    </div>
+    <img src="../assets/images/icons/diagonal-arrow.png" class="w-[20px] cursor-pointer flex justify-end"/>
+  </div>
+`;
+          blogItem.addEventListener("click", () => {
+            displayBlogDetails(blog);
+          });
           blogsList.appendChild(blogItem);
         });
-        initializeSplide(); // Initialize Splide after loading blogs
+        initializeSplide();
+        window.addEventListener("myBlogClicked", (event) => {
+          const blogDetails = event.detail; // The blog object passed with the event
+          console.log("Blog clicked:", blogDetails);
+          displayBlogDetails(blogDetails);
+        });
       } catch (error) {
         console.error("Error fetching blogs", error);
       }
     };
-  
+
     const initializeSplide = () => {
       const splideElement = document.querySelector("#splide");
       if (splideElement && splideElement.splide) {
@@ -130,8 +128,15 @@ export default function renderPageContent() {
       const splide = new Splide("#splide", {
         type: "slide",
         perPage: 3,
-        splitter: 2,
-        gap: "5px",
+        grid: {
+          rows: 2,
+          cols: 1,
+          gap: {
+            row: "1rem",
+            col: "1.5rem",
+          },
+        },
+        gap: "10px",
         autoplay: true,
         interval: 3000,
         pagination: false,
@@ -140,9 +145,17 @@ export default function renderPageContent() {
         breakpoints: {
           640: {
             perPage: 1,
+            grid: {
+              rows: 1, // Adjust grid rows for small screens
+              cols: 1, // Ensure only one column is used on small devices
+            },
           },
           768: {
             perPage: 2,
+            grid: {
+              rows: 1,
+              cols: 2,
+            },
           },
           1024: {
             perPage: 4,
@@ -151,20 +164,101 @@ export default function renderPageContent() {
         easing: "ease-in-out",
         perMove: 1,
       });
-      splide.mount(); // Mount the Splide instance
+      splide.mount(window.splide.Extensions); // Mount the Splide instance
     };
-  
+    const displayBlogDetails = (blog) => {
+      content.innerHTML = `
+   <div class="p-4 w-full bg-sky-100 rounded-3xl mx-auto">
+  <div class="flex justify-between items-center mb-4">
+    <!-- Back Button -->
+    <button id="back-to-list-btn" class="p-2 rounded-lg bg-blue-500 text-white">
+      <img src="../assets/images/icons/back-arrows.png" class="w-6 h-6 md:w-8 md:h-8">
+    </button>
+    <!-- Delete Button (hidden by default) -->
+    <button data-blog-id=${blog.blogId}>
+      <img class="delete-btn w-6 md:w-8 hidden" src="../assets/images/icons/delete.png" alt="Delete Icon">
+    </button>
+  </div>
+
+  <!-- Blog Title -->
+  <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">${blog.title}</h2>
+
+  <!-- Blog Image -->
+  <img src="http://localhost:3000${blog.articleImage}" alt="Blog Image" class="w-full h-[200px] md:h-[300px] lg:h-[400px] object-cover mb-4 rounded-lg"/>
+
+  <!-- User Info and Date -->
+  <div class="flex justify-between items-center mb-3">
+    <!-- User Information -->
+    <div class="flex items-center space-x-3">
+      <img class="w-10 h-10 md:w-12 md:h-12 rounded-full" src="../assets/images/Waggy.png" alt="User Profile Picture">
+      <p class="text-gray-500 text-sm md:text-base">Posted by User</p>
+    </div>
+    <!-- Date -->
+    <p class="text-gray-500 text-sm md:text-base">13 Nov 2024</p>
+  </div>
+
+  <!-- Blog Description -->
+  <p class="text-gray-700 text-sm md:text-base leading-relaxed">
+    <span class="font-semibold">Lorem Ipsum</span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+  </p>
+</div>
+  `;
+      const deleteBtn = document.querySelector(".delete-btn");
+      if (blog.userID === 2) {
+        deleteBtn.classList.remove("hidden");
+      } else {
+        deleteBtn.classList.add("hidden");
+      }
+      deleteBtn.addEventListener("click", (event) => {
+        const blogId = event.target.closest("button").dataset.blogId;
+        // // const petId = event.target.getAttribute("data-blog-id")
+        // console.log(petId);
+        console.log(blogId);
+        deleteBlog(blogId, blogItem);
+      });
+      const backToListBtn = document.getElementById("back-to-list-btn");
+      backToListBtn.addEventListener("click", renderBlogsList);
+      const deleteBlog = async (blogId) => {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/blogs/remove/${blogId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log(response.json());
+          if (response.ok) {
+            const blogDeleteEvent = new CustomEvent("blogDeleted", {
+              bubbles: true,
+            });
+            window.dispatchEvent(blogDeleteEvent);
+            showToast("Blog deleted succesfully" , 'success');
+            renderBlogsList();
+
+          } else {
+            const result = await response.json();
+            console.error("Error deleting pet:", result.error);
+            alert("Failed to delete pet: " + result.error);
+          }
+        } catch (error) {
+          console.error("Error deleting pet:", error);
+          alert("Error deleting pet. Please try again later.");
+        }
+      };
+    };
     // Fetch blogs when the page loads
-    
-      fetchBlogs(); // Call fetchBlogs only after Splide is loaded
-   
+
+    fetchBlogs(); // Call fetchBlogs only after Splide is loaded
+
     createBlogBtn.addEventListener("click", redirectToCreateBlog);
-};
+  };
   // Redirect to the Create Blog form
   const redirectToCreateBlog = () => {
     renderCreateBlogForm();
   };
-
   // Function to render the Create Blog form
   const renderCreateBlogForm = () => {
     content.innerHTML = `
@@ -274,8 +368,15 @@ export default function renderPageContent() {
     // Create blog request
     const createBlog = async () => {
       const blogData = new FormData();
-      blogData.append("title", blogTitleInput.value);
-      blogData.append("description", descriptionInput.value);
+      blogData.append(
+        "title",
+        blogTitleInput.value.at(0).toUpperCase() + blogTitleInput.value.slice(1)
+      );
+      blogData.append(
+        "description",
+        descriptionInput.value.at(0).toUpperCase() +
+          descriptionInput.value.slice(1)
+      );
       blogData.append("articleImage", fileInput.files[0]);
       blogData.append("userID", 2);
 
@@ -284,19 +385,16 @@ export default function renderPageContent() {
           method: "POST",
           body: blogData,
         });
-        const data = await response.json()
         if (response.ok) {
-          alert("Blog was created successfully");
-          resetForm();
-          renderBlogsList();
           const blogCreatedEvent = new CustomEvent("blogCreated", {
-            detail: {
-              message: "A new blog has been created",
-              data: data, // Pass the response data if needed
-            },
             bubbles: true, // Enable event bubbling
           });
-      window.dispatchEvent(blogCreatedEvent); }
+          window.dispatchEvent(blogCreatedEvent);
+          console.log(blogCreatedEvent);
+          resetForm();
+          renderBlogsList();
+          showToast("Blog created succesfully" , 'success');
+        }
       } catch (error) {
         alert("Error creating blog. Please try again later.");
       }
@@ -314,5 +412,4 @@ export default function renderPageContent() {
   };
 
   renderBlogsList(); // Initialize with the blog list
-  document.addEventListener("DOMContentLoaded", renderPageContent)
 }

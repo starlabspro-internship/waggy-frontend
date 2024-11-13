@@ -4,9 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body>
   
-
+  <div class="flex flex-col  items-center justify-center  bg-white shadow-lg rounded-xl bg-red-500 hover:shadow-xl transition-shadow duration-300 ease-in-out mb-6 cursor-pointer">
+    <!-- First div: Blog Image -->
+    <div class="w-full sm:w-40 sm:h-40 p-1 flex-shrink-0">
+      <img src="http://localhost:3000${blog.articleImage || '/assets/images/default-blog.jpg'}" 
+           alt="${blog.title}" class="w-full h-full object-cover rounded-xl mb-4 sm:mb-0">
+    </div>
+  
+    <!-- Second div: Blog Title and Date -->
+    <div class="w-full sm:w-60 flex flex-col justify-between items-start p-4">
+      <!-- Blog Title (Top of the second div) -->
+      <h3 class="text-sm font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-200 mb-2">
+       my title
+      </h3>
+  
+      <!-- Blog Date (Bottom of the second div) -->
+      <span class="text-sm text-gray-500">
+       my data
+      </span>
+    </div>  
+  </div>
 </body>
 </html>

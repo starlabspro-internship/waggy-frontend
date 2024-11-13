@@ -1,10 +1,23 @@
 export default function renderRightContent() {
     const searchInput = document.querySelector("#search-bar");
     const rightContent = document.getElementById('right-content');
+    const customStyles = document.createElement("style");
+    customStyles.rel = "stylesheet";
+    customStyles.textContent = `
+         .truncate-lines {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;   /* Set the number of lines you want */
+  overflow: hidden;        /* Hide the text overflow */
+  text-overflow: ellipsis; /* Add ellipsis when overflowing */
+}
+
+  
+}`
     rightContent.innerHTML = `
          <div class=" rounded-lg">
           <hr />
-          <div class= "blog-list-container">
+          <div class= "blog-list-container  h-[180px] cursor-pointer">
             <p class="text-gray-400 text-sm" style="color: #157aff">
               No blog listed
             </p>
@@ -24,7 +37,8 @@ export default function renderRightContent() {
         const fetchedBlogs = await response.json();
         
         if (response.ok) {
-          window.blogs = fetchedBlogs.filter((fetchedBlog) => fetchedBlog.userID === 2); // Update global blogs array
+          window.blogs = fetchedBlogs.filter((fetchedBlog) => fetchedBlog.userID === 2); 
+          window.blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           displayBlogs(window.blogs);
         } else {
           console.log("Failed to fetch blogs:", fetchedBlogs.message);
@@ -33,11 +47,12 @@ export default function renderRightContent() {
         console.error("Error fetching blogs:", error);
       }
     };
-
+    
+  document.addEventListener('blogCreated' , fetchBlogs)
     const displayBlogs = (blogsToDisplay) => {
         if (blogsToDisplay.length === 0) {
           blogListContainer.innerHTML =
-            '<p class="text-gray-400 ml-3 text-sm" style="color: #157aff">No Blogs Listed</p>';
+            '<p class="text-gray-400 ml-3 text-xs" style="color: #157aff">No Blogs Listed</p>';
           return;
         }
     
@@ -45,36 +60,53 @@ export default function renderRightContent() {
     
         blogsToDisplay.forEach((blog) => {
           const blogItem = document.createElement("div");
-          blogItem.classList.add("blog-item", "mb-5");
+          blogItem.classList.add("blog-item");
     
           blogItem.innerHTML = `
-          
-<div class="flex flex-col sm:flex-row items-center justify-between p-4 bg-white shadow-lg rounded-xl hover:shadow-xl transition-shadow duration-300 ease-in-out mb-6 cursor-pointer">
-  <!-- Blog Content -->
-  <div class="w-full flex flex-col items-center sm:items-start">
-    <!-- Blog Image -->
+<div class="bg-white mb-3 p-2">
+  <div class="w-full flex-shrink-0">
     <img src="http://localhost:3000${blog.articleImage || '/assets/images/default-blog.jpg'}" 
-         alt="${blog.title}" class="w-full h-25 sm:w-40 sm:h-40 rounded-xl object-cover mb-4 sm:mb-0">
+         alt="${blog.title}" class="h-[100px] w-full object-cover mb-2">
+  </div>
 
-    <!-- Blog Title -->
-    <div class="flex flex-col justify-center items-center sm:items-start text-center sm:text-left p-2">
-      <h3 class="text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-200 mb-2">
+  <div class="w-full  flex flex-col justify-between items-start p-0 h-full">
+    <div class="w-full">
+      <h3 class="text-sm font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-200 mb-1 truncate-lines">
         ${blog.title}
       </h3>
     </div>
+    <div class="">
+      <span class="text-xs text-gray-500 mb-5 ">
+        ${new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+      </span>
+    </div>
   </div>
 </div>
+
         `;
-    
+        blogItem.addEventListener('click', () => {
+          console.log('blog was clicked');
+          const newEvent = new CustomEvent('myBlogClicked', {
+            bubbles: true, 
+            detail: {
+              userID: 2,
+              blogId: blog.blogId,
+              title: blog.title,
+              description: blog.description,
+              articleImage: blog.articleImage
+            }
+          });
+          window.dispatchEvent(newEvent);
+        });
           blogListContainer.appendChild(blogItem);
         });
       };
     
      
       fetchBlogs();
-      document.addEventListener("blogCreated", fetchBlogs);
-     
-     
+
+    window.addEventListener('blogCreated' , fetchBlogs)
+    window.addEventListener('blogDeleted' , fetchBlogs)
    
       searchInput.addEventListener("input", (e) => {
         const searchQuery = e.target.value.toLowerCase();
