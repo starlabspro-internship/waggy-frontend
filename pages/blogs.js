@@ -215,7 +215,7 @@ export default function renderPageContent() {
         // // const petId = event.target.getAttribute("data-blog-id")
         // console.log(petId);
         console.log(blogId);
-        deleteBlog(blogId, blogItem);
+        deleteBlog(blogId);
       });
       const backToListBtn = document.getElementById("back-to-list-btn");
       backToListBtn.addEventListener("click", renderBlogsList);
