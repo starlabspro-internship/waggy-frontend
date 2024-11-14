@@ -303,7 +303,7 @@ if (ageInput) {
     if (categoryInput) displayError(categoryInput, categoryError);
     if (breedInput) displayError(breedInput, breedError);
     if (descriptionTextArea) displayError(descriptionTextArea, descriptionError);
-    if (fileInput) displayError(fileInput, fileError);
+    if (fileInput && !petIdForUpdate) displayError(fileInput, fileError);
     if (ageInput) displayError(ageInput, ageError);
   
     if (
@@ -400,13 +400,12 @@ const updatePet = async (petId) => {
         successText.classList.add("hidden");
       }, 5000);
 
-      resetForm();
+      // resetForm();
     } else {
       errorText.classList.remove("hidden");
     }
   } catch (error) {
     console.error("Error updating pet:", error);
-    alert("Error updating pet. Please try again later.");
     showToast("Error updating pet", "error");
   }
 };

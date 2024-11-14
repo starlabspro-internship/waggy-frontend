@@ -33,8 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
   
         const user = await response.json();
+        console.log(user.profile.organisationName);
+
+        console.log(user)
         // dymamicly show user name or organization name
-       let name = user.profile.firstName === undefined ? user.profile.organisationName : user.profile.firstName;
+        let name = !user.profile.firstName ? user.profile.organisationName : user.profile.firstName;
+
+
+       console.log("hey", name)
       
         updateUserDisplay(
           name,
@@ -133,11 +139,23 @@ document.addEventListener("DOMContentLoaded", () => {
  rightContent.innerHTML = `<p>Loading...</p>`;
 
  try {
+
+  const pageTitle = document.getElementById('page-title');
+  if (pageTitle && (page === 'petview' || page === 'petprofile')) {
+    pageTitle.textContent = "Your Pets";
+  } if (pageTitle && (page === 'blogs')){
+    pageTitle.textContent = "Your Blogs";
+  } if (pageTitle && (page === 'profile' || page === 'messages' || page === 'adoptation' || page === 'settings')){
+    pageTitle.textContent = "Your Friends";
+  } if (pageTitle && (page === 'matching')){
+    pageTitle.textContent = "Your Matchings";
+  } 
+  
+
    const pageModule = await import(`../pages/${page}.js`);
    const renderPageContent = pageModule.default;
    renderPageContent();
 
-   console.log(page)
    let rightModule;
    if (page == 'petview') {
      rightModule = await import(`../pages/petprofile-right.js`);

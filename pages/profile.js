@@ -189,8 +189,6 @@ export default function renderPageContent() {
     });
   }
 
-  showToast("This is a test toast!", "success");
-
   // Form submission event
   const profileForm = document.getElementById("profile-form");
   if (profileForm) {

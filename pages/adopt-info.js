@@ -2,7 +2,6 @@ export default function renderPageContent() {
 
         try {
             const storedData = JSON.parse(sessionStorage.getItem('selectedUser'));
-            console.log(storedData.data)
             if (!storedData || Date.now() - storedData.timestamp > 3600000) {
                 throw new Error('Data expired or invalid');
             }

@@ -1,7 +1,6 @@
 export default function renderRightContent() {
   const rightContent = document.getElementById("right-content");
   const searchInput = document.querySelector("#search-bar");
-
   // Initialize the right content area
   rightContent.innerHTML = `
     <div class="p-1 rounded-lg">
@@ -66,7 +65,7 @@ export default function renderRightContent() {
           petItem.classList.add("pet-item", "mb-4", "bg-white", "p-2", "rounded-lg", "shadow-md", "flex", "items-center", "space-x-4", "hover:bg-blue-50", "cursor-pointer");
   
           petItem.innerHTML = `
-              <div class="flex items-center space-x-4" onclick="navigateToAdoptInfo(${pet.id})">
+              <div class="flex items-center space-x-4  w-full" onclick="navigateToAdoptInfo(${pet.id})">
                   <img src="http://localhost:3000${pet.petPicture || "/assets/images/default-pet.jpg"}" 
                   alt="${pet.name}" class="w-12 h-12 rounded-full object-cover object-center">
                   <div class="flex-1">

@@ -81,6 +81,42 @@ export default function renderPageContent() {
             }
         });
     };
+
+    window.addToMatchingList = async function () {
+        // Retrieve the token (ensure this is done securely, e.g., from localStorage or a global state)
+        const token = localStorage.getItem("token"); // or another method depending on your app's auth flow
+    
+        if (!token) {
+            showToast("You must be logged in to list a pet!", "error");
+            return; // Exit if the user is not authenticated
+        }
+    
+        try {
+            const response = await fetch("http://localhost:3000/api/matching-list/new", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}` // Sending the token as part of the request
+                },
+                body: JSON.stringify({
+                    petId: petId, // Get petId dynamically from your pet data
+                    status: "Available" // Example status, adjust based on your logic
+                })
+            });
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+    
+            showToast("Pet listed successfully!", "success");
+            // Optionally, redirect or update the UI
+            // window.location.href = '#/petprofile';
+        } catch (error) {
+            console.error('Error listing pet:', error);
+            showToast("Failed to list the pet!", "error");
+        }
+    };
     
 
 
@@ -186,7 +222,7 @@ export default function renderPageContent() {
                 </div>
 
                 <div class="flex justify-center gap-4 md:gap-8 pt-14">
-                    <button class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm">
+                    <button class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm"  onclick="addToMatchingList()">
                         Add to Matching
                     </button>
                     <button class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm">
