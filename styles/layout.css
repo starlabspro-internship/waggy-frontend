@@ -115,3 +115,27 @@ body {
   max-width: 800px;
   margin: auto;
 }
+#right-content {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #f0f0f0; /* Firefox */
+}
+
+/* For Webkit browsers (Chrome, Safari, Edge) */
+#right-content::-webkit-scrollbar {
+  width: 8px; /* width of the scrollbar */
+}
+
+#right-content::-webkit-scrollbar-thumb {
+  background-color: #C0C0C0; /* Scroll thumb color */
+  border-radius: 10px; /* Rounded thumb */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+#right-content::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* Track color */
+  border-radius: 10px;
+}
+
+#right-content::-webkit-scrollbar-thumb:hover {
+  background-color: #A0A0A0; /* Thumb color on hover */
+}

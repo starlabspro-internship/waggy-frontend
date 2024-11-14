@@ -35,18 +35,20 @@ export default function renderPageContent() {
       
       `;
     document.head.appendChild(customStyles);
+    const userId = localStorage.getItem("userId");
+    const userIdNumber = parseInt(userId, 10);
 
   // Function to render the blog list
   const renderBlogsList = () => {
     content.innerHTML = `
       <div class="color blogs-list-container p-3  md:p-8">
-       <div class="flex justify-center mt-5 sm:justify-start sm:-mt-8 sm:-mt-12 sm:-ml-5 mb-5">
+       <div class="flex justify-center mb-10  mt-5 md:-mt-10  md:justify-start mb-10 md:mb-0 sm:-ml-10 ">
   <button id="create-blog-btn" class="p-4 py-2 rounded-2xl bg-color text-white hover:bg-blue-600 transition-all duration-200 w-full sm:w-auto">
     Publish a Blog
   </button>  
 </div>
-       <div id="splide" class="splide w-full p-2 mt-2 md:w-[800px] mx-auto rounded-2xl overflow-hidden">
-        <div class="splide__track">
+       <div id="splide" class="splide  z-0 w-full p-2 mt-5 md:w-[500px]  lg:w-[800px] mx-auto rounded-2xl overflow-hidden">
+        <div class="splide__track ">
           <ul class = "splide__list grid gap-4 w-full"></ul> <!-- Apply grid here -->
         </div>
       </div>
@@ -77,10 +79,10 @@ export default function renderPageContent() {
             "hover:scale-105",
             "hover:shadow-2xl",
             "relative",
-            "h-[280px]",
+            "h-[260px]",
             "w-[90%]",
             "border",
-            "cursor-pointer"
+            "cursor-pointer",
           );
           //src="http://localhost:3000${
           //  blog.articleImage
@@ -89,20 +91,19 @@ export default function renderPageContent() {
             <img src="http://localhost:3000${
               blog.articleImage
             }" alt="Blog Image" class="w-full h-[180px] mb-1 object-cover"/>
-  <div class="flex justify-between items-start w-[90%]">
+  <div class="flex justify-between items-start w-[90%] relative">
     <div class="flex flex-col justify-between">
-      <h3 class="font-semibold text-lg text-black w-[180px] ml-1 truncate">${
-        blog.title
-      }</h3>
-      <span class="text-xs text-gray-500 mt-10">
-        ${new Date(blog.createdAt).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        })}
-      </span>
-    </div>
-    <img src="../assets/images/icons/diagonal-arrow.png" class="w-[20px] cursor-pointer flex justify-end"/>
+     <div class="relative group">
+  <h3 class="font-semibold text-lg text-black w-[180px] ml-1 line-clamp-2">
+    ${blog.title}
+  </h3>
+  <div
+    class="z-50 fixed left-3  bottom-10 w-[200px] max-w-[200px] p-2 bg-gray-500 text-white text-sm rounded-md opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-opacity text-xs"
+    style=" white-space: normal; word-wrap: break-word;"
+  >
+    ${blog.title}
+  </div>
+    
   </div>
 `;
           blogItem.addEventListener("click", () => {
@@ -147,19 +148,19 @@ export default function renderPageContent() {
           640: {
             perPage: 1,
             grid: {
-              rows: 1, // Adjust grid rows for small screens
+              rows: 3, // Adjust grid rows for small screens
               cols: 1, // Ensure only one column is used on small devices
             },
           },
           768: {
-            perPage: 2,
+            perPage: 1,
             grid: {
-              rows: 1,
-              cols: 2,
+              rows: 3,
+              cols: 1,
             },
           },
           1024: {
-            perPage: 4,
+            perPage: 3,
           },
         },
         easing: "ease-in-out",
@@ -192,7 +193,7 @@ export default function renderPageContent() {
     <!-- User Information -->
     <div class="flex items-center space-x-3">
       <img class="w-10 h-10 md:w-12 md:h-12 rounded-full" src="../assets/images/Waggy.png" alt="User Profile Picture">
-      <p class="text-gray-500 text-sm md:text-base">Posted by User</p>
+      <p class="text-gray-500 text-sm md:text-base">Posted by ${blog.author.profile.firstName} ${blog.author.profile.lastName}</p>
     </div>
     <!-- Date -->
     <p class="text-gray-500 text-sm md:text-base">13 Nov 2024</p>
@@ -205,7 +206,7 @@ export default function renderPageContent() {
 </div>
   `;
       const deleteBtn = document.querySelector(".delete-btn");
-      if (blog.userID === 2) {
+      if (blog.userID === userIdNumber) {
         deleteBtn.classList.remove("hidden");
       } else {
         deleteBtn.classList.add("hidden");
@@ -297,6 +298,7 @@ export default function renderPageContent() {
                           Choose File
                           <input type="file" class="hidden file" id="file-input" name="articleImage" accept="image/*"/>
                         </label>
+                          <span class="text-red-500 text-xs ml-2 image-error hidden">Image is required</span>
                         <label class="ml-3 color text-sm file-label" for="file-input">Select Blog Image</label>
                         <img id="image-preview" src="" alt="Blog Image Preview" style="max-width: 100px; max-height: 100px; display: none; border-radius: 50%;" />
                     </div>
@@ -317,6 +319,7 @@ export default function renderPageContent() {
     const blogForm = document.querySelector("#blog-form");
     const blogTitleError = document.querySelector(".blog-title-error");
     const descriptionError = document.querySelector(".description-error");
+    const fileError = document.querySelector('.image-error')
     const fileInput = document.querySelector("#file-input");
     const fileLabel = document.querySelector(".file-label");
     const imagePreview = document.getElementById("image-preview");
@@ -356,7 +359,7 @@ export default function renderPageContent() {
       e.preventDefault();
       displayError(blogTitleInput, blogTitleError);
       displayError(descriptionInput, descriptionError);
-
+      displayError(fileInput, fileError);
       if (
         blogTitleInput.value.trim() &&
         descriptionInput.value.trim() &&
@@ -366,8 +369,6 @@ export default function renderPageContent() {
       }
     };
 
-    const userId = localStorage.getItem("userId");
-  const userIdNumber = parseInt(userId, 10);
     const createBlog = async () => {
       const blogData = new FormData();
       blogData.append(

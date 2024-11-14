@@ -91,7 +91,7 @@ export default function renderRightContent() {
           const newEvent = new CustomEvent('myBlogClicked', {
             bubbles: true, 
             detail: {
-              userID: 2,
+              userID: userIdNumber,
               blogId: blog.blogId,
               title: blog.title,
               description: blog.description,
