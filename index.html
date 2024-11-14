@@ -21,12 +21,12 @@
 <!-- Add Splide Grid extension JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-grid@0.4.1/dist/js/splide-extension-grid.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
-    
+
 
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Satisfy&display=swap"
         rel="stylesheet" />
-    <script >
+    <script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -91,15 +91,15 @@
             <div class="text-white text-xs font-semibold">Waggy</div>
         </div>
     </aside>
-<!-- -->
-    
-    <div id="drawer" class="fixed inset-0 z-[90] bg-gray-800 bg-opacity-75 hidden h-[100%]">
+    <!-- -->
+
+    <div id="drawer" class="fixed inset-0 z-[90] bg-gray-800 bg-opacity-75 hidden h-[100%] md:hidden">
         <aside class="w-64 bg-blue flex flex-col  text-white h-screen p-4">
             <img src="./assets/images/icons/joi.png" class="p-4 h-[120px] w-[120px] rounded-full" alt="" />
             <nav class="flex flex-col pl-5  justify-around">
                 <div class="p-2 mb-5 font-semibold text-2xl">
-                    <h1 class="user-name">User Name</h1>
-                    <h4 class="font-thin text-sm user-email">User Email</h4>
+                    <h1 class="user-nameMobile">User Name</h1>
+                    <h4 class="font-thin text-sm user-emailMobile">User Email</h4>
                 </div>
                 <a href="#profile" class="nav-link hover:rounded p-2 font-semibold">
                     Profile
@@ -130,12 +130,12 @@
                     <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon" />
                 </a>
                 <div class="pl-4 pt-5">
-                    <button  class="hover:rounded p-2 font-semibold logoutLink">
-                        <img src="./assets/images/icons/logout.png" alt="" />
+                    <button class="logoutLink mobile hover:rounded p-2 font-semibold z-10">
+                        <img src="./assets/images/icons/logout.png" alt=""/>
                     </button>
                 </div>
             </nav>
-    
+
             <div class="flex jusify-center items-center absolute bottom-0 left-3 gap-1">
                 <img src="./assets/images/icons/WaggyRounded.png" class="w-8 rounded-full" alt="" />
                 <div class="text-white text-xs font-semibold">Waggy</div>
@@ -145,11 +145,10 @@
     </div>
 
     <!-- Main Content -->
-    <main id="main-content" class="flex-1 h-[100%] md:p-6 bg-white md:rounded-l-3xl md:rounded-r-3xl md:rounded-r-none z-10 md:overflow-auto">
+    <main id="main-content"
+        class="flex-1 h-[100%] md:p-6 bg-white md:rounded-l-3xl md:rounded-r-3xl md:rounded-r-none z-10 md:overflow-auto">
         <!-- Page content loaded here -->
-        
-        <div id="content" >Welcome to the Dashboard</div>
-
+        <div id="content">Welcome to the Dashboard</div>
 
     </main>
 
@@ -162,7 +161,8 @@
                 <img src="./assets/images/svg/magnetize.svg" alt="Search"
                     class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
                 <!-- Input field styled with Tailwind CSS -->
-                <input type="text" class="w-full bg-white rounded-3xl pl-10 pr-2 py-1 text-sm" placeholder="Search Here..." id="search-bar">
+                <input type="text" class="w-full bg-white rounded-3xl pl-10 pr-2 py-1 text-sm"
+                    placeholder="Search Here..." id="search-bar">
             </div>
             <hr class="py-1" />
             <div id="right-content" class="h-[calc(100%-4rem)] overflow-y-auto">
@@ -199,10 +199,12 @@
     </div>
     <div id="toast-container" class="fixed bottom-4 right-1 flex flex-col space-y-2 z-[100]"></div>
     <!-- Toast Container -->
-    <script type="module" src="./scripts/layout.js"></script>   
+    <script type="module" src="./scripts/layout.js"></script>
     <script src="./scripts/toast.js"></script>
     <script src="./scripts/auth/logoutAuth.js"></script>
-      
+    <script src="./config/apiConfig.js"></script>
+
+
 </body>
 
 </html>

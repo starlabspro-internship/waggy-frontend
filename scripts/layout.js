@@ -6,11 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let userId = localStorage.getItem('userId');
   let token = localStorage.getItem('token');
 
- console.log(userId)
- console.log(token)
  const updateUserDisplay = (firstName, email) => {
   document.querySelector(".user-name").textContent = firstName || "No Name Available";
+  document.querySelector(".user-nameMobile").textContent = firstName || "No Name Available";
   document.querySelector(".user-email").textContent = email || "No Email Available";
+  document.querySelector(".user-emailMobile").textContent = email || "No Email Available";
+
+
 };
 
     // Fetch user data with proper error handling
@@ -31,11 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
   
         const user = await response.json();
-        console.log(user);
         // dymamicly show user name or organization name
        let name = user.profile.firstName === undefined ? user.profile.organisationName : user.profile.firstName;
-
-       console.log("ketu", name, user.email )
       
         updateUserDisplay(
           name,
@@ -112,39 +111,60 @@ document.addEventListener("DOMContentLoaded", () => {
   
 
   // Load page content based on navigation
-  async function loadPage(page) {
-    const content = document.getElementById("content");
-    const rightContent = document.getElementById("right-content");
+ async function loadPage(page) {
+ if (localStorage.getItem("petToUpdateId")) {
+   localStorage.removeItem("petToUpdateId");
+ }
+ const content = document.getElementById("content");
+ const rightContent = document.getElementById("right-content");
 
-    content.innerHTML = `<div class="flex justify-center items-center h-screen md:h-[400px] bg-[#157AFF] md:bg-white">
-    <div class="flex flex-col items-center gap-2">
-        <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-75"></div>
-        <p class="text-white text-lg font-semibold">Loading...</p>
-    </div>
-</div>`;
-    rightContent.innerHTML = `<p>Loading...</p>`;
+ // Initially set opacity to 0 for smooth transition
+ content.classList.remove('loaded');
+ rightContent.classList.remove('loaded');
 
-    try {
-      const pageModule = await import(`../pages/${page}.js`);
-      const renderPageContent = pageModule.default;
-      renderPageContent();
+ // Display loading spinner
+ content.innerHTML = `<div class="flex justify-center items-center h-screen md:h-[400px] bg-[#157AFF] md:bg-white">
+     <div class="flex flex-col items-center gap-2">
+         <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-75"></div>
+         <p class="text-white text-lg font-semibold">Loading...</p>
+     </div>
+ </div>`;
 
-      const rightModule = await import(`../pages/${page}-right.js`);
-      const renderRightContent = rightModule.default;
-      renderRightContent();
+ rightContent.innerHTML = `<p>Loading...</p>`;
 
-      document.title = `${page.charAt(0).toUpperCase() + page.slice(1)} - Waggy`;
-      setActiveLink(page);
-    } catch (error) {
-      console.error(`Error loading page ${page}:`, error);
-      content.innerHTML = `<div class="flex justify-center items-center h-screen  bg-[#157AFF] md:bg-white">
-    <div class="flex flex-col items-center gap-2">
-        <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-75"></div>
-        <p class="text-white text-lg font-semibold">Error loading...</p>
-    </div>
-</div>`;
-    }
-  }
+ try {
+   const pageModule = await import(`../pages/${page}.js`);
+   const renderPageContent = pageModule.default;
+   renderPageContent();
+
+   console.log(page)
+   let rightModule;
+   if (page == 'petview') {
+     rightModule = await import(`../pages/petprofile-right.js`);
+   } else {
+     rightModule = await import(`../pages/${page}-right.js`);
+   }
+   const renderRightContent = rightModule.default;
+   renderRightContent();
+
+   // After loading, apply fade-in transition
+   content.classList.add('loaded');
+   rightContent.classList.add('loaded');
+
+   // Update title and active links
+   document.title = `${page.charAt(0).toUpperCase() + page.slice(1)} - Waggy`;
+   setActiveLink(page);
+ } catch (error) {
+   console.error(`Error loading page ${page}:`, error);
+   content.innerHTML = `<div class="flex justify-center items-center h-screen  bg-[#157AFF] md:bg-white">
+       <div class="flex flex-col items-center gap-2">
+           <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-75"></div>
+           <p class="text-white text-lg font-semibold">Error loading...</p>
+       </div>
+   </div>`;
+ }
+}
+
 
   // Load initial page or default to 'profile'
   const initialPage = location.hash ? location.hash.substring(1) : "profile";
@@ -153,6 +173,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Handle back/forward navigation
   window.addEventListener("popstate", () => {
     const page = location.hash ? location.hash.substring(1) : "profile";
+    if (localStorage.getItem("petToUpdateId")) {
+      localStorage.removeItem("petToUpdateId");
+    }
     loadPage(page);
   });
 });

@@ -38,13 +38,12 @@ body {
 .active-link {
   color: #ffcc00; /* Example color for active link */
 }
-/* Plain CSS version */
-/* toast.css */
+
 /* toast.css */
 .toast {
   display: flex;
   align-items: center;
-  background-color: #333;
+  background-color: #d6cc6c;
   color: #fff;
   padding: 12px 20px;
   border-radius: 8px;
@@ -103,7 +102,9 @@ body {
 .toast--info {
   background-color: #007bff;
 }
-
+.toast--warning {
+  background-color: #FFC107;
+}
 @media (max-width: 600px) {
   .toast {
     right: 10px;

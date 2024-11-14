@@ -4,17 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Redirect if user is not logged in
   if (!userId || !token) {
-    window.location.href = "/login.html"; 
+      window.location.href = "/login.html";
   }
 
   // Function to handle logout
   function logout() {
-    localStorage.removeItem("userId");
-    localStorage.removeItem("token");
-    window.location.href = "/login.html";
+      localStorage.removeItem("userId");
+      localStorage.removeItem("token");
+      window.location.href = "/login.html";
   }
 
-  document.querySelector(".logoutLink").addEventListener("click", logout);
+  // Handle logout for the sidebar
+  const sidebarLogoutButton = document.querySelector(".logoutLink");
+  if (sidebarLogoutButton) {
+      sidebarLogoutButton.addEventListener("click", logout);
+  }
 
-
+  // Handle logout for mobile navbar
+  const mobileLogoutButton = document.querySelector(".logoutLink.mobile");
+  if (mobileLogoutButton) {
+      mobileLogoutButton.addEventListener("click", logout);
+  }
 });
