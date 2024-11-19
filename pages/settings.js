@@ -104,6 +104,8 @@ export default function renderPageContent() {
                 <div class="flex justify-center gap-4 md:gap-8 pt-14">
                     <button class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm">Add to Matching</button>
                     <button class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm">Add to Adoption</button>
+                    <button class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm" onclick="window.location.href='http://127.0.0.1:5500/forgetPassword.html';" >
+                    Reset your password </button>
                 </div>
             </div>
         `;

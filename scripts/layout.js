@@ -163,7 +163,6 @@ async function isTokenValid() {
 }
  if (isProtected && (!userId || !token)) {
    window.location.href = "/login.html";
-   alert("You are not logged in");
   return;
 }
  const isValid = await isTokenValid(token);
