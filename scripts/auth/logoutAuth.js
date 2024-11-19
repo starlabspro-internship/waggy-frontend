@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem('token');
 
   // Redirect if user is not logged in
-  if (!userId || !token) {
-      window.location.href = "/login.html";
-  }
+//   if (!userId || !token) {
+//       window.location.href = "/login.html";
+//   }
 
   // Function to handle logout
   function logout() {

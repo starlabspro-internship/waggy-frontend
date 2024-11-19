@@ -33,11 +33,17 @@ export default function renderRightContent() {
     // Fetch blogs from the API
     const userId = localStorage.getItem("userId");
     const userIdNumber = parseInt(userId, 10);
+    const token = localStorage.getItem('token');
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/blogs/list");
+        const response = await fetch("http://localhost:3000/api/blogs/list" , {
+          method: 'GET',
+          headers: {
+              'Authorization': `Bearer ${token}`, // Attach the token in the Authorization header
+  },
+        });
         const fetchedBlogs = await response.json();
-        
+      console.log(fetchedBlogs);
         if (response.ok) {
           window.blogs = fetchedBlogs.filter((fetchedBlog) => fetchedBlog.userID === userIdNumber); 
           window.blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -88,6 +94,9 @@ export default function renderRightContent() {
         `;
         blogItem.addEventListener('click', () => {
           console.log('blog was clicked');
+          const authorName = blog.author.profile.firstName + " " + blog.author.profile.lastName;
+           console.log(authorName);
+         
           const newEvent = new CustomEvent('myBlogClicked', {
             bubbles: true, 
             detail: {
@@ -95,7 +104,9 @@ export default function renderRightContent() {
               blogId: blog.blogId,
               title: blog.title,
               description: blog.description,
-              articleImage: blog.articleImage
+              articleImage: blog.articleImage,
+              authorFullName: authorName || "Me" || "Anonymous",
+              createdAt: blog.createdAt,
             }
           });
           window.dispatchEvent(newEvent);

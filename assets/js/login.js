@@ -67,11 +67,12 @@ function togglePassword() {
   
       const data = await response.json();
       console.log(data);
-      const { accessToken, userId } = data;
+      const { accessToken, userId , refreshToken } = data;
       
       // Store tokens in localStorage
       localStorage.setItem('userId', userId);
       localStorage.setItem('token', accessToken);
+      localStorage.setItem('refreshToken' , refreshToken)
       window.location.href = '/index.html'; 
 
     } catch (error) {

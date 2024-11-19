@@ -9,64 +9,65 @@
 <body>
   <main id="main-content" class="flex-1 h-[100%] md:p-6 bg-white md:rounded-l-3xl md:rounded-r-3xl md:rounded-r-none z-10 md:overflow-auto">
     <!-- Page content loaded here -->
-    
-    <div id="content" >
-      <div class="p-4 w-3xl bg-sky-100">
-        <div class="flex justify-between ">
-          <button id="back-to-list-btn" class="p-2 rounded-lg bg-color text-white mb-4"><img src="./assets/images/icons/back-arrows.png"></img></button>
-        <button><img class="w-[30px] hidden" src="./assets/images/icons/delete.png"></img></button>
-        </div>
-        <h2 class="text-4xl font-bold mb-2">This is my title</h2>
-        <img src="./assets/images/dog2.jpg" alt="Blog Image" class="w-full h-[300px] object-cover mb-4 rounded-lg"/>
-       <div class="flex justify-between mb-3">
-        <div >
-          <img class="w-[50px] rounded-full" src="./assets/images/Waggy.png">
-          <p class="text-gray-500 text-sm">Posted by User</p>
-        </div>
-        <p class="text-gray-500 text-sm mt-4">13 Nov 2024</p>
-       </div>
-        <p class="text-gray-700">
-          <span class="text-bold">Lorem Ipsum</span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        </p>
-      </div>
-      <div id="splide" class="splide w-full p-2 mt-2 md:w-[800px] mx-auto rounded-2xl overflow-hidden">
-        <div class="splide__track">
-          <ul class = "splide__list grid gap-4 w-full">
+    <!--../
+    assets/images/icons/back-arrows.png-->
 
-            <li class="splide__slide
-            p-1
-            border
-            bg-grey-100
-            shadow-lg
-            transition-transform
-            transform
-            hover:scale-105
-            hover:shadow-2xl
-            relative
-            h-[280px]
-            w-[90%]
-            border
-            cursor-pointer">
-            <img src="./assets/images/DOGG.jpg" alt="Blog Image" class="w-full h-[180px] mb-1 object-cover" />
-
-            <div class="flex flex-col justify-between bg-yellow-500 h-[100px] ">
-              <div class="flex justify-between py-2">
-                <h3 class="font-semibold text-lg text-black w-[180px] ml-1">${blog.title}</h3>
-                <img src="../assets/images/icons/diagonal-arrow.png" class="w-[20px] cursor-pointer flex justify-end" />
-              </div>
-    
-              <!-- Date Section aligned to the bottom -->
-              <div class="bg-red-500 flex justify-end mt-auto py-2">
-                <span class="text-xs text-gray-500">
-                  28 Nov 2024
-                </span>
-              </div>
-            </div>
-          </li>
-          </ul>
-        </div>
+    <div class="p-4 w-full bg-sky-100 rounded-3xl mx-auto">
+      <div class="flex justify-between items-center mb-4">
+        <!-- Back Button -->
+        <button id="back-to-list-btn" class="p-2 rounded-lg bg-blue-500 text-white">
+          <img src="../assets/images/icons/back-arrows.png" class="w-6 h-6 md:w-8 md:h-8">
+        </button>
+        <!-- Delete Button (hidden by default) -->
+        <button data-blog-id=${blog.blogId}>
+          <img class="delete-btn w-6 md:w-8 hidden" src="../assets/images/icons/delete.png" alt="Delete Icon">
+        </button>
       </div>
+    
+      <!-- Image with Title Overlaid -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:space-x-4 w-full mb-4 ">
+        <!-- Title Over the Image -->
+        <div class="flex flex-col justify-between bg-green-500 h-full" >
+          <h2 class="text-black text-xl md:text-2xl lg:text-3xl font-bold px-4 py-2 rounded-l">
+            ${blog.title} This is my title hello there how are you doing
+          </h2>
+          <div class="flex flex-row md:flex-col justify-between bg-red-500 items-start mb-4 px-3">
+          <div class="flex items-start md:flex-col space-x-3 "> 
+            <!-- User Information -->
+          
+              <p class="text-gray-500 text-sm md:text-base">User Name</p>
+            </div >
+            <!-- Date -->
+           <div class="flex">
+            <img 
+          src="../assets/images/icons/date-icon.png" 
+          alt="Blog Image" 
+          class="w-5 h-5"
+        />
+            <p class="text-gray-500 text-sm md:text-base"> ${new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p></div>
+          </div>
+        </div>
+      
+        <img 
+          src=http://localhost:3000${blog.articleImage} 
+          alt="Blog Image" 
+          class="w-full h-[200px] md:h-[300px] lg:h-[300px] object-contain rounded-lg"
+        />
+      </div>
+    
+      <!-- User Info and Date Beneath the Image -->
+    
+      <!-- Blog Description -->
+      <p class="text-gray-500 text-sm md:text-base leading-relaxed">
+        <span class="font-semibold">${blog.description}   </span>
+      </p>
     </div>
-    
+
+ 
+</div>
+  </main>
+  
+  
+  
 </body>
 </html>

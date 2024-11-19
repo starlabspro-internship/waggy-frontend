@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const navLinks = document.querySelectorAll('.nav-link');
   let userId = localStorage.getItem('userId');
   let token = localStorage.getItem('token');
-
+  let refreshToken = localStorage.getItem('refreshToken')
+  console.log(userId);
+  console.log(refreshToken);
+  
  const updateUserDisplay = (firstName, email) => {
   document.querySelector(".user-name").textContent = firstName || "No Name Available";
   document.querySelector(".user-nameMobile").textContent = firstName || "No Name Available";
@@ -15,56 +18,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
 };
 
+async function isTokenValid() {
+  if (!refreshToken) {
+    console.log("No refresh token available, user must log in again.");
+    window.location.href = '/login.html'; // Redirect to login if no refresh token
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:3000/api/auth/refreshToken', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify({ refreshToken }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to refresh token');
+    }
+
+    const data = await response.json();
+    const newAccessToken = data.accessToken;
+    localStorage.setItem('token', newAccessToken); // Update the access token
+    console.log('Access token refreshed');
+    return newAccessToken;
+
+  } catch (error) {
+    console.error('Error refreshing token:', error);
+    window.location.href = '/login.html'; // Redirect to login page on failure
+  }
+}
+
     // Fetch user data with proper error handling
     const fetchUserData = async () => {
+      const isValid = await isTokenValid(token); // Validate token before making the API request
+      if (!isValid) {
+        alert("Session expired. Please log in again.");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("token");
+        window.location.href = "/login.html"; // Redirect to login page
+        return;
+      }
+    
       try {
         const response = await fetch(`http://localhost:3000/api/users/view/${userId}`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-             "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
           },
-
         });
-  
+    
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-  
+    
         const user = await response.json();
-        console.log(user.profile.organisationName);
-
-        console.log(user)
-        // dymamicly show user name or organization name
-        let name = !user.profile.firstName ? user.profile.organisationName : user.profile.firstName;
-
-
-       console.log("hey", name)
-      
-        updateUserDisplay(
-          name,
-          user.email
-        );
+        updateUserDisplay(user.profile.firstName, user.email);
       } catch (error) {
         console.error("Error fetching user data:", error);
         updateUserDisplay("User not found", "No Email Available");
-        
-        // Optionally show an error notification to the user
-        const errorMessage = error.message === 'Failed to fetch' 
-          ? 'Network error. Please check your connection.'
-          : 'Error loading user data. Please try again later.';
-        
-        // You could add a notification element to show this error
-        const notification = document.createElement('div');
-        notification.className = 'error-notification text-red-500 mb-4';
-        notification.textContent = errorMessage;
-        form.insertBefore(notification, form.firstChild);
-        
-        // Remove the notification after 5 seconds
-        setTimeout(() => notification.remove(), 5000);
       }
     };
+   
   
     // Execute the fetch
     if (userId) {
@@ -89,11 +108,24 @@ document.addEventListener("DOMContentLoaded", () => {
     menuIcon.src = './assets/images/icons/app.png';
   }
 
+  const routes = {
+    "login": { protected: false, page: "/login.html" },
+    "signup": { protected: false, page: "/signup.html" },
+    "profile": { protected: true, page: "pages/profile.js" },
+    "petprofile": { protected: true, page: "pages/petprofile.js" },
+    "petview": { protected: true, page: "pages/petview.js" } ,
+    "matching": { protected: true, page: "pages/matching.js" },
+    "messages": { protected: true, page: "pages/messages.js" },
+    "blogs": { protected: true, page: "pages/blogs.js" },
+    "adoptation": { protected: true, page: "pages/adoptation.js" },
+    "settings": { protected: true, page: "pages/settings.js" },
+  };
   // Set active link function
   function setActiveLink(page) {
     navLinks.forEach(link => {
       link.classList.remove('active-link');
       if (link.getAttribute("href").substring(1) === page) {
+
         link.classList.add('active-link');
       }
     });
@@ -115,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   
-
+ 
   // Load page content based on navigation
  async function loadPage(page) {
  if (localStorage.getItem("petToUpdateId")) {
@@ -123,7 +155,26 @@ document.addEventListener("DOMContentLoaded", () => {
  }
  const content = document.getElementById("content");
  const rightContent = document.getElementById("right-content");
-
+ const { protected: isProtected, page: pagePath } = routes[page] || {};
+ console.log(isProtected , pagePath , routes[page]);
+ if (!pagePath) {
+  console.error(`Page path not found for: ${page}`);
+  return; // Exit if there's no valid page path
+}
+ if (isProtected && (!userId || !token)) {
+   window.location.href = "/login.html";
+   alert("You are not logged in");
+  return;
+}
+ const isValid = await isTokenValid(token);
+    if (!isValid) {
+      alert("Session expired. Please log in again.");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("token");
+      window.location.href = "/login.html";
+      return;
+    }
+  
  // Initially set opacity to 0 for smooth transition
  content.classList.remove('loaded');
  rightContent.classList.remove('loaded');
@@ -151,8 +202,8 @@ document.addEventListener("DOMContentLoaded", () => {
     pageTitle.textContent = "Your Matchings";
   } 
   
-
-   const pageModule = await import(`../pages/${page}.js`);
+//const pageModule = await import(`../pages/${page}.js`);
+   const pageModule = await import(`../${pagePath}`);
    const renderPageContent = pageModule.default;
    renderPageContent();
 
@@ -190,10 +241,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Handle back/forward navigation
   window.addEventListener("popstate", () => {
-    const page = location.hash ? location.hash.substring(1) : "profile";
+    const route = location.hash ? location.hash.substring(1) : "profile";
     if (localStorage.getItem("petToUpdateId")) {
       localStorage.removeItem("petToUpdateId");
     }
-    loadPage(page);
+      loadPage(route);
+    
   });
 });
