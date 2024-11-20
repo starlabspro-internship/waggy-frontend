@@ -1,3 +1,4 @@
 {
-  "liveServer.settings.multiRootWorkspaceName": "waggy-frontend"
+  "liveServer.settings.multiRootWorkspaceName": "waggy-frontend",
+  "liveServer.settings.port": 5501
 }
