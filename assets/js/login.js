@@ -52,6 +52,7 @@ function togglePassword() {
   
   // Login function to call API and store tokens
   async function loginUser(email, password) {
+    const errorMessage = document.querySelector('#messageError')
     try {
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
@@ -62,6 +63,8 @@ function togglePassword() {
       });
   
       if (!response.ok) {
+       errorMessage.classList.add('visible')
+
         throw new Error("Login failed. Please check your credentials.");
       }
   
@@ -73,7 +76,7 @@ function togglePassword() {
       localStorage.setItem('userId', userId);
       localStorage.setItem('token', accessToken);
       localStorage.setItem('refreshToken' , refreshToken)
-      window.location.href = '/index.html'; 
+      window.location.href = '/#profile'; 
 
     } catch (error) {
       console.error("Error during login:", error);

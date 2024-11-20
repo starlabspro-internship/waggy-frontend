@@ -99,11 +99,11 @@ export default function renderPageContent() {
       content.innerHTML = `
         <div class="color blogs-list-container p-3 md:p-8">
           <div class="flex justify-center mb-10 mt-5 md:-mt-10 md:justify-start mb-10 md:mb-0 sm:-ml-10">
-            <button id="create-blog-btn" class="p-4 mt-3 ml-2 py-2 rounded-2xl bg-color text-white hover:bg-blue-600 w-full md:w-[200px]">
+            <button id="create-blog-btn" class="p-4 mt-2 ml-2 py-2 rounded-2xl bg-color text-white hover:bg-blue-600 w-full md:w-[200px]">
               Publish a Blog
             </button>
           </div>
-          <div id="splide" class="splide z-0 w-full p-2 mt-5 md:w-[500px] lg:w-[800px] mx-auto rounded-2xl overflow-hidden">
+          <div id="splide" class="splide z-0 w-full p-2 mt-3  md:w-[500px] lg:w-[800px] mx-auto rounded-2xl overflow-hidden">
             <div class="splide__track">
               <ul class="splide__list grid gap-4 w-full"></ul> <!-- Apply grid here -->
             </div>
@@ -130,7 +130,10 @@ export default function renderPageContent() {
         const blogs = await response.json();
         blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         blogsList.innerHTML = "";
-    
+        if (blogs.length === 0) {
+          blogsList.innerHTML = `<p class="text-center text-gray-500">No blogs available yet. Be the first to publish!</p>`;
+          return; // Skip initializing Splide if no blogs exist
+        }
         blogs.forEach((blog) => {
           const blogItem = document.createElement("li");
           blogItem.classList.add("splide__slide", "p-1", "border", "bg-grey-100", "shadow-lg", "transition-transform", "transform", "hover:scale-105", "hover:shadow-2xl", "relative", "h-[260px]", "w-[90%]", "border", "cursor-pointer");
@@ -169,7 +172,7 @@ export default function renderPageContent() {
     console.log(fullName);
       content.innerHTML = `
 
-      <div class="p-6 w-full bg-sky-100 md:rounded-3xl mx-auto">
+      <div class="p-6 w-full bg-sky-100 md:rounded-3xl mx-auto h-full">
         <div class="flex justify-between items-center mb-4">
           <!-- Back Button -->
           <button id="back-to-list-btn" class="p-2 rounded-lg bg-blue-500 text-white">
