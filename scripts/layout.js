@@ -119,6 +119,7 @@ async function isTokenValid() {
     "blogs": { protected: true, page: "pages/blogs.js" },
     "adoptation": { protected: true, page: "pages/adoptation.js" },
     "settings": { protected: true, page: "pages/settings.js" },
+    "aboutPage": { protected: true, page: "pages/aboutPage.js" },
   };
   // Set active link function
   function setActiveLink(page) {
