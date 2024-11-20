@@ -64,8 +64,7 @@ function togglePassword() {
   
       if (!response.ok) {
        errorMessage.classList.add('visible')
-
-        throw new Error("Login failed. Please check your credentials.");
+          throw new Error("Login failed. Please check your credentials.");
       }
   
       const data = await response.json();
@@ -78,7 +77,7 @@ function togglePassword() {
       localStorage.setItem('userId', userId);
       localStorage.setItem('token', accessToken);
       localStorage.setItem('refreshToken' , refreshToken)
-      window.location.href = '/#profile'; 
+      window.location.href = '/profile'; 
 
     } catch (error) {
       console.error("Error during login:", error);

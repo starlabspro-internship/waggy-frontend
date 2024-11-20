@@ -141,7 +141,7 @@ async function isTokenValid() {
       loadPage(page);
 
       // Update URL without reloading
-      history.pushState(null, null, `#${page}`);
+      history.pushState(null, null, `${page}`);
       closeDrawer();
       setActiveLink(page); // Update active links
     });
