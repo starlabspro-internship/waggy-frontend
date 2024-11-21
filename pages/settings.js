@@ -1,139 +1,166 @@
 export default function renderPageContent() {
-    // Add Glide.js CSS
+    const content = document.querySelector('#content');
     const customCssLink = document.createElement("link");
-    customCssLink.rel = "stylesheet";
-    customCssLink.href = "../styles/layout.css";
     document.head.appendChild(customCssLink);
-    
-    const glideCssLink = document.createElement("link");
-    glideCssLink.rel = "stylesheet";
-    glideCssLink.href = "https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css";
-    document.head.appendChild(glideCssLink);
-
-    const content = document.getElementById('content');
-    
-    // Define background colors and icons for carousel items
-    const backgrounds = [
-        'bg-[#E2F5CB]',
-        'bg-[#FFE9C2]',
-        'bg-[#FF8682]',
-        'bg-[#C2EBFF]',
-        'bg-[#E2F5CB]',
-        'bg-[#FFE9C2]'
-    ];
-    
-    const icons = [
-        './assets/images/icons/green.png',
-        './assets/images/icons/orange.png',
-        './assets/images/icons/red.png',
-        './assets/images/icons/blue.png',
-        './assets/images/icons/green.png',
-        './assets/images/icons/orange.png'
-    ];
-
-    // Function to fetch users from API
-    async function fetchUsers() {
-        try {
-            const response = await fetch('https://jsonplaceholder.typicode.com/users?_start=0&_limit=6');
-            const users = await response.json();
-            return users;
-        } catch (error) {
-            console.error('Error fetching users:', error);
-            return [];
-        }
+    const customStyles = document.createElement("style");
+    customStyles.textContent = `
+    .font-poppins {
+        font-family: "Poppins", sans-serif;
     }
-
-    // Function to render content and initialize Glide
-    function renderContent(users) {
-        const carouselSlides = users.map((user, index) => `
-            <li class="glide__slide h-[87px] w-[104px] rounded-[30.20px] ${backgrounds[index]} flex flex-col justify-center items-center overflow-hidden">
-                <div class="flex flex-col justify-center items-center relative top-6 z-[50]">
-                    <h1>${user.name.split(' ')[0]}</h1>
-                    <p>${user.id}</p>
-                </div>
-                <img src="${icons[index]}" class="relative top-0 right-0 left-3" alt="">
-            </li>
-        `).join('');
-
-        content.innerHTML = `
-            <div class="flex flex-col w-full">
-                <!-- First row -->
-                <div class="">
-                    <div class="flex justify-between w-full relative top-5 md:static z-[10] px-2">
-                        <button class="bg-grey text-blue py-2 px-2 text-blue rounded-[16px]">
-                            <img src="./assets/images/icons/pet-care.png" class="h-6 w-6" alt="">
-                        </button>
-                        <div class="flex gap-3">
-                            <button class="gap-4 bg-grey py-1 px-2 rounded-[16px]">
-                                <img src="./assets/images/icons/edit-text.png" class="h-6 w-6" alt="">
-                            </button>
-                            <button class="gap-4 bg-grey py-1 px-2 rounded-[16px]">
-                                <img src="./assets/images/icons/delete.png" class="h-6 w-6" alt="">
-                            </button>
+    .color {
+        color: #70717b;
+    }
+    .bg-color {
+        background: #157aff;
+    }
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    `;
+    document.head.appendChild(customStyles);
+   
+    content.innerHTML = `
+    <div class="max-w-7xl mx-auto py-8 px-4">
+        <!-- Most Visited Settings -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">Settings</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Reset your password -->
+                <div id="resetPasswordCard" class="p-6 bg-white rounded-lg shadow-md cursor-pointer">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <img src="./assets/images/icons/resetPassword.png" alt="Reset Password">
                         </div>
                     </div>
-                    <!-- Second row -->
-                    <div class="relative -top-10">
-                        <div class="flex w-full justify-center md:static">
-                            <img src="./assets/images/dog2.jpg" class="w-full md:h-[250px] md:w-auto md:rounded-[16px]" alt="">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Password Reset</h3>
+                    <p class="text-sm text-gray-600">Reset your password.</p>
+                </div>
+                <!-- Activity Log -->
+                <div class="p-6 bg-white rounded-lg shadow-md cursor-pointer">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                            <img src="./assets/images/icons/activity.png" alt="Activity Log Icon">
                         </div>
                     </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Activity Log</h3>
+                    <p class="text-sm text-gray-600">View and manage your activity on the platform.</p>
                 </div>
-                <!-- third row -->
-                <div class="bg-white rounded-t-[40px] md:rounded-t-[0] relative -top-20 z-[60] md:static">
-                    <div class="relative pl-5 pt-7 md:pt-1 md:pl-10">
-                        <h1 class="font-semibold text-2xl md:text-3xl md:text-[26.11px] text-blue md:text-[#03063A]">Shiro</h1>
-                        <div class="flex gap-1 items-center">
-                            <img src="./assets/images/icons/location-pin.png" alt="" class="h-4">
-                            <h2 class="text-xl md:text-sm text-[#70717B]">Tirana, Albania</h2>
+                <!-- Dark Mode -->
+                <div class="p-6 bg-white rounded-lg shadow-md cursor-pointer">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                            <img src="./assets/images/icons/darkmode.png" alt="Dark Mode Icon">
                         </div>
                     </div>
-                </div>
-                <!-- forth row -->     
-                <div class="glide px-2 relative -top-10 md:-top-[0] md:static">
-                    <div class="glide__track" data-glide-el="track">
-                        <ul class="glide__slides">
-                            ${carouselSlides}
-                        </ul>
-                    </div>
-                </div>
-                <!-- fifth row -->
-                <div class="px-4 md:px-12 py-2 md:text-sm">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ullam doloremque in voluptatem architecto a ab mollitia iusto corrupti eligendi nihil necessitatibus voluptates molestias ut blanditiis ipsum, pariatur ad facilis!</p>
-                </div>
-                <div class="flex justify-center gap-4 md:gap-8 pt-14">
-                    <button class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm">Add to Matching</button>
-                    <button class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm">Add to Adoption</button>
-                    <button class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm" onclick="window.location.href='http://127.0.0.1:5500/forgetPassword.html';" >
-                    Reset your password </button>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Dark Mode</h3>
+                    <p class="text-sm text-gray-600">Choose if you want to use dark mode.</p>
                 </div>
             </div>
-        `;
+        </section>
+        <div id="resetPasswordModal" class="fixed inset-0 bg-color bg-opacity-50  justify-center items-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Reset Your Password</h2>
+            <form id="reset-password-form">
+                <label for="new-password" class="block text-sm text-gray-700">New Password:</label>
+                <input type="password" id="new-password" class="w-full p-2 border rounded mb-4" required />
 
-        // Add Glide.js JavaScript after content is rendered
-        const glideScript = document.createElement("script");
-        glideScript.src = "https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js";
-        glideScript.onload = () => {
-            // Initialize Glide after script is loaded and content is rendered
-            new Glide('.glide', {
-                type: 'carousel',
-                autoplay: 3000,
-                hoverpause: true,
-                perView: 4,
-                gap: 10,
-                breakpoints: {
-                    768: {
-                        perView: 4
-                    },
-                    480: {
-                        perView: 3
-                    }
-                }
-            }).mount();
-        };
-        document.body.appendChild(glideScript);
-    }
+                <label for="confirm-password" class="block text-sm text-gray-700">Confirm Password:</label>
+                <input type="password" id="confirm-password" class="w-full p-2 border rounded mb-4" required />
 
-    // Start the process
-    fetchUsers().then(renderContent);
+                <button type="submit" class="w-full bg-color text-white py-2 rounded-lg">Reset Password</button>
+            </form>
+            <button id="closeModalButton" class="mt-4 text-blue-500">Close</button>
+        </div>
+    </div>
+        <!-- Looking for something else? -->
+        <section>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">Looking for something else?</h2>
+            <div class="space-y-4">
+                <!-- Privacy Centre -->
+                <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-md cursor-pointer">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                            <img src="./assets/images/icons/privacy.png" alt="Privacy Icon">
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Privacy Centre</h3>
+                            <p class="text-sm text-gray-600">Learn how to manage and control your privacy across products.</p>
+                        </div>
+                    </div>
+                    <span class="text-custom-blue font-semibold text-lg">→</span>
+                </div>
+                <!-- Help Centre -->
+                <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-md cursor-pointer">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                            <img src="./assets/images/icons/helpcentre.png" alt="Help Icon">
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Help Centre</h3>
+                            <p class="text-sm text-gray-600">Learn more about our updated settings experience.</p>
+                        </div>
+                    </div>
+                    <span class="text-custom-blue font-semibold text-lg">→</span>
+                </div>
+            </div>
+        </section>
+    </div>
+    `;
+
+    document.getElementById('resetPasswordCard').addEventListener('click', () => {
+        const modal = document.getElementById('resetPasswordModal');
+        modal.classList.remove('hidden'); // Show the modal by removing the 'hidden' class
+    });
+    
+    // Close the modal when the close button is clicked
+    document.getElementById('closeModalButton').addEventListener('click', () => {
+        const modal = document.getElementById('resetPasswordModal');
+        modal.classList.add('hidden'); // Hide the modal by adding the 'hidden' class
+    });
+
+    document.getElementById('reset-password-form').addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent form refresh
+    
+        const newPassword = document.getElementById('new-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+    
+        if (newPassword !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+    
+        // Make the request to reset the password (assumes token is available)
+        let token = localStorage.getItem("token");; // Replace with the actual token from the URL or state
+        if (!token) {
+            alert('No token found. Please request a password reset.');
+            return;
+        }
+        try {
+            const response = await fetch(`http://localhost:3000/api/password/reset/${token}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization' : `Bearer ${token}`
+                },
+                body: JSON.stringify({ password: newPassword }),
+            });
+    
+            if (response.ok) {
+                alert('Password reset successfully!');
+                // Close the modal and redirect to login page
+                document.getElementById('resetPasswordModal').classList.add('hidden');
+                window.location.href = '/login.html';
+            } else {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error('Error resetting password:', error);
+            alert('An error occurred while resetting your password. Please try again later.');
+        }
+    });
 }

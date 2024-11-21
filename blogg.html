@@ -3,31 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Settings</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
+  <style>
+    :root {
+      --custom-blue: #1877F2;
+    }
+    .bg-custom-blue {
+      background-color: var(--custom-blue);
+    }
+    .text-custom-blue {
+      color: var(--custom-blue);
+    }
+  </style>
 </head>
-<body>
-  
-  <div class="flex flex-col  items-center justify-center  bg-white shadow-lg rounded-xl bg-red-500 hover:shadow-xl transition-shadow duration-300 ease-in-out mb-6 cursor-pointer">
-    <!-- First div: Blog Image -->
-    <div class="w-full sm:w-40 sm:h-40 p-1 flex-shrink-0">
-      <img src="http://localhost:3000${blog.articleImage || '/assets/images/default-blog.jpg'}" 
-           alt="${blog.title}" class="w-full h-full object-cover rounded-xl mb-4 sm:mb-0">
-    </div>
-  
-    <!-- Second div: Blog Title and Date -->
-    <div class="w-full sm:w-60 flex flex-col justify-between items-start p-4">
-      <!-- Blog Title (Top of the second div) -->
-      <h3 class="text-sm font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-200 mb-2">
-       my title
-      </h3>
-  
-      <!-- Blog Date (Bottom of the second div) -->
-      <span class="text-sm text-gray-500">
-       my data
-      </span>
-    </div>  
+<body class="bg-gray-100 min-h-screen">
+
+  <div class="max-w-7xl mx-auto py-8 px-4">
+    <!-- Most Visited Settings -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6">Most visited settings</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Blocking -->
+        <div class="p-6 bg-white rounded-lg shadow-md cursor-pointer">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-full  flex items-center justify-center">
+              <img src="./assets/images/icons/blocked.png" alt="Blocking Icon">
+            </div>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">Blocking</h3>
+          <p class="text-sm text-gray-600">Review people you've previously blocked or add someone to your blocked list.</p>
+        </div>
+        <!-- Activity Log -->
+        <div class="p-6 bg-white rounded-lg shadow-md cursor-pointer">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+              <img src="./assets/images/icons/activity.png" alt="Activity Log Icon">
+            </div>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">Activity Log</h3>
+          <p class="text-sm text-gray-600">View and manage your activity on the platform.</p>
+        </div>
+        <!-- Dark Mode -->
+        <div class="p-6 bg-white rounded-lg shadow-md cursor-pointer">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+              <img src="./assets/images/icons/darkmode.png" alt="Dark Mode Icon">
+            </div>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">Dark Mode</h3>
+          <p class="text-sm text-gray-600">Choose if you want to use dark mode.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Looking for something else? -->
+    <section>
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6">Looking for something else?</h2>
+      <div class="space-y-4">
+        <!-- Privacy Centre -->
+        <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-md">
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+              <img src="./assets/images/icons/privacy.png" alt="Privacy Icon">
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold text-gray-800">Privacy Centre</h3>
+              <p class="text-sm text-gray-600">Learn how to manage and control your privacy across products.</p>
+            </div>
+          </div>
+          <span class="text-custom-blue font-semibold text-lg">→</span>
+        </div>
+        <!-- Help Centre -->
+        <div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-md">
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+              <img src="./assets/images/icons/helpcentre.png" alt="Help Icon">
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold text-gray-800">Help Centre</h3>
+              <p class="text-sm text-gray-600">Learn more about our updated settings experience.</p>
+            </div>
+          </div>
+          <span class="text-custom-blue font-semibold text-lg">→</span>
+        </div>
+      </div>
+    </section>
   </div>
+
 </body>
 </html>

@@ -346,7 +346,7 @@ export default function renderPageContent() {
                       <span class="text-red-500 text-xs ml-2 -mt-2 file-error hidden">File is required</span>
                       <input type="hidden" id="blog-picture-src" name="blogPictureSrc" />
                       <div class="button-container mt-4">
-                          <button type="submit" class="mt-0 w-full py-2 rounded-2xl submit-btn bg-color text-white">
+                          <button type="submit" class="mt-0 w-[11rem] py-2 rounded-2xl submit-btn bg-color text-white">
                             <span class="text-xs">Save Blog</span>
                           </button>
                       </div>

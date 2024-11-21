@@ -64,15 +64,16 @@ async function loginUser(email, password) {
 
     if (!response.ok) {
       errorMessage.classList.add("visible");
-      throw new Error("Login failed. Please check your credentials.");
+      // throw new Error("Login failed. Please check your credentials.");
+      return
     }
 
     const data = await response.json();
     console.log(data);
     const { accessToken, userId, refreshToken } = data;
-    localStorage.removeItem("userId");
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
+    // localStorage.removeItem("userId");
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("refreshToken");
     // Store tokens in localStorage
     localStorage.setItem("userId", userId);
     localStorage.setItem("token", accessToken);

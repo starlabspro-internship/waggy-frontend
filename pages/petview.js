@@ -1,4 +1,5 @@
 export default function renderPageContent() {
+    ///api/adoption-listings/new - route for adoption listing
     // Add Glide.js CSS
     const customCssLink = document.createElement("link");
     customCssLink.rel = "stylesheet";
@@ -336,7 +337,7 @@ export default function renderPageContent() {
 </button>
 
 
-                    <button class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm">
+                    <button class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm" >
                         Add to Adoption
                     </button>
                 </div>

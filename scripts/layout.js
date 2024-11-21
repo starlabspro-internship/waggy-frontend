@@ -163,6 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const routes = {
     login: { protected: false, page: "/login.html" },
     signup: { protected: false, page: "/signup.html" },
+    organisationSignup: { protected: false, page: "/organisationSignup.html" },
     profile: { protected: true, page: "pages/profile.js" },
     petprofile: { protected: true, page: "pages/petprofile.js" },
     petview: { protected: true, page: "pages/petview.js" },
