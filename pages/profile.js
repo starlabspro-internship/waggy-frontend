@@ -142,6 +142,9 @@ export default async function renderPageContent() {
     );
 
     const user = await response.json();
+    console.log(user.profile.address, "sdasdadsadasd")
+
+    localStorage.setItem("userLocation", user.profile.address)
 
     // Check if the user has an organisationName
     hasOrganisationName = Boolean(user.profile.organisationName);

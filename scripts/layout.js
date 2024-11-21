@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ? user.profile.organisationName
         : user.profile.firstName;
 
-      console.log("hey", name);
+
 
       let profilePictureSrc;
 
@@ -172,6 +172,10 @@ document.addEventListener("DOMContentLoaded", () => {
     adoptation: { protected: true, page: "pages/adoptation.js" },
     settings: { protected: true, page: "pages/settings.js" },
     aboutPage: { protected: true, page: "pages/aboutPage.js" },
+    "match-info": { protected: true, page: "pages/match-info.js" },
+    "match-action": { protected: true, page: "pages/match-action.js" },
+
+
   };
   // Set active link function
   function setActiveLink(page) {
@@ -262,8 +266,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       //const pageModule = await import(`../pages/${page}.js`);
       const pageModule = await import(`../${pagePath}`);
+      
       const renderPageContent = pageModule.default;
       renderPageContent();
+      let rightModule;
+      if (page == 'petview') {
+        rightModule = await import(`../pages/petprofile-right.js`);
+      }
+      else if (page == 'match-info' || page == 'match-action') {
+       rightModule = await import(`../pages/matching-right.js`);
+     }  
+     else {
+        rightModule = await import(`../pages/${page}-right.js`);
+      }
+      const renderRightContent = rightModule.default;
+      renderRightContent();
 
       // After loading, apply fade-in transition
       content.classList.add("loaded");

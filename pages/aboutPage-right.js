@@ -4,9 +4,6 @@ export default function renderPageContent() {
     content.innerHTML = `
         <div class="p-4 rounded-lg">
         <div class=" bg-white text-white-800">
-
-   
-
     <!-- About Section -->
     <section class="max-w-2xl mx-auto py-12 text-center">
         <h2 class="text-3xl font-bold mb-6">Our Story</h2>

@@ -51,7 +51,7 @@ export default function renderPageContent() {
             }
             const pet = await response.json();
             renderContent(pet);
-            console.log(pet);
+            await initializeButton();
         } catch (error) {
             console.error('Error fetching pet:', error);
             content.innerHTML = '<p>Error loading pet data</p>';
@@ -74,50 +74,155 @@ export default function renderPageContent() {
                 }
                 showToast("Pet deleted successfully!", "success");
                 // Redirect to the pet list or home page after successful deletion
-                window.location.href = '#/petprofile';
+                window.location.href = '#petprofile';
             } catch (error) {
                 console.error('Error deleting pet:', error);
                 showToast("Failed to delete the pet!", "error");
             }
         });
     };
-
-    window.addToMatchingList = async function () {
-        // Retrieve the token (ensure this is done securely, e.g., from localStorage or a global state)
-        const token = localStorage.getItem("token"); // or another method depending on your app's auth flow
     
+    window.handleMatchingButtonClick = async function () {
+        
         if (!token) {
-            showToast("You must be logged in to list a pet!", "error");
-            return; // Exit if the user is not authenticated
+            showToast("You must be logged in to perform this action!", "error");
+            return;
         }
-    
+
+        const petId = sessionStorage.getItem("selectedPet");
+        if (!petId) {
+            showToast("No pet selected!", "error");
+            return;
+        }
+
+        try {
+            // Check the current status of the pet in the matching list
+            const status = await getMatchingStatus(petId);
+           
+            if (status === "Not Found") {
+                // Pet is not in the list, add it
+                await addToMatchingList(petId);
+            } else if (status === "Available") {
+                // Pet is in the list and available, make it unavailable
+                await updateMatchingList(petId, "Unavailable");
+            } else if (status === "Unavailable") {
+                // Pet is in the list and unavailable, make it available
+                await updateMatchingList(petId, "Available");
+            }
+        } catch (error) {
+            console.error("Error handling button click:", error);
+            showToast("An error occurred while updating the pet status.", "error");
+        }
+    };
+
+    // Function to add pet to matching list
+    window.addToMatchingList = async function (petId) {
+        
         try {
             const response = await fetch("http://localhost:3000/api/matching-list/new", {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${token}` // Sending the token as part of the request
+                    "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify({
-                    petId: petId, // Get petId dynamically from your pet data
-                    status: "Available" // Example status, adjust based on your logic
-                })
+                body: JSON.stringify({ petId, status: "Available" })
             });
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-    
-            showToast("Pet listed successfully!", "success");
-            // Optionally, redirect or update the UI
-            // window.location.href = '#/petprofile';
+
+            showToast("Pet added to the matching list successfully!", "success");
+            await initializeButton()
         } catch (error) {
-            console.error('Error listing pet:', error);
-            showToast("Failed to list the pet!", "error");
+            console.error('Error adding pet:', error);
+            showToast("Failed to add the pet to the matching list!", "error");
         }
     };
-    
+
+    // Function to update the pet status in the matching list
+    window.updateMatchingList = async function (petId, status) {
+        console.log("this one")
+        try {
+            const response = await fetch(`http://localhost:3000/api/matching-list/edit/${petId}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ petId, status })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            showToast(`Pet status updated to ${status}!`, "success");
+            await initializeButton()
+        } catch (error) {
+            console.error('Error updating pet status:', error);
+            showToast("Failed to update the pet status!", "error");
+        }
+    };
+
+    // Function to get the matching status of the pet
+    window.getMatchingStatus = async function (petId) {
+        console.log(petId)
+        console.log(token)
+        console.log("hey 1")
+        try {
+            const response = await fetch(`http://localhost:3000/api/matching-list/view-pet/${petId}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`
+                },
+            });
+
+            if (response.status === 404) {
+                return "Not Found";
+            }
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+         console.log(data)
+            return data.status;
+        } catch (error) {
+            console.error('Error fetching matching status:', error);
+            showToast("Failed to fetch matching status!", "error");
+            return null;
+        }
+    };
+
+    // Initialize button text based on the current pet status
+    window.initializeButton = async function () {
+        const petId = sessionStorage.getItem("selectedPet");
+        const button = document.getElementById("matchingButton");
+
+        if (!petId || !button) return;
+
+        try {
+            const status = await getMatchingStatus(petId);
+            console.log(status , "statusi eshte");
+
+            if (status === "Not Found") {
+                button.textContent = "Add to Matching List";
+            } else if (status === "Available") {
+                button.textContent = "Remove from Matching List";
+            } else if (status === "Unavailable") {
+                button.textContent = "Make Available to Matching List";
+            }
+        } catch (error) {
+            console.error("Error initializing button:", error);
+        }
+    };
+
 
 
     window.navigateToProfile = function() {
@@ -135,21 +240,21 @@ export default function renderPageContent() {
             <li class="glide__slide h-[87px] w-[104px] rounded-[30.20px] ${backgrounds[0]} flex flex-col justify-center items-center overflow-hidden">
                 <div class="flex flex-col justify-center items-center relative top-6 z-[50]">
                 <h1>Age</h1>
-                <p>${pet.age}</p>
+                <p class="text-xs">${pet.age}</p>
                 </div>
                 <img src="${icons[0]}" class="relative top-0 right-0 left-3" alt="">
             </li>
             <li class="glide__slide h-[87px] w-[104px] rounded-[30.20px] ${backgrounds[1]} flex flex-col justify-center items-center overflow-hidden">
                 <div class="flex flex-col justify-center items-center relative top-6 z-[50]">
                     <h1>Breed</h1>
-                    <p>${pet.breed}</p>
+                    <p class="text-xs">${pet.breed}</p>
             </div>
              <img src="${icons[1]}" class="relative top-0 right-0 left-3" alt="">
             </li>
                 <li class="glide__slide h-[87px] w-[104px] rounded-[30.20px] ${backgrounds[2]} flex flex-col justify-center items-center overflow-hidden">
                 <div class="flex flex-col justify-center items-center relative top-6 z-[50]">
                     <h1>Species</h1>
-                <p>${pet.species}</p>
+                <p class="text-xs">${pet.species}</p>
             </div>
              <img src="${icons[2]}" class="relative top-0 right-0 left-3" alt="">
             </li>
@@ -157,7 +262,7 @@ export default function renderPageContent() {
                 <li class="glide__slide h-[87px] w-[104px] rounded-[30.20px] ${backgrounds[3]} flex flex-col justify-center items-center overflow-hidden">
                 <div class="flex flex-col justify-center items-center relative top-6 z-[50]">
                     <h1>Gender</h1>
-                <p>${pet.gender}</p>
+                <p class="text-xs">${pet.gender}</p>
             </div>
              <img src="${icons[3]}" class="relative top-0 right-0 left-3" alt="">
             </li>
@@ -222,9 +327,15 @@ export default function renderPageContent() {
                 </div>
 
                 <div class="flex justify-center gap-4 md:gap-8 pt-14">
-                    <button class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm"  onclick="addToMatchingList()">
-                        Add to Matching
-                    </button>
+<button
+    id="matchingButton"
+    class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm"
+    onclick="handleMatchingButtonClick()"
+>
+    Add to Matching List
+</button>
+
+
                     <button class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm">
                         Add to Adoption
                     </button>
@@ -252,8 +363,7 @@ export default function renderPageContent() {
         document.body.appendChild(glideScript);
     }
 
-   
-      
     // Start the process by fetching pet data
     fetchPetData();
+    // getMatchingStatus();
 }

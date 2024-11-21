@@ -106,10 +106,10 @@ export default function renderPageContent() {
     </div>
     <span class="text-red-500 text-xs ml-2 -mt-2 file-error hidden">File is required</span>
     <input type="hidden" id="pet-picture-src" name="petPictureSrc" />
-    <div class="mt-4">
+    <div class="mt-4 flex w-full justify-center">
       <button
         type="submit"
-        class="w-full py-2 rounded-2xl bg-blue text-white hover:bg-sky-700 focus:outline-none "
+        class="w-1/3 py-2 rounded-2xl bg-blue text-white hover:bg-sky-700 focus:outline-none "
       >
         <span class="text-sm">Save Details</span>
       </button>
@@ -147,8 +147,6 @@ export default function renderPageContent() {
 if(petIdForUpdate){
   header.textContent  = "Update your pet";
 }
-
-console.log(API_URLS.PETS.CREATE)
   async function fetchPetData(petId) {
     try {
       const response = await fetch(API_URLS.PETS.VIEW(petId), {
@@ -324,7 +322,6 @@ if (ageInput) {
   };
   
   const userId = localStorage.getItem("userId");
-  console.log(API_URLS.PETS.CREATE)
 
   const userIdNumber = parseInt(userId, 10);
   const createPet = async () => {
@@ -349,8 +346,8 @@ if (ageInput) {
 
         },
       });
-      const data = await response.json()
-      console.log(data);
+      await response.json()
+
       if (response.ok) {
         const createPetEvent = new CustomEvent('petCreated' , {bubbles: true})
         document.dispatchEvent(createPetEvent)
@@ -388,8 +385,7 @@ const updatePet = async (petId) => {
       },
     });
 
-    const data = await response.json();
-    console.log(data);
+      await response.json();
 
     if (response.ok) {
       const updatePetEvent = new CustomEvent("petCreated", { bubbles: true });
