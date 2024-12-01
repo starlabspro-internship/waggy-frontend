@@ -1,6 +1,7 @@
 export default function renderPageContent() {
     ///api/adoption-listings/new - route for adoption listing
     // Add Glide.js CSS
+    //http://localhost:3000/api/adoption-listings/new
     const customCssLink = document.createElement("link");
     customCssLink.rel = "stylesheet";
     customCssLink.href = "../styles/layout.css";
@@ -53,6 +54,7 @@ export default function renderPageContent() {
             const pet = await response.json();
             renderContent(pet);
             await initializeButton();
+            await initializeAdoptionButton()
         } catch (error) {
             console.error('Error fetching pet:', error);
             content.innerHTML = '<p>Error loading pet data</p>';
@@ -223,9 +225,6 @@ export default function renderPageContent() {
             console.error("Error initializing button:", error);
         }
     };
-
-
-
     window.navigateToProfile = function() {
         window.location.href = '#petprofile';
     };
@@ -234,6 +233,139 @@ export default function renderPageContent() {
         localStorage.setItem("petToUpdateId", petId);
 
     };
+
+
+    window.handleAdoptionButtonClick = async function () {
+        
+        if (!token) {
+            showToast("You must be logged in to perform this action!", "error");
+            return;
+        }
+
+        const petId = sessionStorage.getItem("selectedPet");
+        console.log("Selected Pet : " , petId);
+        if (!petId) {
+            showToast("No pet selected!", "error");
+            return;
+        }
+
+        try {
+            // Check the current status of the pet in the matching list
+            const adoptionStatus = await getAdoptionStatus(petId);
+            console.log("Adoption status from handleButton  : " , adoptionStatus);
+            if (adoptionStatus === "Not Found") {
+                // Pet is not in the list, add it\
+                await addToAdoption(petId);
+            } else if (adoptionStatus === "Available") {
+                // Pet is in the list and available, make it unavailable
+                await updateAdoptionList(petId, "Unavailable");
+            } else if (adoptionStatus === "Unavailable") {
+                // Pet is in the list and unavailable, make it available
+                await updateAdoptionList(petId, "Available");
+            }
+        } catch (error) {
+            console.error("Error handling button click:", error);
+            showToast("An error occurred while updating the pet status.", "error");
+        }
+    };
+    window.updateAdoptionList = async function (petId, adoptionStatus) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/adoption-listings/edit/${petId}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ adoptionStatus })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+           
+            showToast(`Pet status updated to ${adoptionStatus}!`, "success");
+            await initializeAdoptionButton()
+        } catch (error) {
+            console.error('Error updating pet status:', error);
+            showToast("Failed to update the pet status!", "error");
+        }
+    };
+    window.getAdoptionStatus = async function (petId) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/adoption-listings/view/${petId}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`
+                },
+            });
+
+            if (response.status === 404) {
+                return "Not Found";
+            }
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+         console.log(data.adoptionStatus)
+            return data.adoptionStatus;
+        } catch (error) {
+            console.error('Error fetching matching status:', error);
+            showToast("Failed to fetch adoption status!", "error");
+            return null;
+        }
+    };
+
+    window.initializeAdoptionButton = async function () {
+        const petId = sessionStorage.getItem("selectedPet");
+        const adoptionbutton = document.getElementById("adoptionButton");
+    
+        if (!petId || !adoptionbutton) return;
+        const adoptionStatus = await getAdoptionStatus(petId)
+        console.log(adoptionStatus);
+        try {
+
+            if (adoptionStatus === "Not Found") {
+                adoptionbutton.textContent = "Add to Adoption List";
+            } else if (adoptionStatus === "Available") {
+                adoptionbutton.textContent = "Remove from Adoption List";
+            } else if (adoptionStatus === "Unavailable") {
+                adoptionbutton.textContent = "Make Available to Adoption List";
+            }
+        } catch (error) {
+            console.error("Error initializing button:", error);
+        }
+    };
+
+   
+   
+    window.addToAdoption = async () => {
+        try {
+            const response = await fetch("http://localhost:3000/api/adoption-listings/new", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ petId, adoptionStatus: "Available" })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            showToast("Pet added to the adoption list successfully!", "success");
+            await initializeAdoptionButton()
+        } catch (error) {
+            console.error('Error adding pet:', error);
+            showToast("Failed to add the pet to the adoption list!", "error");
+        }
+    }
     // Function to render content and initialize Glide
     async function renderContent(pet) {
 
@@ -337,7 +469,7 @@ export default function renderPageContent() {
 </button>
 
 
-                    <button class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm" >
+                    <button id="adoptionButton" class="gap-4 bg-blue text-white py-1 px-2 rounded-[16px] text-sm" onClick="handleAdoptionButtonClick()">
                         Add to Adoption
                     </button>
                 </div>

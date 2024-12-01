@@ -79,6 +79,8 @@ async function loginUser(email, password) {
     localStorage.setItem("token", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
     window.location.href = "/#profile";
+
+ 
   } catch (error) {
     console.error("Error during login:", error);
   }

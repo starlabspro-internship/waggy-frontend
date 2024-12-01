@@ -51,17 +51,17 @@ export default function renderPageContent() {
         splideElement.splide.destroy(); // Destroy previous instance if it exists
       }
       const splide = new Splide("#splide", {
-        type: "slide",
-        perPage: 3,
+        type: "loop",
+        perPage: 1,
         grid: {
           rows: 2,
-          cols: 1,
+          cols: 3,
           gap: {
             row: "1rem",
             col: "1.5rem",
           },
         },
-        gap: "10px",
+        gap: "5px",
         autoplay: true,
         interval: 2000,
         pagination: false,
@@ -87,10 +87,11 @@ export default function renderPageContent() {
           },
         },
         easing: "ease-in-out",
+        speed: 500, 
         perMove: 1,
       });
       splide.mount(window.splide.Extensions); // Mount the Splide instance
-
+      
 
     }
 
@@ -103,7 +104,7 @@ export default function renderPageContent() {
               Publish a Blog
             </button>
           </div>
-          <div id="splide" class="splide z-0 w-full p-2 mt-3  md:w-[500px] lg:w-[800px] mx-auto rounded-2xl overflow-hidden">
+          <div id="splide" class="splide z-0 w-full p-2 mt-1  md:w-[500px] lg:w-[800px] mx-auto rounded-2xl overflow-hidden">
             <div class="splide__track">
               <ul class="splide__list grid gap-4 w-full"></ul> <!-- Apply grid here -->
             </div>
@@ -136,7 +137,7 @@ export default function renderPageContent() {
         }
         blogs.forEach((blog) => {
           const blogItem = document.createElement("li");
-          blogItem.classList.add("splide__slide", "p-1", "border", "bg-grey-100", "shadow-lg", "transition-transform", "transform", "hover:scale-105", "hover:shadow-2xl", "relative", "h-[260px]", "w-[90%]", "border", "cursor-pointer");
+          blogItem.classList.add("splide__slide", "p-1", "border", "bg-grey-100", "shadow-lg", "transition-transform", "transform", "hover:scale-105", "hover:shadow-2xl", "relative", "h-[250px]", "w-[90%]", "border", "cursor-pointer");
           blogItem.innerHTML = `
             <img src="http://localhost:3000${blog.articleImage}" alt="Blog Image" class="w-full h-[180px] mb-1 object-cover"/>
             <div class="flex justify-between items-start w-[90%] relative">
@@ -172,7 +173,7 @@ export default function renderPageContent() {
     console.log(fullName);
       content.innerHTML = `
 
-      <div class="p-6 w-full bg-sky-100 md:rounded-3xl mx-auto h-full">
+      <div class="p-6 w-full  md:rounded-3xl mx-auto h-full">
         <div class="flex justify-between items-center mb-4">
           <!-- Back Button -->
           <button id="back-to-list-btn" class="p-2 rounded-lg bg-blue-500 text-white">

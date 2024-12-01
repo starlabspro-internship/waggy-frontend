@@ -1,0 +1,77 @@
+
+
+/* Dark mode styles */
+main {
+  background-color: #ffffff; /* Light mode background */
+  color: #000000; /* Light mode text */
+}
+
+/* Dark mode styles for main container */
+body.dark-mode main {
+  background-color: #333333; /* Dark mode background */
+  color: #ffffff; /* Dark mode text */
+}
+
+/* Example for cards */
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 87vh;
+  border-radius: 20px;
+  background: linear-gradient(150deg,#F0F0F0, rgb(240, 241, 242));
+}
+.box {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  transform-style: preserve-3d;
+  animation: animate 30s linear infinite;
+
+}
+
+.box:hover{
+  animation-play-state: paused;
+}
+
+
+@keyframes animate {
+  0%{
+      transform: perspective(1000px) rotateY(0deg);
+  }
+  100%{
+      transform: perspective(1000px) rotateY(360deg);
+  }
+}
+
+.box span{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transform: rotateY(calc(var(--i) * 40deg)) translateZ(450px);
+  -webkit-box-reflect: below 2px linear-gradient(transparent, transparent, rgba(4, 4, 4, 0.267));
+}
+
+
+
+.box span .my-div{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: 0.5s;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.my-div:hover{
+  transform: translateY(-2px);
+  
+}

@@ -1,13 +1,35 @@
 export default function renderPageContent() {
-
+    const customCssLink = document.createElement("link");
+    customCssLink.rel = "stylesheet";
+    customCssLink.href = "../styles/layout.css";
+    document.head.appendChild(customCssLink);
+    const storedId = JSON.parse(localStorage.getItem('selectedListing'));
+    const petId = localStorage.getItem("selectedPet")
+    console.log(petId);
+    console.log(storedId);
+    const token = localStorage.getItem("token");
+    const customStyles = document.createElement("style");
+    customStyles.rel = "stylesheet";
+    customStyles.textContent = `
+         
+    .font-poppins {
+    font-family: "Poppins", sans-serif;
+  }
+  .blue {
+    color: #70717b;
+  }
+  .bg-color {
+    background: #157aff;
+  }
+    console.log(storedId);
+`
         try {
-            const storedData = JSON.parse(sessionStorage.getItem('selectedUser'));
-            if (!storedData || Date.now() - storedData.timestamp > 3600000) {
+            if (!storedId || !petId || Date.now() - storedId.timestamp > 3600000) {
                 throw new Error('Data expired or invalid');
             }
             
 
-            sessionStorage.removeItem('selectedUser');
+            localStorage.removeItem('selectedListing');
             
             const customCssLink = document.createElement("link");
             customCssLink.rel = "stylesheet";
@@ -41,38 +63,47 @@ export default function renderPageContent() {
             ];
         
             // Function to fetch users from API
-            async function fetchUsers() {
+            async function fetchPetInfo() {
                 try {
-                    const response = await fetch('https://jsonplaceholder.typicode.com/users?_start=0&_limit=6');
-                    const users = await response.json();
-                    return users;
+                    const response = await fetch(`http://localhost:3000/api/adoption-listings/view/${storedId}`, {
+                        method: "GET",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            "Authorization": `Bearer ${token}`
+                        },
+                    });
+
+                    const pet = await response.json();
+                    console.log(pet);
+                    return pet;
                 } catch (error) {
-                    console.error('Error fetching users:', error);
+                    console.error('Error fetching pet:', error);
                     return [];
                 }
             }
         
             // Function to render content and initialize Glide
-            function renderContent(users) {
-                const carouselSlides = users.map((user, index) => `
-                    <li class="glide__slide h-[87px] w-[104px] rounded-[30.20px] ${backgrounds[index]} flex flex-col justify-center items-center overflow-hidden">
-                        <div class="flex flex-col justify-center items-center relative top-6 z-[50]">
-                            <h1>${user.name.split(' ')[0]}</h1>
-                            <p>${user.id}</p>
-                        </div>
-                        <img src="${icons[index]}" class="relative top-0 right-0 left-3" alt="">
-                    </li>
-                `).join('');
+            function renderContent(pet) {
+                // const carouselSlides = users.map((user, index) => `
+                //     <li class="glide__slide h-[87px] w-[104px] rounded-[30.20px] ${backgrounds[index]} flex flex-col justify-center items-center overflow-hidden">
+                //         <div class="flex flex-col justify-center items-center relative top-6 z-[50]">
+                //             <h1>${user.name.split(' ')[0]}</h1>
+                //             <p>${user.id}</p>
+                //         </div>
+                //         <img src="${icons[index]}" class="relative top-0 right-0 left-3" alt="">
+                //     </li>
+                // `).join('');
         
                 content.innerHTML = `
                     <div class="flex flex-col w-full">
                         <!-- First row -->
                         <div class="">
                             <div class="flex justify-between w-full relative top-5 md:static z-[10] px-2">
-                                <div class="bg-grey text-blue pr-2 text-blue rounded-full flex justify-center items-center gap-1">
-                                    <img src="./assets/images/icons/joi.png" class="h-10 w-10 rounded-full" alt="">
+                                <div class="bg-grey text-blue pr-2  rounded-full flex justify-center items-center gap-1">
+                                    <img src="http://localhost:3000${pet.user.profile.profilePicture}" class="h-10 w-10 rounded-full" alt="">
                                     <div>
-                                    <h1 class="text-sm font-semibold">Xhoi</h1>
+                                    <h1 class="text-sm font-semibold">${pet?.user?.profile?.firstName}</h1>
                                     <p class="text-sm">Owner</p>
                                      </div>
         
@@ -89,17 +120,17 @@ export default function renderPageContent() {
                             <!-- Second row -->
                             <div class="relative -top-10">
                                 <div class="flex w-full justify-center md:static">
-                                    <img src="./assets/images/dog2.jpg" class="w-full md:h-[250px] md:w-auto md:rounded-[16px]" alt="">
+                                    <img src="http://localhost:3000${pet.pet.petPicture}" class="w-full md:h-[250px] md:w-auto md:rounded-[16px]"  alt="">
                                 </div>
                             </div>
                         </div>
                         <!-- third row -->
                         <div class="bg-white rounded-t-[40px] md:rounded-t-[0] relative -top-20 z-[60] md:static">
                             <div class="relative pl-5 pt-7 md:pt-1 md:pl-10">
-                                <h1 class="font-semibold text-2xl md:text-3xl md:text-[26.11px] text-blue md:text-[#03063A]">Shiro</h1>
+                                <h1 class="font-semibold text-2xl md:text-3xl md:text-[26.11px] text-blue">${pet.pet.name}</h1>
                                 <div class="flex gap-1 items-center">
                                     <img src="./assets/images/icons/location-pin.png" alt="" class="h-4">
-                                    <h2 class="text-xl md:text-sm text-[#70717B]">Tirana, Albania</h2>
+                                    <h2 class="text-xl md:text-sm text-[#70717B]">${pet.user.profile.address}</h2>
                                 </div>
                             </div>
                         </div>
@@ -107,13 +138,13 @@ export default function renderPageContent() {
                         <div class="glide px-2 relative -top-10 md:-top-[0] md:static">
                             <div class="glide__track" data-glide-el="track">
                                 <ul class="glide__slides">
-                                    ${carouselSlides}
+                                 
                                 </ul>
                             </div>
                         </div>
                         <!-- fifth row -->
-                        <div class="px-4 md:px-12 py-2 md:text-sm">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ullam doloremque in voluptatem architecto a ab mollitia iusto corrupti eligendi nihil necessitatibus voluptates molestias ut blanditiis ipsum, pariatur ad facilis!</p>
+                        <div class="px-4 md:px-12 py-2 md:text-sm text-gray">
+                            <p>${pet.pet.interests}</p>
                         </div>
                         <div class="flex justify-center gap-4 md:gap-8 pt-14">
                             <button class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm">Adopt Request</button>
@@ -146,7 +177,7 @@ export default function renderPageContent() {
             }
         
             // Start the process
-            fetchUsers().then(renderContent);
+            fetchPetInfo().then(renderContent);
             
         } catch (error) {
             console.error('Error retrieving user data:', error);

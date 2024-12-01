@@ -6,7 +6,7 @@ Navbar / Sidebar
 Background Color: #157AFF (Blue shade)
 Text Color / Text on Focus: #FFFFFF (White)
 Text out of focus: F0F0F0
-
+Charcoal (#37474F)
 Login / Register
 Logo & App Name Color: #157AFF (Blue shade)
 Button Color: #157AFF (Blue shade)

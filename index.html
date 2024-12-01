@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
     <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
-
+   <link rel="stylesheet" href="./styles/index.css">
 
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
 
@@ -37,7 +37,9 @@
                         paleGrey: "#F9FAFC",
                         grey: "#F0F0F0",
                         pink: "#FF8682",
+                       
                     },
+                  
                 },
             },
         };
@@ -47,7 +49,7 @@
 
 <body class="md:bg-blue flex flex-col md:flex-row h-screen md:py-5 md:pr-5">
     <!-- Sidebar -->
-    <aside id="sidebar" class="text-white w-72 hidden md:block bg-blue pl-9 ">
+    <aside id="sidebar" class="text-white w-72 hidden md:block  pl-9 ">
         <img src="" id="indexUserProfilePicture" class="p-4 h-[120px] rounded-full" alt="Profile Picture" />
         <nav class="flex flex-col pl-5 space-y-2">
             <div class="p-2 mb-5 font-semibold text-2xl">
@@ -102,7 +104,7 @@
 
     <div id="drawer" class="fixed inset-0 z-[90] bg-gray-800 bg-opacity-75 hidden h-[100%] md:hidden">
         <aside class="w-64 bg-blue flex flex-col  text-white h-screen p-4">
-            <img src="./assets/images/icons/joi.png" class="p-4 h-[120px] w-[120px] rounded-full" alt="" />
+            <img src="./assets/images/dog2.jpg" class="p-4 h-[120px] w-[120px] rounded-full" alt="" />
             <nav class="flex flex-col pl-5  justify-around">
                 <div class="p-2 mb-5 font-semibold text-2xl">
                     <h1 class="user-nameMobile">User Name</h1>
@@ -152,10 +154,162 @@
     </div>
 
     <!-- Main Content -->
-    <main id="main-content"
-        class="flex-1 h-[100%] md:p-6 bg-white md:rounded-l-3xl md:rounded-r-3xl md:rounded-r-none z-10 md:overflow-auto">
+    <main id="main-content" 
+        class="flex-1 h-[100%] md:p-6  bg-white md:rounded-l-3xl md:rounded-r-3xl md:rounded-r-none z-10 md:overflow-auto">
         <!-- Page content loaded here -->
-        <div id="content" class="overflow-y-auto h-full">Welcome to the Dashboard</div>
+        <div id="content" class="overflow-y-auto h-full">
+           <div class="container ">
+            <div class="box">
+
+                <span style="--i:1">
+                    <div class="my-div bg-[#E2F5CB] text-[#A7D08E] shadow-md rounded-lg overflow-hidden ">
+                        <!-- Background Color -->
+                        <div class="p-4 flex flex-col justify-between h-full">
+                            <!-- Text Content -->
+                            <h3 class="font-semibold text-lg">Blogs</h3>
+                            <p class="text-sm mt-2">Total Blogs Written</p>
+                            <div class="flex-grow flex items-center justify-center mt-4">
+                                <p class="text-3xl font-bold">12</p>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="bg-[#A7D08E] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <span style="--i:2">
+                    <div class="my-div bg-[#FFE9C2] text-[#FF9F00] shadow-md rounded-lg overflow-hidden">
+                        <!-- Background Color -->
+                        <div class="p-4 flex flex-col justify-between h-full">
+                            <!-- Text Content -->
+                            <h3 class="font-semibold text-lg">Pets</h3>
+                            <p class="text-sm mt-2">Total Pets Listed</p>
+                            <div class="flex-grow flex items-center justify-center mt-4">
+                                <p class="text-3xl font-bold">5</p>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="bg-[#FF9F00] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <span style="--i:3">
+                    <div class="my-div bg-[#FFD6D1] text-[#FF8682] shadow-md rounded-lg overflow-hidden ">
+                        <!-- Background Color -->
+                        <div class="p-4 flex flex-col justify-between h-full">
+                            <!-- Text Content -->
+                            <h3 class="font-semibold text-lg">Adoption Listings</h3>
+                            <p class="text-sm mt-2">Total Adoption Listings</p>
+                            <div class="flex-grow flex items-center justify-center mt-4">
+                                <p class="text-3xl font-bold">5</p>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="bg-[#FF8682] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <span style="--i:4">
+                    <div class="my-div bg-[#C2EBFF] text-[#66C2FF] shadow-md rounded-lg overflow-hidden ">
+                        <!-- Background Color -->
+                        <div class="p-4 flex flex-col justify-between h-full">
+                            <!-- Text Content -->
+                            <h3 class="font-semibold text-lg">Adoption History</h3>
+                            <p class="text-sm mt-2">Total Number Of Success Adoption</p>
+                            <div class="flex-grow flex items-center justify-center mt-4">
+                                <p class="text-3xl font-bold">23</p>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="bg-[#66C2FF] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <span style="--i:5">
+                    <div class="my-div bg-[#E2F5CB] text-[#A7D08E] shadow-md rounded-lg overflow-hidden ">
+                        <!-- Background Color -->
+                        <div class="p-4 flex flex-col justify-between h-full">
+                            <!-- Text Content -->
+                            <h3 class="font-semibold text-lg">Match Requests</h3>
+                            <p class="text-sm mt-2">Total Number Of Match Requests</p>
+                            <div class="flex-grow flex items-center justify-center mt-4">
+                                <p class="text-3xl font-bold">33</p>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="bg-[#A7D08E] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <span style="--i:6">
+                    <div class="my-div bg-[#FFE9C2] text-[#FF9F00] shadow-md rounded-lg overflow-hidden ">
+                        <!-- Background Color -->
+                        <div class="p-4 flex flex-col justify-between h-full">
+                            <!-- Text Content -->
+                            <h3 class="font-semibold text-lg">Match History</h3>
+                            <p class="text-sm mt-2">Total Number Of Match Successes</p>
+                            <div class="flex-grow flex items-center justify-center mt-4">
+                                <p class="text-3xl font-bold">30</p>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="bg-[#FF9F00] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <span style="--i:7">
+                    <div class="my-div bg-[#FFD6D1] text-[#FF8682] shadow-md rounded-lg overflow-hidden ">
+                        <!-- Background Color -->
+                        <div class="p-4 flex flex-col justify-between h-full">
+                            <!-- Text Content -->
+                            <h3 class="font-semibold text-lg">Friends</h3>
+                            <p class="text-sm mt-2">Total Number Of Friends</p>
+                            <div class="flex-grow flex items-center justify-center mt-4">
+                                <p class="text-3xl font-bold">50</p>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="bg-[#FF8682] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <span style="--i:8">
+                    <div class="my-div bg-[#C2EBFF] text-[#66C2FF] shadow-md rounded-lg overflow-hidden ">
+                        <!-- Background Color -->
+                        <div class="p-4 flex flex-col justify-between h-full">
+                            <!-- Text Content -->
+                            <h3 class="font-semibold text-lg">Ratings</h3>
+                            <p class="text-sm mt-2">Total Number Of Ratings Recieved</p>
+                            <div class="flex-grow flex items-center justify-center mt-4">
+                                <p class="text-3xl font-bold">30</p>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="bg-[#66C2FF] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <span style="--i:9">
+                    <div class="my-div bg-[#FFD6D1] text-[#FF8682] shadow-md rounded-lg overflow-hidden ">
+                        <!-- Background Color -->
+                        <div class="p-4 flex flex-col justify-between h-full">
+                            <!-- Text Content -->
+                            <h3 class="font-semibold text-lg">Ratings</h3>
+                            <p class="text-sm mt-2">Total Number of Ratings Recieved</p>
+                            <div class="flex-grow flex items-center justify-center mt-4">
+                                <p class="text-3xl font-bold">45</p>
+                            </div>
+                            <div class="mt-auto">
+                                <button class="bg-[#FF8682] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+           </div>
+        
+
+        </div>
 
     </main>
 
@@ -211,7 +365,7 @@
     <script src="./scripts/auth/logoutAuth.js"></script>
     <script src="./config/apiConfig.js"></script>
     <script type="module" src="./assets/js/login.js"></script>
-
+    
 </body>
 
 </html>

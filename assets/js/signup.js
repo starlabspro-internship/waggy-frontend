@@ -60,7 +60,7 @@ form.addEventListener('submit', async (event) => {
 
     const passwordRegex = /^(?=.*\d).{8,}$/;
     if (!passwordRegex.test(password)) {
-        passwordError.textContent = 'Password must be at least 8 characters long and include at least one number.';
+        passwordError.textContent = 'Password must be at least 8 characters long and include at least one number and one uppercase character.';
         return;
     }
 

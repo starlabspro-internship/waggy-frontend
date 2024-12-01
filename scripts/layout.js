@@ -173,6 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
     aboutPage: { protected: true, page: "pages/aboutPage.js" },
     "match-info": { protected: true, page: "pages/match-info.js" },
     "match-action": { protected: true, page: "pages/match-action.js" },
+    "adopt-info": { protected: true, page: "pages/adopt-info.js" },
+
   };
   // Set active link function
   function setActiveLink(page) {
@@ -259,6 +261,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if (pageTitle && page === "matching") {
         pageTitle.textContent = "Your Matchings";
+      }  if (pageTitle && page === "adoptation") {
+        pageTitle.textContent = "Your Adoptations";
       }
 
       //const pageModule = await import(`../pages/${page}.js`);
@@ -270,10 +274,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (page == "petview") {
         rightModule = await import(`../pages/petprofile-right.js`);
       } else if (page == "match-info" || page == "match-action") {
-        rightModule = await import(`../pages/matching-right.js`);
+
+        rightModule = await import(`../pages/matching-right.js`)
+        rightModule = await import(`../pages/matching-right.js`) }
+        else if (page == "adopt-info" || page == "adopt-info") {
+          rightModule = await import(`../pages/adoptation-right.js`);
       } else {
         rightModule = await import(`../pages/${page}-right.js`);
       }
+      console.log(rightModule);
       const renderRightContent = rightModule.default;
       renderRightContent();
 
