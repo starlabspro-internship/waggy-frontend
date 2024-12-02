@@ -8,6 +8,7 @@ export default function renderPageContent() {
     console.log(petId);
     console.log(storedId);
     const token = localStorage.getItem("token");
+    let userId = localStorage.getItem("userId");
     const customStyles = document.createElement("style");
     customStyles.rel = "stylesheet";
     customStyles.textContent = `
@@ -29,7 +30,7 @@ export default function renderPageContent() {
             }
             
 
-            localStorage.removeItem('selectedListing');
+            
             
             const customCssLink = document.createElement("link");
             customCssLink.rel = "stylesheet";
@@ -63,7 +64,7 @@ export default function renderPageContent() {
             ];
         
             // Function to fetch users from API
-            async function fetchPetInfo() {
+             window.fetchPetInfo = async () => {
                 try {
                     const response = await fetch(`http://localhost:3000/api/adoption-listings/view/${storedId}`, {
                         method: "GET",
@@ -75,6 +76,7 @@ export default function renderPageContent() {
                     });
 
                     const pet = await response.json();
+                  //  await initializeButton()
                     console.log(pet);
                     return pet;
                 } catch (error) {
@@ -85,16 +87,6 @@ export default function renderPageContent() {
         
             // Function to render content and initialize Glide
             function renderContent(pet) {
-                // const carouselSlides = users.map((user, index) => `
-                //     <li class="glide__slide h-[87px] w-[104px] rounded-[30.20px] ${backgrounds[index]} flex flex-col justify-center items-center overflow-hidden">
-                //         <div class="flex flex-col justify-center items-center relative top-6 z-[50]">
-                //             <h1>${user.name.split(' ')[0]}</h1>
-                //             <p>${user.id}</p>
-                //         </div>
-                //         <img src="${icons[index]}" class="relative top-0 right-0 left-3" alt="">
-                //     </li>
-                // `).join('');
-        
                 content.innerHTML = `
                     <div class="flex flex-col w-full">
                         <!-- First row -->
@@ -147,11 +139,11 @@ export default function renderPageContent() {
                             <p>${pet.pet.interests}</p>
                         </div>
                         <div class="flex justify-center gap-4 md:gap-8 pt-14">
-                            <button class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm">Adopt Request</button>
+                            <button id="requestButton" class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm" onClick="makeAdoptRequest()">Adopt Request</button>
                         </div>
                     </div>
                 `;
-        
+              
                 // Add Glide.js JavaScript after content is rendered
                 const glideScript = document.createElement("script");
                 glideScript.src = "https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js";
@@ -185,5 +177,59 @@ export default function renderPageContent() {
         }
 
 
-   
+        window.makeAdoptRequest  = async () => {
+            const pet =await fetchPetInfo()
+            console.log(pet);
+            try {
+                const response = await fetch(`http://localhost:3000/api/adoption-requests/new`, {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                       userID: pet.user.id,
+                       listingID: pet.id ,
+                       requestStatus: "pending",
+                       requestUserID: userId,
+                    }),
+                });
+            
+                const result = await response.json();
+                console.log(result);
+                await initializeButton()
+                showToast("Adoption Request was succesfully sent" , 'success')
+                return result;
+            } catch (error) {
+                console.error('Error requesting an adoption :', error);
+                return [];
+            }
+        }
+     
+        window.initializeButton = async function () {
+            const pet = await fetchPetInfo()
+            const petId = sessionStorage.getItem("selectedPet");
+            console.log(petId);
+            const button = document.getElementById("requestButton");
+            console.log(button);
+            console.log('it is working ' , pet);
+           
+    
+            try {
+                const status = await pet.requestStatus;
+                console.log(status , "statusi eshte");
+    
+                if (status === "Not Found") {
+                    button.textContent = "Adopt Request";
+                } else if (status === "Pending") {
+                    button.textContent = "Remove Adoptation Request";
+                } else if (status === "Unavailable") {
+                    button.textContent = "Make Available to Matching List";
+                }
+            } catch (error) {
+                console.error("Error initializing button:", error);
+            }
+        };
+     
 }

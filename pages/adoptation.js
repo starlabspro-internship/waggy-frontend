@@ -14,10 +14,10 @@ export default function renderPageContent() {
                   <div class="hidden md:flex gap-1 items-center pt-1 w-full">
                       <h2 class="text-sm text-slate-400  font-mono">Location</h2>
                       <img src="./assets/images/icons/location-pin.png" alt="" class="h-4">
-                      <h1 class="relative text-center text-[#03063A] w-full text-2xl font-semibold right-5">Matching <span class="text-rose-400">Center</span></h1>
+                      <h1 class="relative text-center text-[#03063A] w-full text-2xl font-semibold right-5">Adoption <span class="text-rose-400">Center</span></h1>
                   </div>
                   <h1 class="font-semibold text-sm text-slate-50 md:text-xl md:text-[26.11px] text-white md:text-[#03063A] mt-2 md:mt-0">${userLocation}</h1>
-                  <h1 class="md:hidden font-semibold text-slate-50 text-2xl md:text-3xl md:text-[26.11px] text-white md:text-[#03063A]">Matching <span class="text-rose-400">Center</span></h1>
+                  <h1 class="md:hidden font-semibold text-slate-50 text-2xl md:text-3xl md:text-[26.11px] text-white md:text-[#03063A]">Adoption <span class="text-rose-400">Center</span></h1>
   
               </div>
       
