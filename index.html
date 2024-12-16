@@ -28,12 +28,13 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Satisfy&display=swap"
         rel="stylesheet" />
+        <!--#002147-->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        blue: "#157AFF",
+                        blue: "#002147",
                         paleGrey: "#F9FAFC",
                         grey: "#F0F0F0",
                         pink: "#FF8682",
@@ -51,14 +52,17 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="text-white w-72 hidden md:block  pl-9 ">
         <img src="" id="indexUserProfilePicture" class="p-4 h-[120px] rounded-full" alt="Profile Picture" />
-        <nav class="flex flex-col pl-5 space-y-2">
-            <div class="p-2 mb-5 font-semibold text-2xl">
+        <nav class="flex flex-col pl-5 space-y-1">
+            <div class="p-2 mb-1 font-semibold text-2xl">
                 <h1 class="user-name" id="indexUserName">UserName</h1>
                 <h4 class="font-thin text-sm user-email" id="indexUserEmail">User Email</h4>
             </div>
             <a href="#profile" class="nav-link hover:rounded p-2 font-semibold">
+               <div class="flex gap-2">
+              
                 Profile
                 <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon" />
+               </div>
             </a>
             <a href="#petprofile" class="nav-link hover:rounded p-2 font-semibold">
                 Pet Profile
@@ -77,9 +81,10 @@
                 <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon" />
             </a>
             <a href="#adoptation" class="nav-link hover:rounded p-2 font-semibold">
-                Adoptation
+                Adoptions
                 <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon" />
             </a>
+            
             <a href="#aboutPage" class="nav-link hover:rounded p-2 font-semibold">
                 About Us
                 <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon" />
@@ -88,7 +93,14 @@
                 Settings
                 <img src="./assets/images/icons/paws.png" alt="paw icon" class="paw-icon" />
             </a>
-            <div class="pl-4 pt-5">
+            <div class="pl-3 pt-0 -mb-5">
+                <p class="notification-desktop hover:rounded p-2 font-semibold cursor-pointer relative">
+                    <img src="./assets/images/icons/notifications.png" class="w-8">
+                    <!-- Notification count for Desktop -->
+                    <span id="notificationBadgeDesktop" class="absolute top-2 right-[180px] bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                </p>
+            </div>
+            <div class="pl-4 pt-0">
                 <button class="hover:rounded p-2 font-semibold logoutLink">
                     <img src="./assets/images/icons/logout.png" alt="" />
                 </button>
@@ -102,9 +114,9 @@
     </aside>
     <!-- -->
 
-    <div id="drawer" class="fixed inset-0 z-[90] bg-gray-800 bg-opacity-75 hidden h-[100%] md:hidden">
-        <aside class="w-64 bg-blue flex flex-col  text-white h-screen p-4">
-            <img src="./assets/images/dog2.jpg" class="p-4 h-[120px] w-[120px] rounded-full" alt="" />
+    <div id="drawer" class="fixed left-[-100%] top-0 bottom-0 z-[90] bg-gray-800 bg-opacity-75 w-[250px] transition-all duration-300 opacity-0">
+        <aside class="w-[250px] bg-blue flex flex-col  text-white h-screen p-4">
+            <img src="" class="mobile-picture p-4 h-[120px] w-[120px] rounded-full" alt="" />
             <nav class="flex flex-col pl-5  justify-around">
                 <div class="p-2 mb-5 font-semibold text-2xl">
                     <h1 class="user-nameMobile">User Name</h1>
@@ -143,7 +155,7 @@
                         <img src="./assets/images/icons/logout.png" alt=""/>
                     </button>
                 </div>
-            </nav>
+            
 
             <div class="flex jusify-center items-center absolute bottom-0 left-3 gap-1">
                 <img src="./assets/images/icons/WaggyRounded.png" class="w-8 rounded-full" alt="" />
@@ -155,166 +167,32 @@
 
     <!-- Main Content -->
     <main id="main-content" 
-        class="flex-1 h-[100%] md:p-6  bg-white md:rounded-l-3xl md:rounded-r-3xl md:rounded-r-none z-10 md:overflow-auto">
+        class="flex-1 h-[100%] md:p-6  bg-[#f9f9f9] md:rounded-l-3xl md:rounded-r-3xl md:rounded-r-none z-10 md:overflow-auto">
         <!-- Page content loaded here -->
         <div id="content" class="overflow-y-auto h-full">
-           <div class="container ">
-            <div class="box">
-
-                <span style="--i:1">
-                    <div class="my-div bg-[#E2F5CB] text-[#A7D08E] shadow-md rounded-lg overflow-hidden ">
-                        <!-- Background Color -->
-                        <div class="p-4 flex flex-col justify-between h-full">
-                            <!-- Text Content -->
-                            <h3 class="font-semibold text-lg">Blogs</h3>
-                            <p class="text-sm mt-2">Total Blogs Written</p>
-                            <div class="flex-grow flex items-center justify-center mt-4">
-                                <p class="text-3xl font-bold">12</p>
-                            </div>
-                            <div class="mt-auto">
-                                <button class="bg-[#A7D08E] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
-                            </div>
-                        </div>
-                    </div>
-                </span>
-                <span style="--i:2">
-                    <div class="my-div bg-[#FFE9C2] text-[#FF9F00] shadow-md rounded-lg overflow-hidden">
-                        <!-- Background Color -->
-                        <div class="p-4 flex flex-col justify-between h-full">
-                            <!-- Text Content -->
-                            <h3 class="font-semibold text-lg">Pets</h3>
-                            <p class="text-sm mt-2">Total Pets Listed</p>
-                            <div class="flex-grow flex items-center justify-center mt-4">
-                                <p class="text-3xl font-bold">5</p>
-                            </div>
-                            <div class="mt-auto">
-                                <button class="bg-[#FF9F00] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
-                            </div>
-                        </div>
-                    </div>
-                </span>
-                <span style="--i:3">
-                    <div class="my-div bg-[#FFD6D1] text-[#FF8682] shadow-md rounded-lg overflow-hidden ">
-                        <!-- Background Color -->
-                        <div class="p-4 flex flex-col justify-between h-full">
-                            <!-- Text Content -->
-                            <h3 class="font-semibold text-lg">Adoption Listings</h3>
-                            <p class="text-sm mt-2">Total Adoption Listings</p>
-                            <div class="flex-grow flex items-center justify-center mt-4">
-                                <p class="text-3xl font-bold">5</p>
-                            </div>
-                            <div class="mt-auto">
-                                <button class="bg-[#FF8682] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
-                            </div>
-                        </div>
-                    </div>
-                </span>
-                <span style="--i:4">
-                    <div class="my-div bg-[#C2EBFF] text-[#66C2FF] shadow-md rounded-lg overflow-hidden ">
-                        <!-- Background Color -->
-                        <div class="p-4 flex flex-col justify-between h-full">
-                            <!-- Text Content -->
-                            <h3 class="font-semibold text-lg">Adoption History</h3>
-                            <p class="text-sm mt-2">Total Number Of Success Adoption</p>
-                            <div class="flex-grow flex items-center justify-center mt-4">
-                                <p class="text-3xl font-bold">23</p>
-                            </div>
-                            <div class="mt-auto">
-                                <button class="bg-[#66C2FF] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
-                            </div>
-                        </div>
-                    </div>
-                </span>
-                <span style="--i:5">
-                    <div class="my-div bg-[#E2F5CB] text-[#A7D08E] shadow-md rounded-lg overflow-hidden ">
-                        <!-- Background Color -->
-                        <div class="p-4 flex flex-col justify-between h-full">
-                            <!-- Text Content -->
-                            <h3 class="font-semibold text-lg">Match Requests</h3>
-                            <p class="text-sm mt-2">Total Number Of Match Requests</p>
-                            <div class="flex-grow flex items-center justify-center mt-4">
-                                <p class="text-3xl font-bold">33</p>
-                            </div>
-                            <div class="mt-auto">
-                                <button class="bg-[#A7D08E] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
-                            </div>
-                        </div>
-                    </div>
-                </span>
-                <span style="--i:6">
-                    <div class="my-div bg-[#FFE9C2] text-[#FF9F00] shadow-md rounded-lg overflow-hidden ">
-                        <!-- Background Color -->
-                        <div class="p-4 flex flex-col justify-between h-full">
-                            <!-- Text Content -->
-                            <h3 class="font-semibold text-lg">Match History</h3>
-                            <p class="text-sm mt-2">Total Number Of Match Successes</p>
-                            <div class="flex-grow flex items-center justify-center mt-4">
-                                <p class="text-3xl font-bold">30</p>
-                            </div>
-                            <div class="mt-auto">
-                                <button class="bg-[#FF9F00] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
-                            </div>
-                        </div>
-                    </div>
-                </span>
-                <span style="--i:7">
-                    <div class="my-div bg-[#FFD6D1] text-[#FF8682] shadow-md rounded-lg overflow-hidden ">
-                        <!-- Background Color -->
-                        <div class="p-4 flex flex-col justify-between h-full">
-                            <!-- Text Content -->
-                            <h3 class="font-semibold text-lg">Friends</h3>
-                            <p class="text-sm mt-2">Total Number Of Friends</p>
-                            <div class="flex-grow flex items-center justify-center mt-4">
-                                <p class="text-3xl font-bold">50</p>
-                            </div>
-                            <div class="mt-auto">
-                                <button class="bg-[#FF8682] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
-                            </div>
-                        </div>
-                    </div>
-                </span>
-                <span style="--i:8">
-                    <div class="my-div bg-[#C2EBFF] text-[#66C2FF] shadow-md rounded-lg overflow-hidden ">
-                        <!-- Background Color -->
-                        <div class="p-4 flex flex-col justify-between h-full">
-                            <!-- Text Content -->
-                            <h3 class="font-semibold text-lg">Ratings</h3>
-                            <p class="text-sm mt-2">Total Number Of Ratings Recieved</p>
-                            <div class="flex-grow flex items-center justify-center mt-4">
-                                <p class="text-3xl font-bold">30</p>
-                            </div>
-                            <div class="mt-auto">
-                                <button class="bg-[#66C2FF] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
-                            </div>
-                        </div>
-                    </div>
-                </span>
-                <span style="--i:9">
-                    <div class="my-div bg-[#FFD6D1] text-[#FF8682] shadow-md rounded-lg overflow-hidden ">
-                        <!-- Background Color -->
-                        <div class="p-4 flex flex-col justify-between h-full">
-                            <!-- Text Content -->
-                            <h3 class="font-semibold text-lg">Ratings</h3>
-                            <p class="text-sm mt-2">Total Number of Ratings Recieved</p>
-                            <div class="flex-grow flex items-center justify-center mt-4">
-                                <p class="text-3xl font-bold">45</p>
-                            </div>
-                            <div class="mt-auto">
-                                <button class="bg-[#FF8682] text-white px-4 py-2 rounded hover:bg-blue-700 w-full">View</button>
-                            </div>
-                        </div>
-                    </div>
-                </span>
+          
             </div>
            </div>
         
 
         </div>
 
+        <div id="notificationPanel" class="hidden fixed top-0 sm:top-5 left-0 sm:left-[288px] w-full sm:w-80 h-[94%] bg-grey shadow-lg sm:rounded-tl-3xl sm:rounded-bl-3xl ">
+            <div class="bg-blue-500 text-blue p-4 flex items-center justify-start z-10">
+                <button id="closeNotification" class="text-white font-bold cursor-pointer ">
+                  <img src="./assets//images/icons/back-arrows.png" class="sm:hidden">
+                </button>
+              <h3 class="font-semibold text-xl">Notifications</h3>
+            </div>
+            <hr class="border-gray-300 my-4">
+            <div id="notificationList" class="p-4 space-y-2">
+              <!-- Notifications will appear here -->
+             
+            </div>
+          </div>
     </main>
-
     <!-- Right Section -->
-    <aside id="right-section" class="md:w-72 lg:block bg-white md:bg-paleGrey md:p-4 md:shadow-md md:rounded-r-3xl pb-20 md:pb-0">
+    <aside id="right-section" class="md:w-72 lg:block bg-[#f9f9f9] md:bg-paleGrey md:p-4 md:shadow-md md:rounded-r-3xl pb-20 md:pb-0">
         <h2 id="page-title" class="font-semibold text-lg py-6 md:py-2 text-center text-blue ">List</h2>
         <div class="md:bg-grey h-[90%] md:rounded-3xl p-4">
             <div class="relative py-2">
@@ -346,11 +224,12 @@
 
                 <p class="text-xs">My Pets</p>
             </a>
-            <a href="#matching" class="nav-link flex flex-col justify-around items-center gap-1">
-                <img id="menu-icon" src="./assets/images/icons/animal-care.png" alt="menu icon" />
-
-                <p class="text-xs">Matching</p>
-            </a>
+            <div class="notification-mobile flex flex-col justify-around items-center gap-1 cursor-pointer relative">
+                <img src="./assets/images/icons/notifications.png" alt="paw icon" class="w-10" />
+                <p class="text-xs">Notifications</p>
+                <!-- Notification count for Mobile -->
+                <span id="notificationBadgeMobile" class="absolute top-0 right-3 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+            </div>
             <a href="#messages" class="nav-link flex flex-col justify-around items-center gap-1">
                 <img id="menu-icon" src="./assets/images/icons/consultation.png" alt="menu icon" />
 
@@ -362,6 +241,7 @@
     <!-- Toast Container -->
     <script type="module" src="./scripts/layout.js"></script>
     <script src="./scripts/toast.js"></script>
+    <script src="./scripts/notification.js"></script>
     <script src="./scripts/auth/logoutAuth.js"></script>
     <script src="./config/apiConfig.js"></script>
     <script type="module" src="./assets/js/login.js"></script>

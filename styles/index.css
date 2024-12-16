@@ -75,3 +75,23 @@ body.dark-mode main {
   transform: translateY(-2px);
   
 }
+
+
+
+
+#content, #right-content {
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 0; 
+  transform: translateX(-100%); 
+}
+
+
+#content.loaded, #right-content.loaded {
+  opacity: 1;
+  transform: translateX(0); 
+}
+
+
+
+
+

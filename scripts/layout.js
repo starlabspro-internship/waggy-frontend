@@ -24,13 +24,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const updateUserDisplay = (firstName, email, profilePicture) => {
     document.getElementById("indexUserProfilePicture").src = profilePicture;
+    document.querySelector(".mobile-picture").src = profilePicture;
     document.querySelector(".user-name").textContent =
       firstName || "No Name Available";
     document.querySelector(".user-nameMobile").textContent =
       firstName || "No Name Available";
     document.querySelector(".user-email").textContent =
       email || "No Email Available";
-    document.querySelector(".user-emailMobile").textContent =
+      document.querySelector(".user-emailMobile").textContent =
       email || "No Email Available";
   };
 
@@ -143,20 +144,47 @@ document.addEventListener("DOMContentLoaded", () => {
     console.warn("No userId found in localStorage");
     updateUserDisplay("Guest User", "Not Signed In");
   }
-
+  const openDrawer = () => {
+    drawer.classList.remove("hidden"); // Make the drawer visible
+    setTimeout(() => {
+      drawer.classList.remove("left-[-100%]"); // Slide in the drawer from the left
+      drawer.classList.add("left-0"); // Set the drawer to its visible position
+      drawer.classList.remove("opacity-0"); // Fade it in
+      drawer.classList.add("opacity-100"); // Full opacity
+    }, 200); // Small delay to trigger the transition
+    menuIcon.src = "./assets/images/icons/cancel.png"; // Change icon to cancel
+  };
+  const closeDrawer = () => {
+    drawer.classList.add("left-[-100%]"); // Slide the drawer out of view
+    drawer.classList.remove("left-0"); // Remove the position for being visible
+    drawer.classList.add("opacity-0"); // Fade it out
+    setTimeout(() => {
+      drawer.classList.add("hidden"); // Hide the drawer after the transition
+    }, 200); // Match the transition duration
+    menuIcon.src = "./assets/images/icons/app.png"; // Change icon to app
+  };
+  
   // Toggle Drawer
   menuButton.addEventListener("click", () => {
-    drawer.classList.toggle("hidden");
-    menuIcon.src = drawer.classList.contains("hidden")
-      ? "./assets/images/icons/app.png"
-      : "./assets/images/icons/cancel.png";
+    if (drawer.classList.contains("left-0")) {
+      closeDrawer(); // Close the drawer if it's open
+    } else {
+      openDrawer(); // Open the drawer if it's closed
+    }
   });
+  // Toggle Drawer
+  // menuButton.addEventListener("click", () => {
+  //   drawer.classList.toggle("hidden");
+  //   menuIcon.src = drawer.classList.contains("hidden")
+  //     ? "./assets/images/icons/app.png"
+  //     : "./assets/images/icons/cancel.png";
+  // });
 
-  // Function to close the drawer
-  function closeDrawer() {
-    drawer.classList.add("hidden");
-    menuIcon.src = "./assets/images/icons/app.png";
-  }
+  // // Function to close the drawer
+  // function closeDrawer() {
+  //   drawer.classList.add("hidden");
+  //   menuIcon.src = "./assets/images/icons/app.png";
+  // }
 
   const routes = {
     login: { protected: false, page: "/login.html" },
@@ -174,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "match-info": { protected: true, page: "pages/match-info.js" },
     "match-action": { protected: true, page: "pages/match-action.js" },
     "adopt-info": { protected: true, page: "pages/adopt-info.js" },
-
+    
   };
   // Set active link function
   function setActiveLink(page) {
@@ -184,6 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
         link.classList.add("active-link");
       }
     });
+   
   }
 
   // Handle link clicks
@@ -229,10 +258,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Initially set opacity to 0 for smooth transition
-    content.classList.remove("loaded");
-    rightContent.classList.remove("loaded");
-
-    // Display loading spinner
+    // content.classList.remove("loaded");
+    // rightContent.classList.remove("loaded");
+    // content.style.transform = "translateX(-100%)";
+    //  rightContent.style.transform = "translateX(-100%)";
+    // // Display loading spinner
     content.innerHTML = `<div class="flex justify-center items-center h-screen md:h-[400px] bg-[#157AFF] md:bg-white">
      <div class="flex flex-col items-center gap-2">
          <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-75"></div>
@@ -262,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (pageTitle && page === "matching") {
         pageTitle.textContent = "Your Matchings";
       }  if (pageTitle && page === "adoptation") {
-        pageTitle.textContent = "Your Adoptations";
+        pageTitle.textContent = "Your Adoptions";
       }
 
       //const pageModule = await import(`../pages/${page}.js`);
@@ -289,7 +319,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // After loading, apply fade-in transition
       content.classList.add("loaded");
       rightContent.classList.add("loaded");
-
+      setTimeout(() => {
+        content.style.transform = "translateX(0)";
+        rightContent.style.transform = "translateX(0)";
+      }, 200); // Delay to trigger the CSS transition
+  
       // Update title and active links
       document.title = `${
         page.charAt(0).toUpperCase() + page.slice(1)
