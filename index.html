@@ -97,7 +97,7 @@
                 <p class="notification-desktop hover:rounded p-2 font-semibold cursor-pointer relative">
                     <img src="./assets/images/icons/notifications.png" class="w-8">
                     <!-- Notification count for Desktop -->
-                    <span id="notificationBadgeDesktop" class="absolute top-2 right-[180px] bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                    <span id="notificationBadgeDesktop" class="absolute top-2 right-[180px] bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center hidden"></span>
                 </p>
             </div>
             <div class="pl-4 pt-0">
@@ -185,7 +185,7 @@
               <h3 class="font-semibold text-xl">Notifications</h3>
             </div>
             <hr class="border-gray-300 my-4">
-            <div id="notificationList" class="p-4 space-y-2">
+            <div id="notificationList" class="p-4 space-y-2 overflow-y-auto h-[80%]">
               <!-- Notifications will appear here -->
              
             </div>
@@ -228,7 +228,7 @@
                 <img src="./assets/images/icons/notifications.png" alt="paw icon" class="w-10" />
                 <p class="text-xs">Notifications</p>
                 <!-- Notification count for Mobile -->
-                <span id="notificationBadgeMobile" class="absolute top-0 right-3 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                <span id="notificationBadgeMobile" class="absolute top-0 right-2 pz-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">2</span>
             </div>
             <a href="#messages" class="nav-link flex flex-col justify-around items-center gap-1">
                 <img id="menu-icon" src="./assets/images/icons/consultation.png" alt="menu icon" />

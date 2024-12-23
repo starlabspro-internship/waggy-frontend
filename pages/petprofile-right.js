@@ -41,6 +41,7 @@ export default function renderRightContent() {
         if (response.ok) {
             // Assuming 'userIdNumber' is the user ID of the currently authenticated user
             window.pets = fetchedPets.filter((fetchedPet) => fetchedPet.userId === userIdNumber); // Filter pets by userId
+            console.log(window.pets);
             displayPets(window.pets); // Update the displayed pets
         } else {
             console.log("Failed to fetch pets:", fetchedPets.message);

@@ -1,12 +1,14 @@
+
+
 export default function renderPageContent() {
     const customCssLink = document.createElement("link");
     customCssLink.rel = "stylesheet";
     customCssLink.href = "../styles/layout.css";
     document.head.appendChild(customCssLink);
-    const storedId = JSON.parse(localStorage.getItem('selectedListing'));
+    const storedId = JSON.parse(localStorage.getItem('selectedPet'));
+    const selectedListing = JSON.parse(localStorage.getItem('selectedListing'))
    
-   
-
+    console.log(selectedListing);
     console.log(typeof storedId);
     const token = localStorage.getItem("token");
     let userId = +localStorage.getItem("userId");
@@ -57,75 +59,82 @@ export default function renderPageContent() {
                 './assets/images/icons/orange.png'
             ];
           
-            window.fetchRequestStatus = async () => {
-            
-            
-                try {
-                    const response = await fetch(`http://localhost:3000/api/adoption-requests/list`, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": `Bearer ${token}`
-                        },
-                    });
-                    
-                    const results = await response.json();
-                    console.log(results);
-                    const request = results.find((result) => result?.listingID == storedId && result?.requestUserID == userId)
-
-                    console.log(request);
-                    console.log('Request status:', request?.requestStatus);
-    
-                    return request?.requestStatus || null; // Assuming the API returns the status directly
-                } catch (error) {
-                    console.error('Error fetching request status:', error);
-                    return null;
-                }
-            };
             // Function to fetch users from API
-             window.fetchPetInfo = async () => {
-                try {
-                    const response = await fetch(`http://localhost:3000/api/adoption-listings/view/${storedId}`, {
-                        method: "GET",
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            "Authorization": `Bearer ${token}`
-                        },
-                    });
-
-                    const pet = await response.json();
-                    return pet;
-                } catch (error) {
-                    console.error('Error fetching pet:', error);
-                    return [];
-                }
-            }
-        
-            // Function to render content and initialize Glide
-          
-        
-            // Start the process
-            // fetchPetInfo().then(renderContent);
+           
             
         } catch (error) {
             console.error('Error retrieving user data:', error);
             window.location.href = '#adoptation';
-        }
-      async  function renderContent() {
-            const pet = await fetchPetInfo();
-            if (!pet) {
-                console.error('Pet data is undefined');
-                return;
+        } 
+      
+        async function fetchPetInfo() {
+            const storedId = localStorage.getItem('selectedPet');
+            const selectedListing = localStorage.getItem('selectedListing');
+            const id = +storedId || +selectedListing;
+            const token = localStorage.getItem("token");
+            console.log('id' , id);
+            try {
+                // Step 1: Attempt to fetch data from adoption requests endpoint
+                const requestResponse = await fetch(`http://localhost:3000/api/adoption-requests/view/${id}`, {
+                    method: "GET",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${token}`
+                    },
+                });
+        
+                if (requestResponse.ok) {
+                    const petRequest = await requestResponse.json();
+                    console.log(typeof petRequest.requestUserID , petRequest.requestUserID);
+                    if (petRequest.requestUserID === userId) {
+                        console.log("Data from Adoption Requests:", petRequest);
+                        return petRequest
+                    }
+                }
+        
+                // Step 2: Fallback to adoption listings endpoint
+                const listingResponse = await fetch(`http://localhost:3000/api/adoption-listings/view/${id}`, {
+                    method: "GET",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${token}`
+                    },
+                });
+        
+                if (listingResponse.ok) {
+                    const petListing = await listingResponse.json();
+                    console.log("Data from Adoption Listings:", petListing);
+                    console.log(petListing.data);
+                    return petListing.data
+                }
+            } catch (error) {
+                console.error('Error fetching pet data:', error);
+                throw error;
             }
+        }
+       
+      async  function renderContent() {
+        const pet = await fetchPetInfo();
+        const profilePicture = pet?.owner?.profile?.profilePicture || pet?.user?.profile?.profilePicture || "default-image.png";
+        const petPicture = pet?.listing?.pet?.petPicture || pet?.pet?.petPicture || "default-image.png";
+         const ownerName = pet?.owner?.profile?.firstName || pet?.user?.profile?.firstName || "Unknown Owner";
+         const petName = pet?.listing?.pet?.name || pet?.pet?.name || "Unknown Pet";
+         const address = pet?.owner?.profile?.address || pet?.user?.profile?.address || "Unknown address" ;
+         console.log('Attributs' , petPicture , ownerName , petName , address , profilePicture );
+         const petInterests =  pet?.listing?.pet?.interests || pet?.pet?.interests || "unknown interests"
+          console.log(petInterests || 'unknown pet');
+        console.log("Final Pet Data:", pet );    
             content.innerHTML = `
                 <div class="flex flex-col w-full">
                     <!-- First row -->
                     <div class="">
                         <div class="flex justify-between w-full relative top-5 md:static z-[10] px-2">
                             <div class="bg-grey text-blue pr-2  rounded-full flex justify-center items-center gap-1">
-                                <img src="http://localhost:3000${pet.user.profile.profilePicture}" class="h-10 w-10 rounded-full" alt="">
+                                <img src="http://localhost:3000${profilePicture}" class="h-10 w-10 rounded-full" alt="">
                                 <div>
-                                <h1 class="text-sm font-semibold">${pet?.user?.profile?.firstName}</h1>
+                                <h1 class="text-sm font-semibold">${ ownerName}</h1>
                                 <p class="text-sm">Owner</p>
                                  </div>
     
@@ -142,17 +151,17 @@ export default function renderPageContent() {
                         <!-- Second row -->
                         <div class="relative -top-10">
                             <div class="flex w-full justify-center md:static">
-                                <img src="http://localhost:3000${pet.pet.petPicture}" class="w-full md:h-[250px] md:w-auto md:rounded-[16px]"  alt="">
+                                <img src="http://localhost:3000${petPicture}" class="w-full md:h-[250px] md:w-auto md:rounded-[16px]"  alt="">
                             </div>
                         </div>
                     </div>
                     <!-- third row -->
                     <div class="bg-white rounded-t-[40px] md:rounded-t-[0] relative -top-20 z-[60] md:static">
                         <div class="relative pl-5 pt-7 md:pt-1 md:pl-10">
-                            <h1 class="font-semibold text-2xl md:text-3xl md:text-[26.11px] text-blue">${pet.pet.name}</h1>
+                            <h1 class="font-semibold text-2xl md:text-3xl md:text-[26.11px] text-blue">${petName}</h1>
                             <div class="flex gap-1 items-center">
                                 <img src="./assets/images/icons/location-pin.png" alt="" class="h-4">
-                                <h2 class="text-xl md:text-sm text-[#70717B]">${pet.user.profile.address}</h2>
+                                <h2 class="text-xl md:text-sm text-[#70717B]">${address}</h2>
                             </div>
                         </div>
                     </div>
@@ -166,7 +175,7 @@ export default function renderPageContent() {
                     </div>
                     <!-- fifth row -->
                     <div class="px-4 md:px-12 py-2 md:text-sm text-gray">
-                        <p>${pet.pet.interests}</p>
+                        <p>${petInterests}</p>
                     </div>
                     <div class="flex justify-center gap-4 md:gap-8 pt-14">
                         <button id="requestButton" class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm" onclick="makeAdoptRequest()">Adopt Request</button>
@@ -197,9 +206,10 @@ export default function renderPageContent() {
                 }).mount();
             };
             async function checkRequestStatus() {
-                const status = await fetchRequestStatus();
-                console.log("Request status outside function:", status);
-                updateRequestButton(status)
+                const status = await fetchPetInfo();
+                console.log(status);
+                console.log("Request status outside function:", status.requestStatus);
+                updateRequestButton(status.requestStatus)
                 return status;
                 
             }
@@ -209,8 +219,8 @@ export default function renderPageContent() {
         }
        
         window.makeAdoptRequest  = async () => {
-            const pet =await fetchPetInfo()
-            console.log(pet);
+            const { data: pet , isRequested} = await fetchPetInfo();
+            console.log('pet info ' , pet , isRequested);
             try {
                 const response = await fetch(`http://localhost:3000/api/adoption-requests/new`, {
                     method: "POST",
@@ -244,37 +254,14 @@ export default function renderPageContent() {
             }
             
         }
-        // window.deleteAdoptRequest = async (petId) => {
-        //     try {
-        //         const response = await fetch(`http://localhost:3000/api/adoption-requests/remove/${petId}`, {
-        //             method: "DELETE",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //                 "Authorization": `Bearer ${token}`
-        //             },
-        //         });
-        
-        //         if (!response.ok) throw new Error("Failed to delete request");
-        
-        //         const result = await response.json();
-        //         console.log("Request deleted:", result);
-        
-        //         showToast("Adoption Request successfully deleted", 'success');
-        //         updateRequestButton("available"); // Reset button state to allow new requests
-        //     } catch (error) {
-        //         console.error("Error deleting adoption request:", error);
-        //         showToast("Failed to delete request", 'error');
-        //     }
-        // };
          
-  
         function updateRequestButton(status) {
             
             const requestButton = document.getElementById('requestButton');
             if (!requestButton) return;
            
            const buttonStatus = status || "available";
-            console.log(buttonStatus);
+            console.log('button Status',buttonStatus);
             switch (buttonStatus) {
                 case "pending":
                     requestButton.textContent = "Request Was Sent";
@@ -289,7 +276,7 @@ export default function renderPageContent() {
                     requestButton.classList.add('bg-yellow-500');
                     requestButton.classList.remove('bg-blue', 'bg-gray-400', 'cursor-not-allowed');
                     break;
-                case "approved":
+                case "accepted":
                     requestButton.textContent = "Request Approved";
                     requestButton.disabled = true;
                     requestButton.classList.add('bg-green-500');

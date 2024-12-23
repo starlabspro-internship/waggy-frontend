@@ -6,6 +6,7 @@ export default function renderPageContent() {
     document.head.appendChild(customCssLink);
     const userLocation = localStorage.getItem("userLocation");
     let userId = localStorage.getItem("userId");
+    const selectedPet = localStorage.getItem('selectedPet')
     const content = document.getElementById("content");
     content.innerHTML = `
           <div class="flex flex-col md:pl-14  w-full  md:w-full ">
@@ -75,19 +76,19 @@ export default function renderPageContent() {
       </div>
   </div>
       
-              <!-- Possible Match Section -->
+              <!-- Possible Adoption Section -->
             
                <div class="flex flex-col pt-5 w-full md:w-full ">
               <!-- Possible Match Section -->
               <div class="flex flex-col gap-6 md:mb-10  w-full  overflow-hidden justify-center items-center">
-                  <h1 class="font-semibold text-[16.71px] text-[#03063A] self-start pl-3">Possible Matches</h1>
+                  <h1 class="font-semibold text-[16.71px] text-[#03063A] self-start pl-3">Possible Adoptions</h1>
                     <div class="relative w-full px-2 md:px-0 ">
                           <!-- Main carousel wrapper -->
                           <div class="overflow-hidden relative">
                               <div id="carousel-container" class="flex transition-transform duration-300 ease-in-out">
                                   <!-- Slides will be inserted here dynamically -->
                                   <div class="flex justify-center items-center h-[220px] md:h-40 w-full text-gray-600">
-                                     <p>No matching results found.</p>
+                                     <p>No adoption results found.</p>
                                  </div>
                               </div>
                           </div>
@@ -109,6 +110,7 @@ export default function renderPageContent() {
   //   get id of the pet listed save it for use in match-info page
     window.navigateToAdoptationInfo = (id) => {
       localStorage.setItem('selectedListing', id);
+      localStorage.removeItem('selectedPet');
       window.location.href = '#adopt-info';
   };
   
@@ -196,7 +198,7 @@ export default function renderPageContent() {
   async function fetchUsers() {
     const baseUrl = `http://localhost:3000/api/adoption-listings/list`;
     const params = new URLSearchParams();
-    params.append("adoptionStatus", "Available");
+    // params.append("adoptionStatus", "Available");
     for (const [key, value] of Object.entries(filters)) {
       if (value) {
         params.append(key, value);
@@ -213,7 +215,8 @@ export default function renderPageContent() {
       },
       });
       const pets = await response.json();
-      items = pets.filter((pet) => pet.adoptionStatus === "Available" && pet.user.id != userId)
+      console.log(pets);
+      items = pets.filter((pet) => pet.adoptionStatus !== "Unavailable"  && pet.user.id != userId)
       
       console.log(items);
      
@@ -243,74 +246,90 @@ export default function renderPageContent() {
         return;
     }
   
-      container.innerHTML = items
-        .map(
-          (pet, index) => `
-            <div class="w-full md:w-1/3 flex-shrink-0 px-2">
-              <div class="relative rounded-[16px] shadow-lg hover:shadow-2xl  transition-all duration-300 ${
-                pet.pet.gender === "Female" ? "bg-rose-300" : " bg-sky-300"
-              }">
-                ${
-                  index === 0
-                    ? `
-                    <div class="absolute top-4 right-4 z-10">
-                      <div class="bg-yellow-400 text-white px-3 py-1.5  rounded-[16px] flex items-center gap-1.5 shadow-lg">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <span class="font-semibold text-sm">Best Match</span>
-                      </div>
-                    </div>
-                  `
-                    : ""
-                }
-                <div class="relative">
-                  <div class="h-[220px] md:h-40 w-full">
-                    <div class="absolute inset-0 rounded-t-2xl overflow-hidden">
-                      <div class="bg-cover bg-center h-full w-full"
-                        style="background-image: url('http://localhost:3000${
-                          pet.pet.petPicture
-                        }')">
-                      </div>
-                      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    </div>
-                  </div>
-                  <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
-                    <h3 class="font-bold text-lg mb-1">${pet.pet.name}</h3>
-                    <p class="text-sm opacity-90">@${pet.pet.breed}</p>
+    container.innerHTML = items
+    .map(
+      (pet, index) => `
+        <div class="w-full md:w-1/3 flex-shrink-0 px-2">
+          <div class="relative rounded-[16px] shadow-lg hover:shadow-2xl transition-all duration-300 ${
+            pet.pet.gender === "Female" ? "bg-rose-300" : " bg-sky-300"
+          }" style="${pet.adoptionStatus === 'Adopted' ? 'opacity: 0.7;' : ''}">
+            ${
+              pet.adoptionStatus === "Adopted"
+                ? `
+                <div class="absolute top-4 right-4 z-10">
+                  <div class="bg-green-500 text-white px-3 py-1.5 rounded-[16px] flex items-center gap-1.5 shadow-lg">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                    <span class="font-semibold text-sm">Adopted</span>
                   </div>
                 </div>
-                <div class="p-3 space-y-3">
-                  <div class="flex items-center justify-between">
-                    <div class="flex justify-around gap-2 w-full">
-                      <span class="px-3 py-1 text-white  ${
-                          pet.pet.gender === "Female" ? "bg-rose-500" : "bg-sky-500"
-                        }  rounded-[16px] text-sm font-medium flex items-center gap-1">
-                       <img src="./assets/images/icons/location-pin.png" alt="" class="h-4">
-                      ${pet.user.profile.address}
-                      </span>
-                      <span class="px-3 py-1 text-white ${
-                          pet.pet.gender === "Female" ? "bg-rose-500" : "bg-sky-500"
-                        }  rounded-[16px] text-sm font-medium flex items-center gap-1">
-                        Age: ${pet.pet.age}
-                      </span>
-                    </div>
+              `
+                : index === 0
+                ? `
+                <div class="absolute top-4 right-4 z-10">
+                  <div class="bg-yellow-400 text-white px-3 py-1.5 rounded-[16px] flex items-center gap-1.5 shadow-lg">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                    <span class="font-semibold text-sm">Best Adoption</span>
                   </div>
-                  <div class="pt-2 text-black">
-                    <button onclick="navigateToAdoptationInfo(${pet.id})"
-                      class="block w-full text-center ${
-                        pet.pet.gender === "Female" ? "bg-rose-500" : "bg-sky-500"
-                      } text-white hover:bg-blue-700 font-semibold px-4 py-2.5  rounded-[16px] transition-colors duration-200">
-                      See more
-                    </button>
+                </div>
+                `
+                : ""
+            }
+            <div class="relative">
+              <div class="h-[220px] md:h-40 w-full">
+                <div class="absolute inset-0 rounded-t-2xl overflow-hidden">
+                  <div class="bg-cover bg-center h-full w-full"
+                    style="background-image: url('http://localhost:3000${
+                      pet.pet.petPicture
+                    }')">
                   </div>
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 </div>
               </div>
+              <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+                <h3 class="font-bold text-lg mb-1">${pet.pet.name}</h3>
+                <p class="text-sm opacity-90">@${pet.pet.breed}</p>
+              </div>
             </div>
-          `
-        )
-        .join("");
-      
+            <div class="p-3 space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex justify-around gap-2 w-full">
+                  <span class="px-3 py-1 text-white  ${
+                      pet.pet.gender === "Female" ? "bg-rose-500" : "bg-sky-500"
+                    } rounded-[16px] text-sm font-medium flex items-center gap-1">
+                   <img src="./assets/images/icons/location-pin.png" alt="" class="h-4">
+                  ${pet.user.profile.address}
+                  </span>
+                  <span class="px-3 py-1 text-white ${
+                      pet.pet.gender === "Female" ? "bg-rose-500" : "bg-sky-500"
+                    }  rounded-[16px] text-sm font-medium flex items-center gap-1">
+                    Age: ${pet.pet.age}
+                  </span>
+                </div>
+              </div>
+              <div class="pt-2 text-black">
+                <button onclick="navigateToAdoptationInfo(${pet.id})"
+                  class="block w-full text-center ${
+                    pet.pet.gender === "Female" ? "bg-rose-500" : "bg-sky-500"
+                  } text-white hover:bg-blue-700 font-semibold px-4 py-2.5 rounded-[16px] transition-colors duration-200"
+                  ${
+                    pet.adoptionStatus === "Adopted"
+                      ? 'disabled style="cursor:not-allowed; opacity:0.5;"'
+                      : ""
+                  }>
+                  See more
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+    )
+    .join("");
+  
   
     // Add touch event listeners after rendering
     setupTouchHandlers();

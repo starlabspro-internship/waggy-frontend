@@ -1,7 +1,7 @@
 export default function renderRightContent() {
     const token = localStorage.getItem("token");
     let userId = localStorage.getItem("userId");
-
+    const selectedListing = localStorage.getItem('selectedListing')
     const fetchMyPetsForAdoption = async () => {
         const baseUrl = `http://localhost:3000/api/adoption-requests/list`;
         const params = new URLSearchParams();
@@ -20,7 +20,8 @@ export default function renderRightContent() {
             const pets = await response.json();
             console.log(pets);
             const items = pets.filter((pet) => pet?.requestUserID == userId);
-            
+            items.sort((a , b) => new Date(b.requestedAt) - new Date(a.requestedAt))
+            console.log(items);
             // Generate HTML dynamically for filtered pets
             const rightContent = document.getElementById('right-content');
             if (items.length === 0) {
@@ -33,15 +34,27 @@ export default function renderRightContent() {
                     <ul id="pets-list" class="space-y-3">
                         ${items
                             .map(
-                                (pet) => `
-                                <li class="flex items-center space-x-3 p-2 rounded-lg bg-gray-100 shadow" data-pet-id="${pet.id}">
-                                    <img src="http://localhost:3000${pet.listing.pet.petPicture}" alt="${pet.listing.pet.name}" class="w-10 h-10 rounded-full" />
-                                    <div>
-                                        <p class="text-md font-medium">${pet.listing.pet.name}</p>
-                                        <p class="text-sm text-yellow-500"> ${pet.requestStatus}</p>
-                                    </div>
-                                </li>
-                            `
+                                (pet) => {
+                                    // Determine the status color dynamically
+                                    let statusColorClass = '';
+                                    if (pet.requestStatus === 'accepted') {
+                                        statusColorClass = 'text-green-500';
+                                    } else if (pet.requestStatus === 'rejected') {
+                                        statusColorClass = 'text-red-500';
+                                    } else if (pet.requestStatus === 'pending') {
+                                        statusColorClass = 'text-yellow-500';
+                                    }
+
+                                    return `
+                                        <li class="flex items-center space-x-3 p-2 rounded-lg bg-gray-100 shadow" data-pet-id="${pet.id}">
+                                            <img src="http://localhost:3000${pet.listing.pet.petPicture || '/default-image.jpg'}" alt="${pet.listing.pet.name}" class="w-10 h-10 rounded-full" />
+                                            <div>
+                                                <p class="text-md font-medium">${pet.listing.pet.name}</p>
+                                                <p class="text-sm ${statusColorClass}">${pet.requestStatus}</p>
+                                            </div>
+                                        </li>
+                                    `;
+                                }
                             )
                             .join('')}
                     </ul>
@@ -65,8 +78,9 @@ export default function renderRightContent() {
 
     window.navigateToAdoptInfo = (id) => {
         localStorage.setItem('selectedPet', id);
-        console.log(id);
+        localStorage.removeItem('selectedListing')
         window.location.href = '#adopt-info';
+
     };
 
     // Call the function to fetch and display pets

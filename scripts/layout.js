@@ -6,9 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let userId = localStorage.getItem("userId");
   let token = localStorage.getItem("token");
   let refreshToken = localStorage.getItem("refreshToken");
+  const notificationDesktop = document.querySelector('.notification-desktop');
+const notificationMobile = document.querySelector('.notification-mobile');
+const notificationPanel = document.querySelector('#notificationPanel');
   console.log(userId);
   console.log(refreshToken);
-
+ 
   // Profile click elements
   const profileClickableElements = document.querySelectorAll(
     ".user-name, .user-email, #indexUserProfilePicture"
@@ -73,7 +76,20 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "/login.html"; // Redirect to login page on failure
     }
   }
-
+  
+  //  let  isNotificationPanelVisible = false; // Track visibility state
+  // console.log(isNotificationPanelVisible);
+  //   const toggleNotificationPanel = () => {
+  //     isNotificationPanelVisible = !isNotificationPanelVisible; 
+  //     // Toggle state
+  //     console.log(isNotificationPanelVisible);
+  //     notificationPanel.style.display = isNotificationPanelVisible ? "block" : "none";
+  //     console.log("Notification Panel:", notificationPanel.style.display);
+  //   };
+  
+  //   notificationDesktop.addEventListener("click", toggleNotificationPanel);
+  //   notificationMobile.addEventListener("click", toggleNotificationPanel);
+  
   // Fetch user data with proper error handling
   const fetchUserData = async () => {
     try {
@@ -230,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setActiveLink(page); // Update active links
     });
   });
-
+ 
   // Load page content based on navigation
   async function loadPage(page) {
     if (localStorage.getItem("petToUpdateId")) {
@@ -238,6 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const content = document.getElementById("content");
     const rightContent = document.getElementById("right-content");
+   
     const { protected: isProtected, page: pagePath } = routes[page] || {};
     console.log(isProtected, pagePath, routes[page]);
     if (!pagePath) {
@@ -273,6 +290,9 @@ document.addEventListener("DOMContentLoaded", () => {
     rightContent.innerHTML = `<p>Loading...</p>`;
 
     try {
+      // notificationPanel.style.display = "none"
+      // isNotificationPanelVisible = false;
+      // console.log('notificaion changes page' , notificationPanel.style.display);
       const pageTitle = document.getElementById("page-title");
       if (pageTitle && (page === "petview" || page === "petprofile")) {
         pageTitle.textContent = "Your Pets";
@@ -329,6 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
         page.charAt(0).toUpperCase() + page.slice(1)
       } - Waggy`;
       setActiveLink(page);
+      
     } catch (error) {
       console.error(`Error loading page ${page}:`, error);
       content.innerHTML = `<div class="flex justify-center items-center h-screen  bg-[#157AFF] md:bg-white">
@@ -339,7 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
    </div>`;
     }
   }
-
+ 
   // Load initial page or default to 'profile'
   const initialPage = location.hash ? location.hash.substring(1) : "profile";
   loadPage(initialPage);

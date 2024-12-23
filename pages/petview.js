@@ -311,8 +311,9 @@ export default function renderPageContent() {
             }
 
             const data = await response.json();
-         console.log(data.adoptionStatus)
-            return data.adoptionStatus;
+            console.log(data.data);
+         console.log(data.data.adoptionStatus)
+            return data.data.adoptionStatus;
         } catch (error) {
             console.error('Error fetching matching status:', error);
             showToast("Failed to fetch adoption status!", "error");
@@ -335,6 +336,11 @@ export default function renderPageContent() {
                 adoptionbutton.textContent = "Remove from Adoption List";
             } else if (adoptionStatus === "Unavailable") {
                 adoptionbutton.textContent = "Make Available to Adoption List";
+            } else if (adoptionStatus === "Adopted") {
+                adoptionbutton.textContent = "Adopted";
+                adoptionbutton.disabled = true;
+                adoptionbutton.style.opacity = '0.6'
+                adoptionbutton.style.background = "green"
             }
         } catch (error) {
             console.error("Error initializing button:", error);

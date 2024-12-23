@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function logout() {
       localStorage.removeItem("userId");
       localStorage.removeItem("token");
+      localStorage.removeItem('SEEN_NOTIFICATIONS_KEY');
       window.location.href = "/login.html";
   }
 
