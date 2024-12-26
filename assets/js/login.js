@@ -1,4 +1,4 @@
-// Toggle password visibility
+
 function togglePassword() {
   const password = document.getElementById("password");
   const eyeIcon = document.getElementById("eyeIcon");
@@ -49,12 +49,12 @@ function validateForm(event) {
     loginUser(email, password);
   }
 }
-
+const BASE_URL = "http://localhost:3000";
 // Login function to call API and store tokens
 async function loginUser(email, password) {
   const errorMessage = document.querySelector("#messageError");
   try {
-    const response = await fetch("http://localhost:3000/api/auth/login", {
+    const response = await fetch(`${BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -51,7 +51,7 @@ const notificationPanel = document.querySelector('#notificationPanel');
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/auth/refreshToken",
+        `${BASE_URL}/api/auth/refreshToken`,
         {
           method: "POST",
           headers: {
@@ -94,7 +94,7 @@ const notificationPanel = document.querySelector('#notificationPanel');
   const fetchUserData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/users/view/${userId}`,
+        `${BASE_URL}/api/users/view/${userId}`,
         {
           method: "GET",
           headers: {
@@ -112,7 +112,7 @@ const notificationPanel = document.querySelector('#notificationPanel');
       const user = await response.json();
       console.log(user.profile.organisationName);
 
-      console.log(user);
+      console.log("user format" ,user);
       // dymamicly show user name or organization name
       let name = !user.profile.firstName
         ? user.profile.organisationName

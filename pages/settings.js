@@ -34,7 +34,7 @@ export default function renderPageContent() {
         position: fixed;
         inset: 0;
         z-index: 50; /* Ensure it's above all other content */
-        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+         /* Semi-transparent background */
         justify-content: center;
         align-items: center;
     }
@@ -319,7 +319,7 @@ export default function renderPageContent() {
         };
     
         try {
-            const response = await fetch("http://localhost:3000/api/password/change", {
+            const response = await fetch(`${BASE_URL}/api/password/change`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',

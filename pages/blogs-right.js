@@ -36,7 +36,7 @@ export default function renderRightContent() {
     const token = localStorage.getItem('token');
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/blogs/list" , {
+        const response = await fetch(`${BASE_URL}/api/blogs/list` , {
           method: 'GET',
           headers: {
               'Authorization': `Bearer ${token}`, // Attach the token in the Authorization header

@@ -3,7 +3,7 @@ export default function renderPageContent() {
   const content = document.getElementById("content");
   content.innerHTML = `
          
-  <div class="bg-white p-6">
+  <div class="p-6">
   <h1 id="header" class="text-3xl font-bold mb-4 text-blue md:text-[#03063A]">List your Pet</h1>
   
   <form id="pet-form" method="POST" enctype="multipart/form-data" class="space-y-4">

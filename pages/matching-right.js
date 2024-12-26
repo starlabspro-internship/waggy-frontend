@@ -24,7 +24,7 @@ export default function renderRightContent() {
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/api/match-request/${endpoint}`, {
+            const response = await fetch(`${BASE_URL}/api/match-request/${endpoint}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`

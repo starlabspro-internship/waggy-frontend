@@ -1,62 +1,79 @@
 export default function renderRightContent() {
     const rightContent = document.getElementById('right-content');
+    let userId = localStorage.getItem("userId");
+
     rightContent.innerHTML = `
-        <div class="p-4  rounded-lg">
+        <div class="p-4 rounded-lg">
             <h3 class="text-lg font-semibold mb-2">Messages</h3>
             <ul id="friends-list" class="space-y-3">
-                <li class="flex items-center space-x-3 p-2 rounded-lg bg-gray-100 shadow">
-                    <img src="https://via.placeholder.com/40" alt="Friend 1" class="w-10 h-10 rounded-full" />
-                    <div>
-                        <p class="text-md font-medium">Friend 1</p>
-                        <p class="text-sm text-gray-600">Online</p>
-                    </div>
-                </li>
-                <li class="flex items-center space-x-3 p-2 rounded-lg bg-gray-100 shadow">
-                    <img src="https://via.placeholder.com/40" alt="Friend 2" class="w-10 h-10 rounded-full" />
-                    <div>
-                        <p class="text-md font-medium">Friend 2</p>
-                        <p class="text-sm text-gray-600">Offline</p>
-                    </div>
-                </li>
-                <li class="flex items-center space-x-3 p-2 rounded-lg bg-gray-100 shadow">
-                    <img src="https://via.placeholder.com/40" alt="Friend 3" class="w-10 h-10 rounded-full" />
-                    <div>
-                        <p class="text-md font-medium">Friend 3</p>
-                        <p class="text-sm text-gray-600">Busy</p>
-                    </div>
-                </li>
-            </ul>
+                </ul>
         </div>
     `;
 
-    // onLoad function to be called after rendering content
-    function onLoad() {
-        console.log("Right content loaded successfully!");
-
-        // Optional: Fetch friends or additional info on load
-        fetch('https://api.example.com/friends')
-            .then(response => response.json())
+    function fetchAndRenderFriends() {
+        fetch(`${BASE_URL}/api/users/list`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 const friendsList = document.getElementById('friends-list');
-                friendsList.innerHTML = ''; // Clear existing list
+                friendsList.innerHTML = '';
 
-                // Populate with new data
-                data.forEach(friend => {
-                    const friendItem = document.createElement('li');
-                    friendItem.className = "flex items-center space-x-3 p-2 rounded-lg bg-gray-100 shadow";
-                    friendItem.innerHTML = `
-                        <img src="${friend.imageUrl || 'https://via.placeholder.com/40'}" alt="${friend.name}" class="w-10 h-10 rounded-full" />
-                        <div>
-                            <p class="text-md font-medium">${friend.name}</p>
-                            <p class="text-sm text-gray-600">${friend.status}</p>
-                        </div>
-                    `;
-                    friendsList.appendChild(friendItem);
-                });
+                if (data && Array.isArray(data)) {
+                    let filteredData = data.filter((user) => +user.id !== +userId);
+
+                    filteredData.forEach(friend => {
+                        const friendItem = document.createElement('li');
+                        friendItem.className = "flex items-center space-x-3 p-2 rounded-lg bg-gray-100 shadow cursor-pointer";
+
+                        // Set the data-friend-id attribute!
+                        friendItem.dataset.friendId = friend.id; // Or friend._id if your ID is stored as _id
+
+                        friendItem.innerHTML = `
+                            <img src=http://localhost:3000${friend?.profile?.profilePicture} 
+                                 alt="${friend?.profile?.firstName || 'Unknown User'}" 
+                                 class="w-10 h-10 rounded-full" />
+                            <div>
+                                <p class="text-md font-medium">${friend?.profile?.firstName || 'Unknown User'} ${friend?.profile?.lastName}</p>
+                                <p class="text-sm text-gray-600">${friend.status || 'Offline'}</p>
+                            </div>
+                        `;
+                        friendsList.appendChild(friendItem);
+                    });
+
+                    friendsList.addEventListener('click', (event) => {
+                        const clickedElement = event.target.closest('li'); // Use closest to handle clicks on inner elements
+
+                        if (clickedElement) {
+                            const friendId = clickedElement.dataset.friendId;
+                            const friendName = clickedElement.querySelector('.text-md').textContent.trim();
+                            const friendProfilePicture = clickedElement.querySelector('img').src;
+                    
+                            // Emit custom event with friend data
+                            const friendSelectedEvent = new CustomEvent('friendSelected', {
+                                detail: {
+                                    id: friendId,
+                                    name: friendName,
+                                    profilePicture: friendProfilePicture
+                                }
+                            });
+                            document.dispatchEvent(friendSelectedEvent);
+                            console.log(friendSelectedEvent);
+                        }
+                    });
+                } else {
+                    friendsList.innerHTML = `<p class="text-gray-500">No users found.</p>`;
+                }
             })
-            .catch(error => console.error("Error fetching friends:", error));
+            .catch(error => {
+                console.error("Error fetching friends:", error);
+                const friendsList = document.getElementById('friends-list');
+                friendsList.innerHTML = `<p class="text-red-500">Error loading friends.</p>`;
+            });
     }
 
-    // Call the onLoad function immediately
-    onLoad();
+    fetchAndRenderFriends();
 }

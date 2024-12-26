@@ -3,7 +3,7 @@ export default function renderRightContent() {
     let userId = localStorage.getItem("userId");
     const selectedListing = localStorage.getItem('selectedListing')
     const fetchMyPetsForAdoption = async () => {
-        const baseUrl = `http://localhost:3000/api/adoption-requests/list`;
+        const baseUrl = `${BASE_URL}/api/adoption-requests/list`;
         const params = new URLSearchParams();
         params.append("adoptionStatus", "Available");
 
@@ -50,7 +50,7 @@ export default function renderRightContent() {
                                             <img src="http://localhost:3000${pet.listing.pet.petPicture || '/default-image.jpg'}" alt="${pet.listing.pet.name}" class="w-10 h-10 rounded-full" />
                                             <div>
                                                 <p class="text-md font-medium">${pet.listing.pet.name}</p>
-                                                <p class="text-sm ${statusColorClass}">${pet.requestStatus}</p>
+                                                <h5 class="text-sm ${statusColorClass}">${pet.requestStatus}</h5>
                                             </div>
                                         </li>
                                     `;

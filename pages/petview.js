@@ -122,7 +122,7 @@ export default function renderPageContent() {
     window.addToMatchingList = async function (petId) {
         
         try {
-            const response = await fetch("http://localhost:3000/api/matching-list/new", {
+            const response = await fetch(`${BASE_URL}/api/matching-list/new`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -148,7 +148,7 @@ export default function renderPageContent() {
     window.updateMatchingList = async function (petId, status) {
         console.log("this one")
         try {
-            const response = await fetch(`http://localhost:3000/api/matching-list/edit/${petId}`, {
+            const response = await fetch(`${BASE_URL}/api/matching-list/edit/${petId}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
@@ -176,7 +176,7 @@ export default function renderPageContent() {
         console.log(token)
         console.log("hey 1")
         try {
-            const response = await fetch(`http://localhost:3000/api/matching-list/view-pet/${petId}`, {
+            const response = await fetch(`${BASE_URL}/api/matching-list/view-pet/${petId}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -270,7 +270,7 @@ export default function renderPageContent() {
     };
     window.updateAdoptionList = async function (petId, adoptionStatus) {
         try {
-            const response = await fetch(`http://localhost:3000/api/adoption-listings/edit/${petId}`, {
+            const response = await fetch(`${BASE_URL}/api/adoption-listings/edit/${petId}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
@@ -293,7 +293,7 @@ export default function renderPageContent() {
     };
     window.getAdoptionStatus = async function (petId) {
         try {
-            const response = await fetch(`http://localhost:3000/api/adoption-listings/view/${petId}`, {
+            const response = await fetch(`${BASE_URL}/api/adoption-listings/view/${petId}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -351,7 +351,7 @@ export default function renderPageContent() {
    
     window.addToAdoption = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/adoption-listings/new", {
+            const response = await fetch(`${BASE_URL}/api/adoption-listings/new`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -437,9 +437,9 @@ export default function renderPageContent() {
                 </div>
                 
                 <!-- third row -->
-                <div class="bg-white rounded-t-[40px] md:rounded-t-[0] relative -top-20 z-[60] md:static">
+                <div class=" rounded-t-[40px] md:rounded-t-[0] relative -top-20 z-[60] md:static">
                     <div class="relative pl-5 pt-7 md:pt-1 md:pl-10">
-                        <h1 class="font-semibold text-2xl md:text-3xl md:text-[26.11px] text-blue md:text-[#03063A]">
+                        <h1 class="font-semibold text-2xl md:text-3xl md:text-[26.11px] text-blue mt-5 md:mt-0 md:text-[#03063A]">
                             ${pet.name}
                         </h1>
                         <div class="flex gap-1 items-center">
@@ -461,11 +461,11 @@ export default function renderPageContent() {
                 </div>
 
                 <!-- fifth row -->
-                <div class="px-4 md:px-12 py-2 md:text-sm">
+                <div class="px-4 md:px-12 py-2 md:text-sm -mt-5 md:mt-5">
                     <p>${pet.interests || 'No description available.'}</p>
                 </div>
 
-                <div class="flex justify-center gap-4 md:gap-8 pt-14">
+                <div class="flex justify-center -mt-10 gap-4  md:gap-8 pt-14">
 <button
     id="matchingButton"
     class="gap-4 bg-blue text-white py-2 px-2 rounded-[16px] text-sm"

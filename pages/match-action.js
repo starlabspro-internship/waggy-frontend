@@ -82,7 +82,7 @@ export default function renderPageContent() {
         }
     
         try {
-            const response = await fetch(`http://localhost:3000/api/match-request/edit/${senderPetId}`, {
+            const response = await fetch(`${BASE_URL}/api/match-request/edit/${senderPetId}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',

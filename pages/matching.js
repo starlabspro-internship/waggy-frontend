@@ -194,7 +194,7 @@ let isDragging = false;
 let previousTranslate = 0;
 
 async function fetchUsers() {
-  const baseUrl = `http://localhost:3000/api/matching-list/list`;
+  const baseUrl = `${BASE_URL}/api/matching-list/list`;
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries(filters)) {
     if (value) {

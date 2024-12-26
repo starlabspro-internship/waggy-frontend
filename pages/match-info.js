@@ -135,7 +135,7 @@ export default function renderPageContent() {
         }
         try {
             // Send match request to the API
-            const response = await fetch("http://localhost:3000/api/match-request/new", {
+            const response = await fetch(`${BASE_URL}/api/match-request/new1 `, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -183,7 +183,7 @@ export default function renderPageContent() {
         }
     
         try {
-            const response = await fetch(`http://localhost:3000/api/match-request/view/${receiverPetId}`, {
+            const response = await fetch(`${BASE_URL}/api/match-request/view/${receiverPetId}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',

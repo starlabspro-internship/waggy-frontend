@@ -75,7 +75,7 @@ export default function renderPageContent() {
             console.log('id' , id);
             try {
                 // Step 1: Attempt to fetch data from adoption requests endpoint
-                const requestResponse = await fetch(`http://localhost:3000/api/adoption-requests/view/${id}`, {
+                const requestResponse = await fetch(`${BASE_URL}/api/adoption-requests/view/${id}`, {
                     method: "GET",
                     headers: {
                         'Accept': 'application/json',
@@ -94,7 +94,7 @@ export default function renderPageContent() {
                 }
         
                 // Step 2: Fallback to adoption listings endpoint
-                const listingResponse = await fetch(`http://localhost:3000/api/adoption-listings/view/${id}`, {
+                const listingResponse = await fetch(`${BASE_URL}/api/adoption-listings/view/${id}`, {
                     method: "GET",
                     headers: {
                         'Accept': 'application/json',
@@ -131,11 +131,11 @@ export default function renderPageContent() {
                     <!-- First row -->
                     <div class="">
                         <div class="flex justify-between w-full relative top-5 md:static z-[10] px-2">
-                            <div class="bg-grey text-blue pr-2  rounded-full flex justify-center items-center gap-1">
+                            <div class="bg-grey text-[#002147] pr-2  rounded-full flex justify-center items-center gap-1">
                                 <img src="http://localhost:3000${profilePicture}" class="h-10 w-10 rounded-full" alt="">
                                 <div>
-                                <h1 class="text-sm font-semibold">${ ownerName}</h1>
-                                <p class="text-sm">Owner</p>
+                                <h3 class="text-sm font-semibold">${ ownerName}</h3>
+                                <h3 class="text-sm">Owner</h3>
                                  </div>
     
                             </div>
@@ -156,9 +156,9 @@ export default function renderPageContent() {
                         </div>
                     </div>
                     <!-- third row -->
-                    <div class="bg-white rounded-t-[40px] md:rounded-t-[0] relative -top-20 z-[60] md:static">
+                    <div class="rounded-t-[40px] md:rounded-t-[0] relative -top-20 z-[60] md:static">
                         <div class="relative pl-5 pt-7 md:pt-1 md:pl-10">
-                            <h1 class="font-semibold text-2xl md:text-3xl md:text-[26.11px] text-blue">${petName}</h1>
+                            <h1 class="font-semibold text-2xl md:text-3xl md:text-[26.11px] mt-5 text-blue">${petName}</h1>
                             <div class="flex gap-1 items-center">
                                 <img src="./assets/images/icons/location-pin.png" alt="" class="h-4">
                                 <h2 class="text-xl md:text-sm text-[#70717B]">${address}</h2>
@@ -219,10 +219,11 @@ export default function renderPageContent() {
         }
        
         window.makeAdoptRequest  = async () => {
-            const { data: pet , isRequested} = await fetchPetInfo();
-            console.log('pet info ' , pet , isRequested);
+            //const { data: pet , isRequested} = await fetchPetInfo();
+            const pet = await fetchPetInfo()
+            console.log('pet info ' , pet );
             try {
-                const response = await fetch(`http://localhost:3000/api/adoption-requests/new`, {
+                const response = await fetch(`${BASE_URL}/api/adoption-requests/new`, {
                     method: "POST",
                     headers: {
                         'Accept': 'application/json',

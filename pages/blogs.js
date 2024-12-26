@@ -123,7 +123,7 @@ export default function renderPageContent() {
     
     async function fetchBlogs(blogsList) {
       try {
-        const response = await fetch("http://localhost:3000/api/blogs/list", {
+        const response = await fetch(`${BASE_URL}/api/blogs/list`, {
           headers: {
             "Authorization": `Bearer ${token}`,
           }
@@ -249,7 +249,7 @@ export default function renderPageContent() {
       showToast("Are you sure you want to delete this Blog" , "warning" , 0 , async () => {
        try {
          const response = await fetch(
-           `http://localhost:3000/api/blogs/remove/${blogId}`,
+           `${BASE_URL}/api/blogs/remove/${blogId}`,
            {
              method: "DELETE",
              headers: {
@@ -430,7 +430,7 @@ export default function renderPageContent() {
         blogData.append("userID", userIdNumber);
   
         try {
-          const response = await fetch("http://localhost:3000/api/blogs/new", {
+          const response = await fetch(`${BASE_URL}/api/blogs/new`, {
             method: "POST",
             headers: {
              // Set the content type to JSON

@@ -16,7 +16,7 @@ content.innerHTML = `
 export default async function renderPageContent() {
   const content = document.getElementById("content");
   content.innerHTML = `
-    <div class="py-50">
+    <div class="py-50 p-5">
       <p class="text-green-500 font-bold hidden success-text">
         <span> &#9989;</span>Your info is updated successfully!
       </p>
@@ -134,7 +134,7 @@ export default async function renderPageContent() {
   let hasOrganisationName;
   try {
     const response = await fetch(
-      `http://localhost:3000/api/profiles/view/${userId}`,
+      `${BASE_URL}/api/profiles/view/${userId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -281,7 +281,7 @@ export default async function renderPageContent() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/profiles/edit/${userId}`,
+        `${BASE_URL}/api/profiles/edit/${userId}`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

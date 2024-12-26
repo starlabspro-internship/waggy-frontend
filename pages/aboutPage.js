@@ -3,7 +3,7 @@ export default function renderPageContent() {
     const content = document.getElementById('content');
     content.innerHTML = `
         <div class="p-4 rounded-lg">
-        <div class=" bg-white text-white-800">
+        <div class="text-white-800">
 
     
 

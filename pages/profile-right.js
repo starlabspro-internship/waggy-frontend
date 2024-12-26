@@ -23,7 +23,7 @@ export default function renderRightContent() {
   // Fetch pets from the API
   const fetchPets = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/pets/list');
+      const response = await fetch(`${BASE_URL}/api/pets/list`);
       const fetchedPets = await response.json();
 
       if (response.ok) {

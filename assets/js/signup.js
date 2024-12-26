@@ -1,4 +1,5 @@
 // JavaScript code
+const BASE_URL = "http://localhost:3000";
 const firstnameInput = document.getElementById('firstname');
 const firstnameError = document.getElementById('firstname-error');
 
@@ -75,7 +76,7 @@ form.addEventListener('submit', async (event) => {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/auth/register', {
+        const response = await fetch(`${BASE_URL}/api/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

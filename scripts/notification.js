@@ -92,7 +92,7 @@ const updateNotificationCount = (count) => {
 const fetchAdoptionRequests = async () => {
 
     try {
-      const response = await fetch('http://localhost:3000/api/adoption-requests/list' , {
+      const response = await fetch(`${BASE_URL}/api/adoption-requests/list` , {
         method: "GET",
         headers: {
           'Accept': 'application/json',
@@ -140,7 +140,7 @@ const formatTimeAgo = (timestamp) => {
 
 const renderNotications = async () => {
   const notifications = await fetchAdoptionRequests();
-
+  console.log(notifications);
   if (notifications.length === 0) {
     notificationList.innerHTML = '<p>You have no notifications</p>';
     return;
@@ -178,11 +178,12 @@ const renderNotications = async () => {
     if (isOwner && notification.requestStatus === "pending") {
       notificationItem.innerHTML += `
         <div class="flex gap-2">
-         <button class="message-btn bg-blue text-white px-2 rounded cursor-pointer text-sm" data-id="1" data-status="accepted">Message</button>
+         <button id="message-btn" class="message-btn bg-blue text-white px-2 rounded cursor-pointer text-sm"  >Message</button>
           <button class="status-btn border border-blue text-blue px-2 rounded cursor-pointer text-sm" data-id="${notification.id}" data-status="accepted">Accept</button>
           <button class="status-btn text-red-500 border border-solid border-red-500 px-2 rounded cursor-pointer text-sm" data-id="${notification.id}" data-status="rejected">Reject</button>
         </div>
       `;
+    
     } else if (!isOwner && notification.requestStatus !== "pending") {
       notificationItem.innerHTML = `
         <p class="text-sm font-semibold text-gray-700">
@@ -209,13 +210,13 @@ const renderNotications = async () => {
 
     // Add event listeners for buttons
     const statusButtons = notificationItem.querySelectorAll('.status-btn');
+ 
     statusButtons.forEach((button) => {
       button.addEventListener('click', () =>
         handleStatusUpdate(button.dataset.id, button.dataset.status)
       );
     });
   });
-
   markNotificationsAsSeen(notifications);
 };
 
@@ -231,7 +232,7 @@ const handleStatusUpdate = async (id , status) => {
        listingStatus = 'Available'
        petStatus = 'available'; // Set to available when rejected
      }
-    const response = await fetch(`http://localhost:3000/api/adoption-requests/edit/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/adoption-requests/edit/${id}`, {
       method: "PATCH",
       headers: {
         'Accept': 'application/json',
@@ -242,6 +243,7 @@ const handleStatusUpdate = async (id , status) => {
     });
     
     if (response.ok) {
+      console.log(response);
       console.log('Adoption Status' , status , listingStatus , 'pet status' , petStatus);
      await refreshNotifications()
     } else {

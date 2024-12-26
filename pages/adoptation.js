@@ -196,7 +196,7 @@ export default function renderPageContent() {
   let previousTranslate = 0;
   
   async function fetchUsers() {
-    const baseUrl = `http://localhost:3000/api/adoption-listings/list`;
+    const baseUrl = `${BASE_URL}/api/adoption-listings/list`;
     const params = new URLSearchParams();
     // params.append("adoptionStatus", "Available");
     for (const [key, value] of Object.entries(filters)) {

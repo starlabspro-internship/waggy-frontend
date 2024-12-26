@@ -12,4 +12,5 @@ const API_URLS = {
 
 // Attach API_URLS to the global window object
   window.API_URLS = API_URLS;
-
+  window.BASE_URL = BASE_URL;
+  
